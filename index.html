@@ -7,38 +7,35 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root{
-      --bg:#070a14;
-      --bg2:#0b1020;
+      --bg:#060914;
+      --bg2:#0d1428;
       --panel:rgba(255,255,255,.06);
-      --panel-2:rgba(255,255,255,.08);
+      --panel2:rgba(255,255,255,.08);
       --stroke:rgba(255,255,255,.10);
-      --stroke-2:rgba(255,255,255,.16);
+      --stroke2:rgba(255,255,255,.16);
       --text:#f8fafc;
-      --muted:rgba(248,250,252,.70);
-      --muted2:rgba(248,250,252,.52);
-      --brand:#7c3aed;
-      --brand2:#06b6d4;
-      --success:#22c55e;
-      --danger:#ef4444;
-      --shadow:0 18px 50px rgba(0,0,0,.38);
-      --radius:24px;
-      --radius-sm:18px;
-      --max:940px;
+      --muted:rgba(248,250,252,.72);
+      --muted2:rgba(248,250,252,.50);
+      --cyan:#22d3ee;
+      --violet:#8b5cf6;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --shadow:0 20px 60px rgba(0,0,0,.40);
+      --radius:26px;
+      --max:980px;
       --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
     }
-
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;min-height:100%;
       background:
-        radial-gradient(circle at 12% 0%, rgba(6,182,212,.18), transparent 30%),
-        radial-gradient(circle at 92% 5%, rgba(124,58,237,.22), transparent 32%),
-        linear-gradient(180deg, #070a14 0%, #0b1020 55%, #070a14 100%);
-      color:var(--text);
-      font-family:var(--font);
+        radial-gradient(circle at 12% 0%, rgba(34,211,238,.18), transparent 28%),
+        radial-gradient(circle at 92% 4%, rgba(139,92,246,.22), transparent 30%),
+        linear-gradient(180deg,#060914 0%,#0b1222 55%,#060914 100%);
+      color:var(--text);font-family:var(--font);
     }
-
-    body{padding:14px 12px 34px}
+    body{padding:14px 12px 36px}
     button,input{font:inherit}
     .app{max-width:var(--max);margin:0 auto}
 
@@ -46,388 +43,308 @@
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       margin-bottom:14px;
     }
-    .brand{
-      display:flex;align-items:center;gap:12px;min-width:0;
-    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .logo{
       width:52px;height:52px;border-radius:18px;display:grid;place-items:center;flex:0 0 auto;
-      background:linear-gradient(135deg, rgba(34,211,238,.98), rgba(124,58,237,.96));
-      color:#07111d;font-weight:950;font-size:18px;letter-spacing:-.05em;
-      box-shadow:0 18px 40px rgba(6,182,212,.18);
-      position:relative;overflow:hidden;
+      background:linear-gradient(135deg, #22d3ee, #8b5cf6);
+      color:#06111e;font-weight:950;font-size:18px;letter-spacing:-.05em;
+      box-shadow:0 18px 40px rgba(34,211,238,.18);position:relative;overflow:hidden;
     }
-    .logo::after{
+    .logo:after{
       content:"";position:absolute;left:-8px;top:-18px;width:48px;height:48px;border-radius:999px;
-      background:rgba(255,255,255,.34);filter:blur(12px)
+      background:rgba(255,255,255,.36);filter:blur(12px)
     }
     .brand-copy h1{
       margin:0;font-size:21px;line-height:1.02;letter-spacing:-.055em;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
     }
     .brand-copy p{
       margin:4px 0 0;font-size:12px;color:var(--muted2);
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
     }
-
     .sync{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.055);
-      border-radius:999px;
-      padding:9px 12px;
-      color:var(--muted);
-      font-size:12px;
-      white-space:nowrap;
-      backdrop-filter:blur(18px);
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:999px;
+      padding:9px 12px;font-size:12px;color:var(--muted);white-space:nowrap;backdrop-filter:blur(18px)
     }
     .sync .dot{
-      display:inline-block;width:7px;height:7px;border-radius:999px;background:#f59e0b;
-      margin-right:7px;vertical-align:1px;
-      box-shadow:0 0 0 4px rgba(245,158,11,.12);
+      display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--amber);
+      margin-right:7px;vertical-align:1px;box-shadow:0 0 0 4px rgba(245,158,11,.12)
     }
-    .sync.ok .dot{background:var(--success);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
-    .sync.bad .dot{background:var(--danger);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
+    .sync.ok .dot{background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
+    .sync.bad .dot{background:var(--red);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
 
     .hero{
-      border:1px solid var(--stroke);
-      border-radius:30px;
+      border:1px solid var(--stroke);border-radius:30px;
       background:
-        linear-gradient(135deg, rgba(6,182,212,.14), rgba(124,58,237,.15)),
+        linear-gradient(135deg, rgba(34,211,238,.13), rgba(139,92,246,.15)),
         rgba(255,255,255,.05);
-      padding:22px;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-      margin-bottom:14px;
+      padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:14px
     }
-    .hero::before{
-      content:"";position:absolute;right:-80px;top:-85px;width:240px;height:240px;border-radius:999px;
-      background:radial-gradient(circle, rgba(124,58,237,.34), transparent 66%);
+    .hero:before{
+      content:"";position:absolute;right:-80px;top:-90px;width:240px;height:240px;border-radius:999px;
+      background:radial-gradient(circle, rgba(139,92,246,.34), transparent 66%)
     }
-    .hero::after{
-      content:"";position:absolute;left:-86px;bottom:-100px;width:260px;height:260px;border-radius:999px;
-      background:radial-gradient(circle, rgba(6,182,212,.24), transparent 64%);
+    .hero:after{
+      content:"";position:absolute;left:-80px;bottom:-100px;width:250px;height:250px;border-radius:999px;
+      background:radial-gradient(circle, rgba(34,211,238,.22), transparent 64%)
     }
     .hero > *{position:relative;z-index:1}
-    .hero .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background:rgba(255,255,255,.09);
-      border:1px solid rgba(255,255,255,.10);
-      color:rgba(248,250,252,.88);
-      font-size:12px;
-      margin-bottom:14px;
+    .hero-pill{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.10);
+      color:rgba(248,250,252,.88);font-size:12px;margin-bottom:14px
     }
     .hero h2{
-      margin:0;max-width:680px;
-      font-size:34px;line-height:1.0;letter-spacing:-.068em;
+      margin:0;max-width:700px;font-size:33px;line-height:1.0;letter-spacing:-.065em
     }
     .hero p{
-      margin:12px 0 0;max-width:630px;
-      color:var(--muted);font-size:15px;line-height:1.48;
+      margin:12px 0 0;max-width:650px;color:var(--muted);font-size:15px;line-height:1.46
     }
     .hero-actions{
-      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px
     }
     .cta{
-      min-height:48px;border:none;border-radius:16px;padding:0 16px;
-      font-weight:850;cursor:pointer;
+      min-height:46px;border:none;border-radius:16px;padding:0 16px;font-weight:860;cursor:pointer
     }
     .cta.primary{
-      background:linear-gradient(135deg, rgba(34,211,238,.96), rgba(124,58,237,.96));
-      color:#fff;
-      box-shadow:0 16px 34px rgba(0,0,0,.22);
+      background:linear-gradient(135deg, #22d3ee, #8b5cf6);color:#fff;box-shadow:0 16px 32px rgba(0,0,0,.22)
     }
     .cta.secondary{
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--stroke)
+    }
+
+    .search-shell{
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:24px;
+      padding:14px;margin-bottom:14px;box-shadow:0 16px 42px rgba(0,0,0,.16);backdrop-filter:blur(18px)
+    }
+    .searchbox{
+      position:relative;border:1px solid var(--stroke2);background:rgba(8,11,25,.84);
+      border-radius:19px;overflow:hidden;margin-bottom:12px
+    }
+    .searchbox input{
+      width:100%;min-height:54px;border:none;outline:none;background:transparent;color:var(--text);
+      padding:0 48px 0 48px;font-size:15px
+    }
+    .searchbox input::placeholder{color:rgba(248,250,252,.42)}
+    .searchbox .icon{
+      position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:rgba(248,250,252,.56)
+    }
+    .searchbox .clear{
+      display:none;place-items:center;position:absolute;right:12px;top:50%;transform:translateY(-50%);
+      width:30px;height:30px;border-radius:999px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer
+    }
+    .searchbox .clear.show{display:grid}
+    .discover-row{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap
+    }
+    .discover-row p{
+      margin:0;color:var(--muted2);font-size:13px
+    }
+    .quick-chips{
+      display:flex;gap:8px;overflow-x:auto;scrollbar-width:none
+    }
+    .quick-chips::-webkit-scrollbar{display:none}
+    .qchip{
+      border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.06);color:#fff;
+      padding:8px 11px;font-size:12px;cursor:pointer;white-space:nowrap
     }
 
     .action-row{
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
-      margin-bottom:14px;
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px
     }
     .quick{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.055);
-      border-radius:20px;
-      min-height:70px;
-      padding:14px;
-      cursor:pointer;
-      text-align:left;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      box-shadow:0 12px 34px rgba(0,0,0,.14);
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:20px;min-height:72px;
+      padding:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;
+      box-shadow:0 12px 34px rgba(0,0,0,.14)
     }
-    .quick b{
-      display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:4px;
-    }
-    .quick span{
-      display:block;font-size:12px;line-height:1.26;color:var(--muted2);
-    }
+    .quick b{display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:4px}
+    .quick span{display:block;font-size:12px;line-height:1.26;color:var(--muted2)}
     .quick .qicon{
       width:42px;height:42px;border-radius:15px;display:grid;place-items:center;flex:0 0 auto;
-      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.08);
-      font-size:20px;
+      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.08);font-size:20px
     }
 
     .shell{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.05);
-      border-radius:26px;
-      padding:14px;
-      margin-bottom:14px;
-      box-shadow:0 16px 42px rgba(0,0,0,.16);
-      backdrop-filter:blur(18px);
+      border:1px solid var(--stroke);background:rgba(255,255,255,.05);border-radius:26px;
+      padding:14px;margin-bottom:14px;box-shadow:0 16px 42px rgba(0,0,0,.16);backdrop-filter:blur(18px)
     }
     .section-head{
-      display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px;
+      display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px;flex-wrap:wrap
     }
-    .section-head h3{
-      margin:0;font-size:18px;letter-spacing:-.045em;
-    }
-    .section-head span{
-      font-size:12px;color:var(--muted2);white-space:nowrap;
-    }
+    .section-head h3{margin:0;font-size:18px;letter-spacing:-.045em}
+    .section-head span{font-size:12px;color:var(--muted2);white-space:nowrap}
 
-    .category-grid{
-      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+    .visual-grid{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px
     }
-    .category-card{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.055);
-      border-radius:22px;
-      padding:12px;
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
-      min-height:112px;
+    .visual-card{
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:22px;
+      min-height:138px;padding:12px;cursor:pointer;position:relative;overflow:hidden;transition:.16s ease
     }
-    .category-card.active{
+    .visual-card.active{
       border-color:rgba(34,211,238,.28);
       background:
-        linear-gradient(135deg, rgba(6,182,212,.13), rgba(124,58,237,.14)),
+        linear-gradient(135deg, rgba(34,211,238,.13), rgba(139,92,246,.14)),
         rgba(255,255,255,.06);
+      box-shadow:0 14px 32px rgba(0,0,0,.18)
     }
-    .category-card::before{
-      content:"";position:absolute;right:-16px;top:-16px;width:72px;height:72px;border-radius:999px;
-      background:var(--glow);opacity:.9;
+    .visual-card:before{
+      content:"";position:absolute;right:-16px;top:-16px;width:78px;height:78px;border-radius:999px;
+      background:var(--glow);opacity:.95
     }
-    .program-icon{
-      width:44px;height:44px;border-radius:15px;display:grid;place-items:center;
-      background:var(--grad);
-      color:#fff;font-weight:950;font-size:13px;letter-spacing:-.04em;
-      border:1px solid rgba(255,255,255,.14);
-      margin-bottom:12px;
-      position:relative;z-index:1;
-      box-shadow:0 10px 18px rgba(0,0,0,.14);
+    .vicon{
+      width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
+      background:var(--grad);border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 18px rgba(0,0,0,.16);
+      position:relative;z-index:1;margin-bottom:12px;color:#fff
     }
-    .category-card h4{
-      margin:0 0 4px;font-size:15px;letter-spacing:-.03em;position:relative;z-index:1;
+    .vicon svg{width:26px;height:26px;display:block}
+    .visual-card h4{
+      margin:0 0 5px;font-size:15px;letter-spacing:-.03em;position:relative;z-index:1;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
     }
-    .category-card p{
-      margin:0;color:var(--muted2);font-size:12px;line-height:1.28;position:relative;z-index:1;
+    .visual-card p{
+      margin:0;color:var(--muted2);font-size:12px;line-height:1.26;position:relative;z-index:1
+    }
+    .vcount{
+      position:absolute;right:12px;bottom:12px;z-index:1;border-radius:999px;padding:7px 9px;
+      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:850
     }
 
-    .search-wrap{
-      position:sticky;top:8px;z-index:3;margin-bottom:12px;
+    .list-wrap{
+      margin-top:14px
     }
-    .search{
-      position:relative;
-      border:1px solid var(--stroke-2);
-      background:rgba(8,11,26,.84);
-      border-radius:18px;
-      overflow:hidden;
-      backdrop-filter:blur(18px);
+    .category-list{
+      display:grid;gap:8px
     }
-    .search input{
-      width:100%;min-height:50px;padding:0 44px 0 44px;border:none;outline:none;background:transparent;color:var(--text);font-size:15px;
+    .category-item{
+      border:1px solid var(--stroke);background:rgba(255,255,255,.05);border-radius:18px;padding:11px 12px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer
     }
-    .search input::placeholder{color:rgba(248,250,252,.42)}
-    .search .sicon{
-      position:absolute;left:15px;top:50%;transform:translateY(-50%);
-      color:rgba(248,250,252,.55);font-size:17px;
+    .category-item.active{
+      border-color:rgba(34,211,238,.28);background:rgba(255,255,255,.08)
     }
-    .search .clear{
-      display:none;place-items:center;
-      position:absolute;right:12px;top:50%;transform:translateY(-50%);
-      width:28px;height:28px;border-radius:999px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:16px;
+    .category-left{display:flex;align-items:center;gap:10px;min-width:0}
+    .mini-icon{
+      width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:var(--grad);
+      border:1px solid rgba(255,255,255,.14);flex:0 0 auto;color:#fff
     }
-    .search .clear.show{display:grid}
+    .mini-icon svg{width:20px;height:20px;display:block}
+    .category-copy{min-width:0}
+    .category-copy h4{margin:0 0 3px;font-size:14px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .category-copy p{margin:0;color:var(--muted2);font-size:12px}
+    .category-count{
+      border-radius:999px;padding:7px 9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);
+      font-size:12px;font-weight:850;white-space:nowrap
+    }
 
+    .sticky-tools{
+      position:sticky;top:8px;z-index:5;background:linear-gradient(180deg, rgba(6,9,20,.96), rgba(6,9,20,.74));
+      padding-bottom:10px;margin-bottom:2px
+    }
     .chips{
-      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:12px;
+      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none
     }
     .chips::-webkit-scrollbar{display:none}
     .chip{
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      background:rgba(255,255,255,.055);
-      color:rgba(248,250,252,.82);
-      padding:10px 12px;
-      white-space:nowrap;
-      font-size:13px;
-      cursor:pointer;
+      border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.055);color:rgba(248,250,252,.82);
+      padding:10px 12px;white-space:nowrap;font-size:13px;cursor:pointer
     }
     .chip.active{
-      border-color:rgba(34,211,238,.28);
-      background:linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.20));
-      color:#fff;
+      border-color:rgba(34,211,238,.28);background:linear-gradient(135deg, rgba(34,211,238,.18), rgba(139,92,246,.20));color:#fff
     }
 
-    .course-list{
-      display:grid;gap:10px;
-    }
+    .course-list{display:grid;gap:10px}
     .course-card{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.055);
-      border-radius:22px;
-      padding:14px;
-      position:relative;
-      overflow:hidden;
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:22px;padding:14px;position:relative;overflow:hidden
     }
-    .course-card::before{
-      content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-      background:linear-gradient(180deg, #06b6d4, #7c3aed);
+    .course-card:before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#22d3ee,#8b5cf6)
     }
-    .course-top{
-      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
-    }
-    .course-title{
-      margin:0;font-size:17px;line-height:1.16;letter-spacing:-.035em;
-    }
+    .course-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .course-title{margin:0;font-size:17px;line-height:1.16;letter-spacing:-.035em}
     .price{
-      white-space:nowrap;
-      border-radius:999px;
-      padding:8px 10px;
-      background:rgba(34,197,94,.12);
-      border:1px solid rgba(34,197,94,.18);
-      color:#dcfce7;
-      font-weight:900;
-      font-size:12px;
+      white-space:nowrap;border-radius:999px;padding:8px 10px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.18);
+      color:#dcfce7;font-weight:900;font-size:12px
     }
-    .meta{
-      display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;
-    }
+    .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .tag{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.07);
-      color:rgba(248,250,252,.72);
-      border-radius:999px;
-      padding:6px 8px;
-      font-size:11px;
-      line-height:1;
+      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.07);color:rgba(248,250,252,.72);
+      border-radius:999px;padding:6px 8px;font-size:11px;line-height:1
     }
-    .course-text{
-      margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.42;
-    }
-    .course-actions{
-      display:flex;gap:8px;margin-top:12px;
-    }
+    .course-text{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.42}
+    .course-actions{display:flex;gap:8px;margin-top:12px}
     .btn{
-      min-height:42px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;
-      color:#fff;background:rgba(255,255,255,.08);font-weight:850;cursor:pointer;flex:1;
+      min-height:42px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;color:#fff;
+      background:rgba(255,255,255,.08);font-weight:850;cursor:pointer;flex:1
     }
     .btn.primary{
-      border-color:rgba(34,211,238,.26);
-      background:linear-gradient(135deg, rgba(6,182,212,.24), rgba(124,58,237,.24));
+      border-color:rgba(34,211,238,.26);background:linear-gradient(135deg, rgba(34,211,238,.24), rgba(139,92,246,.24))
     }
 
     .empty,.loading{
-      text-align:center;padding:22px 10px;color:var(--muted);font-size:14px;line-height:1.42;
+      text-align:center;padding:22px 10px;color:var(--muted);font-size:14px;line-height:1.42
     }
     .empty{display:none}
-
-    .footer{
-      text-align:center;color:rgba(248,250,252,.42);font-size:12px;line-height:1.4;padding:8px 4px 2px;
-    }
+    .footer{text-align:center;color:rgba(248,250,252,.42);font-size:12px;line-height:1.4;padding:8px 4px 2px}
 
     .fab{
-      position:fixed;right:14px;bottom:74px;z-index:12;
-      min-height:52px;border:none;border-radius:18px;padding:0 16px;
-      background:linear-gradient(135deg, rgba(34,211,238,.96), rgba(124,58,237,.98));
-      color:#fff;font-weight:900;cursor:pointer;
-      box-shadow:0 18px 42px rgba(0,0,0,.30);
+      position:fixed;right:14px;bottom:74px;z-index:12;min-height:52px;border:none;border-radius:18px;padding:0 16px;
+      background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 18px 42px rgba(0,0,0,.30)
     }
-
     .toast{
-      position:fixed;left:12px;right:12px;bottom:16px;max-width:var(--max);margin:0 auto;
-      border:1px solid var(--stroke);border-radius:18px;background:rgba(6,8,22,.94);
-      color:#fff;padding:13px 14px;box-shadow:0 18px 50px rgba(0,0,0,.45);
-      backdrop-filter:blur(18px);
-      transform:translateY(120%);opacity:0;transition:.23s ease;z-index:30;
-      font-size:14px;line-height:1.35;
+      position:fixed;left:12px;right:12px;bottom:16px;max-width:var(--max);margin:0 auto;border:1px solid var(--stroke);
+      border-radius:18px;background:rgba(6,8,22,.94);color:#fff;padding:13px 14px;box-shadow:0 18px 50px rgba(0,0,0,.45);
+      backdrop-filter:blur(18px);transform:translateY(120%);opacity:0;transition:.23s ease;z-index:30;font-size:14px;line-height:1.35
     }
     .toast.show{transform:translateY(0);opacity:1}
 
-    .backdrop{
-      position:fixed;inset:0;background:rgba(0,0,0,.54);
-      opacity:0;pointer-events:none;transition:.2s ease;z-index:18;
-    }
+    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.54);opacity:0;pointer-events:none;transition:.2s ease;z-index:18}
     .backdrop.show{opacity:1;pointer-events:auto}
     .modal{
-      position:fixed;left:0;right:0;bottom:0;z-index:20;
-      max-width:var(--max);margin:0 auto;padding:0 12px 12px;
-      transform:translateY(105%);transition:.24s ease;
+      position:fixed;left:0;right:0;bottom:0;z-index:20;max-width:var(--max);margin:0 auto;padding:0 12px 12px;
+      transform:translateY(105%);transition:.24s ease
     }
     .modal.show{transform:translateY(0)}
     .modal-card{
-      border:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(12,16,30,.98), rgba(8,11,24,.98));
-      border-radius:28px 28px 22px 22px;
-      padding:14px;
-      box-shadow:0 -18px 50px rgba(0,0,0,.30);
+      border:1px solid var(--stroke);background:linear-gradient(180deg, rgba(12,16,30,.98), rgba(8,11,24,.98));
+      border-radius:28px 28px 22px 22px;padding:14px;box-shadow:0 -18px 50px rgba(0,0,0,.30)
     }
-    .drag{
-      width:54px;height:5px;border-radius:999px;background:rgba(255,255,255,.18);margin:2px auto 12px;
-    }
-    .modal-head{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;
-    }
+    .drag{width:54px;height:5px;border-radius:999px;background:rgba(255,255,255,.18);margin:2px auto 12px}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
     .modal-head h4{margin:0;font-size:18px;letter-spacing:-.04em}
     .close{
-      width:34px;height:34px;border-radius:12px;border:1px solid var(--stroke);
-      background:rgba(255,255,255,.06);color:#fff;cursor:pointer;
+      width:34px;height:34px;border-radius:12px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:#fff;cursor:pointer
     }
     .modal-list{display:grid;gap:10px;max-height:58vh;overflow:auto;padding-right:2px}
     .modal-item{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.055);
-      border-radius:20px;
-      padding:13px;
+      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:20px;padding:13px
     }
-    .modal-item-top{
-      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
-    }
-    .modal-item h5{
-      margin:0;font-size:15px;line-height:1.18;letter-spacing:-.03em;
-    }
-    .modal-item .mprice{
-      white-space:nowrap;font-size:16px;font-weight:950;color:#dcfce7;letter-spacing:-.04em;
-    }
-    .modal-item p{
-      margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.4;
-    }
-    .modal-item .meta{
-      margin-top:10px;
-    }
+    .modal-item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .modal-item h5{margin:0;font-size:15px;line-height:1.18;letter-spacing:-.03em}
+    .modal-item .mprice{white-space:nowrap;font-size:16px;font-weight:950;color:#dcfce7;letter-spacing:-.04em}
+    .modal-item p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+    .modal-item .meta{margin-top:10px}
     .modal-btn{
       min-height:40px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;width:100%;
-      color:#fff;background:linear-gradient(135deg, rgba(6,182,212,.24), rgba(124,58,237,.24));font-weight:850;cursor:pointer;margin-top:12px;
+      color:#fff;background:linear-gradient(135deg, rgba(34,211,238,.24), rgba(139,92,246,.24));font-weight:850;cursor:pointer;margin-top:12px
     }
 
-    @media (max-width:840px){
-      .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){
+      .visual-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
       .action-row{grid-template-columns:1fr}
+    }
+    @media (max-width:620px){
+      .visual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
     @media (max-width:540px){
       body{padding:12px 10px 28px}
       .hero{padding:18px;border-radius:28px}
       .hero h2{font-size:28px}
-      .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .sync{display:none}
       .course-actions{flex-direction:column}
       .brand-copy h1{font-size:19px}
       .logo{width:50px;height:50px}
+      .visual-card{min-height:128px}
     }
   </style>
 </head>
@@ -445,12 +362,24 @@
     </header>
 
     <section class="hero">
-      <div class="pill">📐 Курсы внутри Telegram</div>
-      <h2>Выбери программу, посмотри курс и сразу оформи доступ</h2>
-      <p>Ничего лишнего: разделы, стоимость, краткая информация и кнопка покупки.</p>
+      <div class="hero-pill">📐 Легкий поиск нужного курса</div>
+      <h2>Находи курсы и по поиску, и графически по иконкам разделов</h2>
+      <p>Сначала поиск и быстрые подсказки, затем наглядные иконки программ, список категорий и карточки курсов с кнопкой покупки.</p>
       <div class="hero-actions">
-        <button class="cta primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Выбрать курс</button>
+        <button class="cta primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Найти курс</button>
         <button class="cta secondary" onclick="openTariffsModal()">Все тарифы</button>
+      </div>
+    </section>
+
+    <section class="search-shell">
+      <div class="searchbox">
+        <span class="icon">⌕</span>
+        <input id="searchInput" type="search" placeholder="Найти курс, программу, автора или тему..." oninput="renderAll()" />
+        <button class="clear" id="clearSearch" onclick="clearSearch()">×</button>
+      </div>
+      <div class="discover-row">
+        <p>Быстрый поиск: нажми на популярное направление</p>
+        <div class="quick-chips" id="quickChips"></div>
       </div>
     </section>
 
@@ -480,11 +409,19 @@
 
     <section class="shell">
       <div class="section-head">
-        <h3>Разделы</h3>
-        <span id="categorySummary">Выбери программу</span>
+        <h3>Разделы по программам</h3>
+        <span id="categorySummary">Загрузка категорий…</span>
       </div>
-      <div class="category-grid" id="categoryGrid">
-        <div class="loading">Загружаю разделы…</div>
+      <div class="visual-grid" id="visualGrid">
+        <div class="loading">Загружаю иконки разделов…</div>
+      </div>
+
+      <div class="list-wrap">
+        <div class="section-head" style="margin:0 0 10px">
+          <h3 style="font-size:16px">Список категорий</h3>
+          <span>для быстрого просмотра</span>
+        </div>
+        <div class="category-list" id="categoryList"></div>
       </div>
     </section>
 
@@ -494,23 +431,18 @@
         <span id="countLabel">Загрузка…</span>
       </div>
 
-      <div class="search-wrap">
-        <div class="search">
-          <span class="sicon">⌕</span>
-          <input id="searchInput" type="search" placeholder="Найти курс, автора или программу..." oninput="renderCourses()" />
-          <button class="clear" id="clearSearch" onclick="clearSearch()">×</button>
-        </div>
+      <div class="sticky-tools">
+        <div class="chips" id="chips"></div>
       </div>
 
-      <div class="chips" id="chips"></div>
       <div class="course-list" id="courseList">
         <div class="loading">Загружаю курсы из таблицы…</div>
       </div>
-      <div class="empty" id="emptyState">Ничего не найдено. Попробуй другую программу или слово.</div>
+      <div class="empty" id="emptyState">Ничего не найдено. Попробуй поиск или нажми на нужную категорию выше.</div>
     </section>
 
     <div class="footer">
-      CAD Академия · каталог курсов и оформление доступа
+      CAD Академия · поиск, категории, визуальные иконки и покупка доступа
     </div>
   </main>
 
@@ -538,8 +470,8 @@
       tg.ready();
       tg.expand();
       try {
-        tg.setHeaderColor("#070a14");
-        tg.setBackgroundColor("#070a14");
+        tg.setHeaderColor("#060914");
+        tg.setBackgroundColor("#060914");
       } catch(e) {}
     }
 
@@ -549,7 +481,7 @@
       LINKS: {
         bot: "https://t.me/CAD_Academy_bot",
         subscription: "https://t.me/CAD_Academy_bot?start=subscription",
-        support: "https://t.me/REPLACE_SUPPORT"
+        support: "https://t.me/Revit_help_bot"
       }
     };
 
@@ -564,21 +496,42 @@
     let activeCategory = "Все";
 
     const visuals = [
-      { match:["revit"], short:"R", title:"Revit", note:"BIM", grad:"linear-gradient(135deg,#2563eb,#38bdf8)", glow:"rgba(56,189,248,.22)" },
-      { match:["шаблон", "template"], short:"RT", title:"Revit шаблоны", note:"Шаблоны", grad:"linear-gradient(135deg,#0284c7,#06b6d4)", glow:"rgba(6,182,212,.22)" },
-      { match:["семейств"], short:"RF", title:"Revit семейства", note:"Семейства", grad:"linear-gradient(135deg,#0f766e,#14b8a6)", glow:"rgba(20,184,166,.22)" },
-      { match:["autocad","auto cad"], short:"AC", title:"AutoCAD", note:"Чертежи", grad:"linear-gradient(135deg,#dc2626,#fb7185)", glow:"rgba(251,113,133,.22)" },
-      { match:["civil"], short:"CV", title:"Civil", note:"Инженерия", grad:"linear-gradient(135deg,#f59e0b,#f97316)", glow:"rgba(245,158,11,.22)" },
-      { match:["3ds","3ds max","max"], short:"3D", title:"3ds Max", note:"3D", grad:"linear-gradient(135deg,#10b981,#22c55e)", glow:"rgba(34,197,94,.22)" },
-      { match:["archicad","archi"], short:"AR", title:"ArchiCAD", note:"Проект", grad:"linear-gradient(135deg,#a21caf,#ec4899)", glow:"rgba(236,72,153,.22)" },
-      { match:["sketchup","skethup","sketch"], short:"SU", title:"SketchUp", note:"3D", grad:"linear-gradient(135deg,#7c3aed,#a78bfa)", glow:"rgba(167,139,250,.22)" },
-      { match:["twinmotion"], short:"TM", title:"Twinmotion", note:"Realtime", grad:"linear-gradient(135deg,#2563eb,#7c3aed)", glow:"rgba(124,58,237,.22)" },
-      { match:["homestyler"], short:"HS", title:"Homestyler", note:"Интерьер", grad:"linear-gradient(135deg,#0891b2,#22d3ee)", glow:"rgba(34,211,238,.22)" },
-      { match:["установка", "по ", "program"], short:"OS", title:"Установка ПО", note:"Setup", grad:"linear-gradient(135deg,#475569,#94a3b8)", glow:"rgba(148,163,184,.22)" },
-      { match:["итр"], short:"ITR", title:"ИТР", note:"Инженеры", grad:"linear-gradient(135deg,#0f766e,#34d399)", glow:"rgba(52,211,153,.22)" },
-      { match:["нейросет", "ai"], short:"AI", title:"Нейросети", note:"AI", grad:"linear-gradient(135deg,#7c3aed,#22d3ee)", glow:"rgba(34,211,238,.22)" },
-      { match:["все"], short:"ALL", title:"Все", note:"Каталог", grad:"linear-gradient(135deg,#06b6d4,#7c3aed)", glow:"rgba(124,58,237,.22)" }
+      { match:["все"], title:"Все курсы", note:"Весь каталог", grad:"linear-gradient(135deg,#22d3ee,#8b5cf6)", glow:"rgba(139,92,246,.22)", icon:"all" },
+      { match:["revit"], title:"Revit", note:"BIM и проектирование", grad:"linear-gradient(135deg,#2563eb,#38bdf8)", glow:"rgba(56,189,248,.22)", icon:"revit" },
+      { match:["шаблон","template"], title:"Revit шаблоны", note:"Шаблоны и стандарты", grad:"linear-gradient(135deg,#0284c7,#06b6d4)", glow:"rgba(6,182,212,.22)", icon:"templates" },
+      { match:["семейств"], title:"Revit семейства", note:"Семейства и библиотеки", grad:"linear-gradient(135deg,#0f766e,#14b8a6)", glow:"rgba(20,184,166,.22)", icon:"families" },
+      { match:["autocad","auto cad"], title:"AutoCAD", note:"Чертежи и оформление", grad:"linear-gradient(135deg,#dc2626,#fb7185)", glow:"rgba(251,113,133,.22)", icon:"autocad" },
+      { match:["civil"], title:"Civil", note:"Инженерные задачи", grad:"linear-gradient(135deg,#f59e0b,#f97316)", glow:"rgba(245,158,11,.22)", icon:"civil" },
+      { match:["3ds","3ds max","max"], title:"3ds Max", note:"3D и рендер", grad:"linear-gradient(135deg,#10b981,#22c55e)", glow:"rgba(34,197,94,.22)", icon:"max" },
+      { match:["archicad","archi"], title:"ArchiCAD", note:"Архитектурное проектирование", grad:"linear-gradient(135deg,#a21caf,#ec4899)", glow:"rgba(236,72,153,.22)", icon:"archicad" },
+      { match:["sketchup","skethup","sketch"], title:"SketchUp", note:"Быстрое 3D", grad:"linear-gradient(135deg,#7c3aed,#a78bfa)", glow:"rgba(167,139,250,.22)", icon:"sketchup" },
+      { match:["twinmotion"], title:"Twinmotion", note:"Realtime визуализация", grad:"linear-gradient(135deg,#2563eb,#7c3aed)", glow:"rgba(124,58,237,.22)", icon:"twinmotion" },
+      { match:["homestyler"], title:"Homestyler", note:"Интерьеры и планировки", grad:"linear-gradient(135deg,#0891b2,#22d3ee)", glow:"rgba(34,211,238,.22)", icon:"home" },
+      { match:["установка", "program"], title:"Установка ПО", note:"Установка и настройка", grad:"linear-gradient(135deg,#475569,#94a3b8)", glow:"rgba(148,163,184,.22)", icon:"install" },
+      { match:["итр"], title:"ИТР", note:"Для инженеров", grad:"linear-gradient(135deg,#0f766e,#34d399)", glow:"rgba(52,211,153,.22)", icon:"itr" },
+      { match:["нейросет","ai"], title:"Нейросети", note:"AI-инструменты", grad:"linear-gradient(135deg,#7c3aed,#22d3ee)", glow:"rgba(34,211,238,.22)", icon:"ai" }
     ];
+
+    function iconSVG(type){
+      const common = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+      const icons = {
+        all: `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.8" ${common}></rect><rect x="14" y="3" width="7" height="7" rx="1.8" ${common}></rect><rect x="3" y="14" width="7" height="7" rx="1.8" ${common}></rect><rect x="14" y="14" width="7" height="7" rx="1.8" ${common}></rect></svg>`,
+        revit: `<svg viewBox="0 0 24 24"><path d="M5 18V7l7-3 7 3v11l-7 3-7-3Z" ${common}></path><path d="M12 4v17M5 7l7 4 7-4" ${common}></path></svg>`,
+        templates: `<svg viewBox="0 0 24 24"><path d="M8 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8" ${common}></path><path d="M7 7H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9" ${common}></path><path d="M9 9h6M9 13h6M9 17h4" ${common}></path></svg>`,
+        families: `<svg viewBox="0 0 24 24"><rect x="4" y="10" width="7" height="7" rx="1.5" ${common}></rect><rect x="13" y="7" width="7" height="7" rx="1.5" ${common}></rect><path d="M11 13h2M15 14v3" ${common}></path></svg>`,
+        autocad: `<svg viewBox="0 0 24 24"><path d="M12 4 5 19h14L12 4Z" ${common}></path><path d="M9.5 14h5" ${common}></path></svg>`,
+        civil: `<svg viewBox="0 0 24 24"><path d="M6 4c2 4 2 12 0 16" ${common}></path><path d="M18 4c-2 4-2 12 0 16" ${common}></path><path d="M10.5 7h3M10 12h4M10.5 17h3" ${common}></path></svg>`,
+        max: `<svg viewBox="0 0 24 24"><path d="M12 3 4.5 7.5 12 12l7.5-4.5L12 3Z" ${common}></path><path d="M4.5 7.5V16.5L12 21l7.5-4.5V7.5" ${common}></path><path d="M12 12v9" ${common}></path></svg>`,
+        archicad: `<svg viewBox="0 0 24 24"><path d="M4 19h16" ${common}></path><path d="M6 19V9.5C6 6.5 8.5 4 12 4s6 2.5 6 5.5V19" ${common}></path><path d="M9 19v-5h6v5" ${common}></path></svg>`,
+        sketchup: `<svg viewBox="0 0 24 24"><path d="M4 8 12 4l8 4-8 4-8-4Z" ${common}></path><path d="M4 8v8l8 4 8-4V8" ${common}></path><path d="M12 12v8" ${common}></path></svg>`,
+        twinmotion: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" ${common}></circle><path d="M12 7 9.5 12H13l-1 5 3.5-6H12l0-4Z" ${common}></path></svg>`,
+        home: `<svg viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-7.5Z" ${common}></path></svg>`,
+        install: `<svg viewBox="0 0 24 24"><path d="M12 4v9" ${common}></path><path d="M8.5 10.5 12 14l3.5-3.5" ${common}></path><path d="M5 18h14" ${common}></path></svg>`,
+        itr: `<svg viewBox="0 0 24 24"><path d="M4 10 12 4l8 6v3H4v-3Z" ${common}></path><path d="M7 13v2a5 5 0 0 0 10 0v-2" ${common}></path></svg>`,
+        ai: `<svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2" ${common}></circle><circle cx="18" cy="7" r="2" ${common}></circle><circle cx="18" cy="17" r="2" ${common}></circle><circle cx="12" cy="12" r="2" ${common}></circle><path d="M8 12h2M14 11l2.2-2.2M14 13l2.2 2.2" ${common}></path></svg>`
+      };
+      return icons[type] || icons.all;
+    }
 
     function vibrate(type="light"){
       try { tg?.HapticFeedback?.impactOccurred(type); } catch(e){}
@@ -618,11 +571,8 @@
 
     function escapeHtml(str){
       return String(str ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
     }
 
     function escapeAttr(str){
@@ -630,8 +580,7 @@
     }
 
     function wordCourses(n){
-      const last = n % 10;
-      const last2 = n % 100;
+      const last = n % 10, last2 = n % 100;
       if(last === 1 && last2 !== 11) return "курс";
       if([2,3,4].includes(last) && ![12,13,14].includes(last2)) return "курса";
       return "курсов";
@@ -653,10 +602,10 @@
 
     function findValue(row, names){
       const nNames = names.map(normalize);
-      for (const [key, value] of Object.entries(row)) {
+      for(const [key, value] of Object.entries(row)){
         if(nNames.includes(normalize(key))) return value;
       }
-      for (const [key, value] of Object.entries(row)) {
+      for(const [key, value] of Object.entries(row)){
         const nk = normalize(key);
         if(nNames.some(name => nk.includes(name) || name.includes(nk))) return value;
       }
@@ -667,8 +616,7 @@
       return new Promise((resolve, reject) => {
         const callbackName = "__cadSheetCallback_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
         const timeout = setTimeout(() => {
-          cleanup();
-          reject(new Error("Google Sheet loading timeout"));
+          cleanup(); reject(new Error("Google Sheet loading timeout"));
         }, 12000);
 
         function cleanup(){
@@ -690,10 +638,7 @@
         const tqx = encodeURIComponent(`responseHandler:${callbackName};out:json`);
         const tq = encodeURIComponent("select *");
         script.src = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?gid=${CONFIG.SHEET_GID}&tqx=${tqx}&tq=${tq}`;
-        script.onerror = () => {
-          cleanup();
-          reject(new Error("Google Sheet script loading failed"));
-        };
+        script.onerror = () => { cleanup(); reject(new Error("Google Sheet script loading failed")); };
         document.body.appendChild(script);
       });
     }
@@ -702,19 +647,13 @@
       const table = response?.table;
       if(!table?.cols?.length || !table?.rows?.length) return [];
 
-      const headers = table.cols.map((col, index) => {
-        const label = String(col.label || col.id || "").trim();
-        return label || `Колонка ${index + 1}`;
-      });
-
+      const headers = table.cols.map((col, index) => String(col.label || col.id || "").trim() || `Колонка ${index+1}`);
       const result = [];
       let lastCategory = "";
 
       for(const row of table.rows){
         const obj = {};
-        headers.forEach((header, index) => {
-          obj[header] = cellValue(row.c?.[index]);
-        });
+        headers.forEach((header, index) => obj[header] = cellValue(row.c?.[index]));
 
         const rawCategory = findValue(obj, ["Категория", "Category"]);
         const category = rawCategory || lastCategory;
@@ -725,7 +664,6 @@
         const price = findValue(obj, ["Цена", "Price"]);
         const buttonText = findValue(obj, ["Текст кнопки", "Кнопка", "Button"]);
         const meaningful = title || link || (category && price && price !== "0");
-
         if(!meaningful) continue;
         if(!title && !link) continue;
 
@@ -741,7 +679,6 @@
           buttonText: buttonText || "Оформить доступ"
         });
       }
-
       return result;
     }
 
@@ -756,51 +693,91 @@
     function visualForCategory(category){
       const n = normalize(category);
       const found = visuals.find(v => v.match.some(m => n.includes(normalize(m))));
-      return found || { short:"CAD", title:category || "Курсы", note:"Раздел", grad:"linear-gradient(135deg,#06b6d4,#7c3aed)", glow:"rgba(124,58,237,.22)" };
+      return found || { title:category || "Курсы", note:"Раздел", grad:"linear-gradient(135deg,#22d3ee,#8b5cf6)", glow:"rgba(139,92,246,.22)", icon:"all" };
     }
 
-    async function initData(){
-      try{
-        const response = await loadGoogleSheet();
-        const parsed = parseGoogleTable(response);
-        if(!parsed.length) throw new Error("Пустая таблица");
-        allCourses = parsed;
-        updateSync("ok", "Каталог подключён");
-      } catch (error) {
-        console.error(error);
-        allCourses = fallbackCourses;
-        updateSync("bad", "Резервные данные");
-        showToast("Не удалось загрузить таблицу. Проверь доступ по ссылке.");
-      }
-
-      categories = ["Все", ...Array.from(new Set(allCourses.map(c => c.category).filter(Boolean)))];
-      renderCategoryCards();
-      renderChips();
-      renderCourses();
-      renderTariffs();
+    function categoryMatches(course, selected){
+      if(selected === "Все") return true;
+      const c = normalize(course.category);
+      const s = normalize(selected);
+      return c === s || c.includes(s) || s.includes(c);
     }
 
-    function renderCategoryCards(){
-      const grid = document.getElementById("categoryGrid");
+    function searchMatches(course, query){
+      if(!query) return true;
+      const haystack = [course.category, course.title, course.lessons, course.duration, course.author, course.tariff, course.price].join(" ");
+      return normalize(haystack).includes(normalize(query));
+    }
+
+    function filteredCourses(){
+      const query = document.getElementById("searchInput").value.trim();
+      return allCourses.filter(course => categoryMatches(course, activeCategory) && searchMatches(course, query));
+    }
+
+    function setCategory(category){
+      activeCategory = category;
+      renderAll();
+      document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function clearSearch(){
+      document.getElementById("searchInput").value = "";
+      renderAll();
+    }
+
+    function renderQuickChips(){
+      const wrap = document.getElementById("quickChips");
+      const preferred = ["Revit","AutoCAD","3ds Max","ArchiCAD","Нейросети","SketchUp"];
+      wrap.innerHTML = preferred.map(item => `<button class="qchip" onclick="applyQuick('${escapeAttr(item)}')">${escapeHtml(item)}</button>`).join("");
+    }
+
+    function applyQuick(text){
+      document.getElementById("searchInput").value = text;
+      activeCategory = "Все";
+      renderAll();
+      document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function renderVisualGrid(){
+      const grid = document.getElementById("visualGrid");
       const summary = document.getElementById("categorySummary");
-
       const items = categories.map(cat => {
-        const count = cat === "Все"
-          ? allCourses.length
-          : allCourses.filter(item => categoryMatches(item, cat)).length;
-
+        const count = cat === "Все" ? allCourses.length : allCourses.filter(item => categoryMatches(item, cat)).length;
         return { name:cat, count, visual:visualForCategory(cat) };
       });
 
-      summary.textContent = `${categories.length - 1} разделов`;
+      summary.textContent = `${categories.length - 1} категорий · нажми на иконку, чтобы отфильтровать`;
 
       grid.innerHTML = items.map(item => `
-        <article class="category-card ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
+        <article class="visual-card ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
                  style="--grad:${item.visual.grad};--glow:${item.visual.glow}"
                  onclick="setCategory('${escapeAttr(item.name)}')">
-          <div class="program-icon">${escapeHtml(item.visual.short)}</div>
-          <h4>${escapeHtml(item.visual.title === "Все" ? "Все курсы" : item.name)}</h4>
-          <p>${item.count} ${wordCourses(item.count)}</p>
+          <div class="vicon">${iconSVG(item.visual.icon)}</div>
+          <h4>${escapeHtml(item.name === "Все" ? "Все курсы" : item.name)}</h4>
+          <p>${escapeHtml(item.visual.note)}</p>
+          <div class="vcount">${item.count}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderCategoryList(){
+      const list = document.getElementById("categoryList");
+      const items = categories.map(cat => {
+        const count = cat === "Все" ? allCourses.length : allCourses.filter(item => categoryMatches(item, cat)).length;
+        return { name:cat, count, visual:visualForCategory(cat) };
+      });
+
+      list.innerHTML = items.map(item => `
+        <article class="category-item ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
+                 onclick="setCategory('${escapeAttr(item.name)}')">
+          <div class="category-left">
+            <div class="mini-icon" style="--grad:${item.visual.grad}">${iconSVG(item.visual.icon)}</div>
+            <div class="category-copy">
+              <h4>${escapeHtml(item.name === "Все" ? "Все курсы" : item.name)}</h4>
+              <p>${escapeHtml(item.visual.note)}</p>
+            </div>
+          </div>
+          <div class="category-count">${item.count}</div>
         </article>
       `).join("");
     }
@@ -814,38 +791,6 @@
       `).join("");
     }
 
-    function categoryMatches(course, selected){
-      if(selected === "Все") return true;
-      const c = normalize(course.category);
-      const s = normalize(selected);
-      return c === s || c.includes(s) || s.includes(c);
-    }
-
-    function searchMatches(course, query){
-      if(!query) return true;
-      const haystack = [
-        course.category, course.title, course.lessons, course.duration, course.author, course.tariff, course.price
-      ].join(" ");
-      return normalize(haystack).includes(normalize(query));
-    }
-
-    function filteredCourses(){
-      const query = document.getElementById("searchInput").value.trim();
-      return allCourses.filter(course => categoryMatches(course, activeCategory) && searchMatches(course, query));
-    }
-
-    function setCategory(category){
-      activeCategory = category;
-      renderCategoryCards();
-      renderChips();
-      renderCourses();
-    }
-
-    function clearSearch(){
-      document.getElementById("searchInput").value = "";
-      renderCourses();
-    }
-
     function renderCourses(){
       const query = document.getElementById("searchInput").value.trim();
       document.getElementById("clearSearch").classList.toggle("show", !!query);
@@ -853,7 +798,6 @@
       const items = filteredCourses();
       const list = document.getElementById("courseList");
       const empty = document.getElementById("emptyState");
-
       document.getElementById("countLabel").textContent = `${items.length} ${wordCourses(items.length)}`;
 
       if(!items.length){
@@ -861,7 +805,6 @@
         empty.style.display = "block";
         return;
       }
-
       empty.style.display = "none";
 
       list.innerHTML = items.map(course => {
@@ -877,15 +820,11 @@
             <div class="course-top">
               <div>
                 <h4 class="course-title">${escapeHtml(course.title)}</h4>
-                <div class="meta">
-                  ${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}
-                </div>
+                <div class="meta">${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
               </div>
               ${price ? `<span class="price">${escapeHtml(price)}</span>` : ""}
             </div>
-
             ${course.tariff ? `<p class="course-text">${escapeHtml(course.tariff)}</p>` : ""}
-
             <div class="course-actions">
               <button class="btn primary" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
                 ${escapeHtml(course.buttonText || "Оформить доступ")}
@@ -899,10 +838,7 @@
     function renderTariffs(category = ""){
       const target = document.getElementById("tariffContainer");
       let items = allCourses;
-
-      if(category){
-        items = allCourses.filter(course => categoryMatches(course, category));
-      }
+      if(category) items = allCourses.filter(course => categoryMatches(course, category));
 
       if(!items.length){
         target.innerHTML = `<div class="loading">Нет данных для отображения.</div>`;
@@ -926,9 +862,7 @@
                   ${price ? `<div class="mprice">${escapeHtml(price)}</div>` : ""}
                 </div>
                 ${course.tariff ? `<p>${escapeHtml(course.tariff)}</p>` : ""}
-                <div class="meta">
-                  ${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}
-                </div>
+                <div class="meta">${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
                 <button class="modal-btn" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
                   ${escapeHtml(course.buttonText || "Оформить доступ")}
                 </button>
@@ -949,6 +883,33 @@
     function closeTariffsModal(){
       document.getElementById("backdrop").classList.remove("show");
       document.getElementById("tariffsModal").classList.remove("show");
+    }
+
+    function renderAll(){
+      renderVisualGrid();
+      renderCategoryList();
+      renderChips();
+      renderCourses();
+    }
+
+    async function initData(){
+      renderQuickChips();
+      try{
+        const response = await loadGoogleSheet();
+        const parsed = parseGoogleTable(response);
+        if(!parsed.length) throw new Error("Пустая таблица");
+        allCourses = parsed;
+        updateSync("ok", "Каталог подключён");
+      }catch(error){
+        console.error(error);
+        allCourses = fallbackCourses;
+        updateSync("bad", "Резервные данные");
+        showToast("Не удалось загрузить таблицу. Проверь доступ по ссылке.");
+      }
+
+      categories = ["Все", ...Array.from(new Set(allCourses.map(c => c.category).filter(Boolean)))];
+      renderAll();
+      renderTariffs();
     }
 
     document.addEventListener("keydown", (e) => {
