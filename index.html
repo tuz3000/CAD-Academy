@@ -57,11 +57,6 @@
       letter-spacing: -.04em;
     }
 
-    h3 {
-      margin: 18px 0 10px;
-      font-size: 17px;
-    }
-
     .subtitle {
       color: #b8bccb;
       font-size: 14px;
@@ -190,8 +185,7 @@
     }
 
     .section-card:active,
-    .cat-card:active,
-    .tariff:active,
+    .course-card:active,
     .bot-action:active,
     .buy:active,
     .support:active {
@@ -236,6 +230,56 @@
       font-size: 13px;
       line-height: 1.38;
       margin-bottom: 10px;
+    }
+
+    .preview-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 7px;
+      margin: 12px 0 10px;
+    }
+
+    .preview-label {
+      color: rgba(255,255,255,.55);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .preview-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.07);
+      color: #eef0f7;
+      font-size: 13px;
+      line-height: 1.32;
+    }
+
+    .preview-item:before {
+      content: "›";
+      color: #7dd3fc;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .preview-item small {
+      display: block;
+      color: #aeb3c3;
+      font-size: 12px;
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+
+    .preview-more {
+      color: #aeb3c3;
+      font-size: 12px;
+      padding-left: 2px;
     }
 
     .stats {
@@ -292,7 +336,7 @@
       font-size: 27px;
     }
 
-    .cat-card {
+    .course-card {
       padding: 15px;
       border-radius: 18px;
       background: rgba(255,255,255,.075);
@@ -300,27 +344,42 @@
       margin-bottom: 10px;
     }
 
-    .cat-head {
+    .course-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
     }
 
-    .cat-title {
+    .course-title {
       font-size: 16px;
       font-weight: 800;
       line-height: 1.2;
     }
 
-    .cat-desc {
+    .course-desc {
       color: #b8bccb;
       font-size: 13px;
       margin-top: 7px;
       line-height: 1.36;
     }
 
-    .count {
+    .material-name {
+      color: #fff;
+      font-size: 13px;
+      margin-top: 8px;
+      line-height: 1.35;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 13px;
+      padding: 9px 10px;
+    }
+
+    .material-name b {
+      color: #7dd3fc;
+    }
+
+    .price {
       font-size: 12px;
       color: #7dd3fc;
       white-space: nowrap;
@@ -342,40 +401,6 @@
       bottom: 10px;
       margin-top: 22px;
       z-index: 5;
-    }
-
-    .tariffs {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .tariff {
-      text-decoration: none;
-      color: #fff;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-    }
-
-    .price {
-      color: #7dd3fc;
-      font-weight: 900;
-      font-size: 17px;
-      white-space: nowrap;
-    }
-
-    .small {
-      color:#aeb3c3;
-      font-size:12px;
-      margin-top:4px;
-      line-height: 1.25;
     }
 
     .loading {
@@ -424,7 +449,7 @@
       <h1>📐 CAD Академия</h1>
       <div class="subtitle">
         Обучающие видеокурсы для архитекторов, дизайнеров, инженеров и строителей.
-        Посмотри направления и примеры курсов перед оформлением доступа.
+        В карточках ниже показаны категории, разделы и названия материалов из таблицы.
       </div>
 
       <div class="quick-panel">
@@ -443,12 +468,12 @@
         <a class="support" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Написать в поддержку</a>
       </div>
 
-      <div class="section-label">📚 Посмотреть курсы внутри</div>
+      <div class="section-label">📚 Категории, разделы и материалы</div>
       <div class="section-note">
-        Ниже — разделы из твоей Google Таблицы. Нажми на раздел, чтобы увидеть примеры курсов.
+        Категория — это группа. Раздел и название материала показываются внутри карточки.
       </div>
 
-      <input class="search" placeholder="Поиск: Revit, AutoCAD, 3ds Max..." oninput="filterCards(this.value)" />
+      <input class="search" placeholder="Поиск: Revit, AutoCAD, название материала..." oninput="filterCards(this.value)" />
 
       <div id="sections">
         <div class="loading">Загружаю курсы из Google Таблицы...</div>
@@ -466,7 +491,7 @@
         </div>
         <div class="subtitle" id="sectionDesc">Курсы раздела</div>
         <div class="stats">
-          <span class="pill" id="sectionCount">0 курсов</span>
+          <span class="pill" id="sectionCount">0 материалов</span>
           <span class="pill">🔒 доступ после оплаты</span>
         </div>
       </div>
@@ -486,31 +511,6 @@
           <button class="bot-action" onclick="openBotCommand('status')">⭐ Моя подписка</button>
         </div>
       </div>
-    </div>
-
-    <div id="tariffs" class="screen">
-      <div class="back" onclick="openScreen(previousScreen || 'home')">← Назад</div>
-      <h1>Выберите доступ</h1>
-      <div class="subtitle">Тарифы и оплата открываются в боте CAD Академии.</div>
-
-      <div class="tariffs">
-        <div class="tariff" onclick="openBotCommand('plans')">
-          <div>
-            <b>📋 Тарифы и курсы</b>
-            <div class="small">Открыть список тарифов в боте</div>
-          </div>
-          <div class="price">Открыть</div>
-        </div>
-        <div class="tariff" onclick="openBotCommand('status')">
-          <div>
-            <b>⭐ Моя подписка</b>
-            <div class="small">Проверить активный доступ</div>
-          </div>
-          <div class="price">Проверить</div>
-        </div>
-      </div>
-
-      <a class="support" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Нужна помощь с оплатой?</a>
     </div>
 
   </div>
@@ -533,13 +533,11 @@
 
     let courses = [];
     let sections = [];
-    let currentSection = "";
-    let previousScreen = "home";
 
     const fallbackCourses = [
-      { category:"Revit курсы", title:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"" },
-      { category:"AutoCAD курсы", title:"AutoCAD: чертежи и оформление", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" },
-      { category:"3ds Max курсы", title:"3ds Max: моделирование и визуализация", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" }
+      { category:"Revit курсы", section:"Ландшафт в Revit", material:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"" },
+      { category:"AutoCAD курсы", section:"AutoCAD: чертежи и оформление", material:"AutoCAD: чертежи и оформление", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" },
+      { category:"3ds Max курсы", section:"3ds Max: моделирование и визуализация", material:"3ds Max: моделирование и визуализация", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" }
     ];
 
     function appIcon(type){
@@ -601,12 +599,12 @@
       return String(str || "").replaceAll("'","\\'");
     }
 
-    function wordCourses(n){
+    function wordItems(n){
       const last = n % 10;
       const last2 = n % 100;
-      if(last === 1 && last2 !== 11) return "курс";
-      if([2,3,4].includes(last) && ![12,13,14].includes(last2)) return "курса";
-      return "курсов";
+      if(last === 1 && last2 !== 11) return "материал";
+      if([2,3,4].includes(last) && ![12,13,14].includes(last2)) return "материала";
+      return "материалов";
     }
 
     function visualFor(section){
@@ -719,7 +717,8 @@
         const category = rawCategory || lastCategory;
         if(rawCategory) lastCategory = rawCategory;
 
-        const title = findValue(row, ["Раздел", "Курс", "Название", "Материал", "Title"]);
+        const section = findValue(row, ["Раздел", "Section"]);
+        const material = findValue(row, ["Название материала", "Материал", "Название", "Курс", "Title"]);
         const lessons = findValue(row, ["Кол-во уроков", "Количество уроков", "Уроков", "Lessons"]);
         const duration = findValue(row, ["Продолжительность", "Длительность", "Duration"]);
         const author = findValue(row, ["Автор", "Author"]);
@@ -728,20 +727,24 @@
         const link = findValue(row, ["Ссылка", "Link", "URL"]);
         const buttonText = findValue(row, ["Текст кнопки", "Кнопка", "Button"]);
 
-        const cleanTitle = String(title || "").trim();
-        const normalizedTitle = normalize(cleanTitle);
+        const cleanSection = String(section || material || "").trim();
+        const cleanMaterial = String(material || section || "").trim();
+        const norm = normalize(cleanMaterial || cleanSection);
 
         const isJunk =
-          !cleanTitle ||
-          cleanTitle === "0" ||
-          normalizedTitle === "оформить доступ" ||
+          (!cleanSection && !cleanMaterial) ||
+          cleanSection === "0" ||
+          cleanMaterial === "0" ||
+          norm === "оформить доступ" ||
           (!link && !price && !lessons && !duration && !author && !tariff);
 
         if(isJunk) continue;
 
         result.push({
           category: String(category || "Без категории").trim(),
-          title: cleanTitle,
+          section: cleanSection,
+          material: cleanMaterial,
+          title: cleanMaterial || cleanSection,
           lessons,
           duration,
           author,
@@ -769,6 +772,31 @@
       }));
     }
 
+    function previewHtml(section){
+      const visible = section.items.slice(0, 4);
+      const hidden = Math.max(0, section.items.length - visible.length);
+
+      return `
+        <div class="preview-list">
+          <div class="preview-label">Разделы и названия материалов</div>
+          ${visible.map(course => {
+            const sectionName = course.section || course.title;
+            const materialName = course.material || course.title;
+            const same = normalize(sectionName) === normalize(materialName);
+            return `
+              <div class="preview-item">
+                <span>
+                  ${escapeHtml(sectionName)}
+                  ${!same ? `<small>${escapeHtml(materialName)}</small>` : ""}
+                </span>
+              </div>
+            `;
+          }).join("")}
+          ${hidden ? `<div class="preview-more">+ ещё ${hidden} ${wordItems(hidden)}</div>` : ""}
+        </div>
+      `;
+    }
+
     function renderHomeSections(list = sections){
       const root = document.getElementById("sections");
 
@@ -784,8 +812,9 @@
             <span>${escapeHtml(section.title)}</span>
           </div>
           <div class="section-desc">${escapeHtml(section.visual.desc)}</div>
+          ${previewHtml(section)}
           <div class="stats">
-            <span class="pill">${section.items.length} ${wordCourses(section.items.length)}</span>
+            <span class="pill">${section.items.length} ${wordItems(section.items.length)}</span>
             <span class="pill">🔒 доступ после оплаты</span>
           </div>
         </div>
@@ -803,7 +832,7 @@
         const haystack = [
           section.title,
           section.visual.desc,
-          ...section.items.map(item => [item.title, item.author, item.tariff].join(" "))
+          ...section.items.map(item => [item.section, item.material, item.title, item.author, item.tariff].join(" "))
         ].join(" ");
         return normalize(haystack).includes(q);
       });
@@ -812,23 +841,29 @@
     }
 
     function courseExamples(section){
-      return section.items.slice(0, 20).map(course => {
+      return section.items.slice(0, 50).map(course => {
         const meta = [];
         if(course.lessons && course.lessons !== "0") meta.push(course.lessons + " уроков");
         if(course.duration) meta.push(course.duration);
         if(course.author) meta.push(course.author);
         const price = priceText(course.price);
+        const sectionName = course.section || course.title;
+        const materialName = course.material || course.title;
+        const same = normalize(sectionName) === normalize(materialName);
 
         return `
-          <div class="cat-card">
-            <div class="cat-head">
+          <div class="course-card">
+            <div class="course-head">
               <div>
-                <div class="cat-title">${escapeHtml(course.title)}</div>
-                <div class="cat-desc">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеокурс из библиотеки CAD Академии"}</div>
+                <div class="course-title">${escapeHtml(sectionName)}</div>
+                <div class="course-desc">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
               </div>
-              ${price ? `<div class="count">${escapeHtml(price)}</div>` : ""}
+              ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
             </div>
-            ${course.tariff ? `<div class="cat-desc">${escapeHtml(course.tariff)}</div>` : ""}
+
+            ${!same ? `<div class="material-name"><b>Название материала:</b><br>${escapeHtml(materialName)}</div>` : ""}
+
+            ${course.tariff ? `<div class="course-desc">${escapeHtml(course.tariff)}</div>` : ""}
           </div>
         `;
       }).join("");
@@ -838,14 +873,13 @@
       const section = sections.find(item => item.title === title);
       if(!section) return;
 
-      currentSection = title;
       const hero = document.getElementById("sectionHero");
       hero.style.setProperty("--heroGlow", section.visual.glow);
 
       document.getElementById("sectionIcon").innerHTML = appIcon(section.visual.icon);
       document.getElementById("sectionTitle").textContent = section.title;
       document.getElementById("sectionDesc").textContent = section.visual.desc;
-      document.getElementById("sectionCount").textContent = section.items.length + " " + wordCourses(section.items.length);
+      document.getElementById("sectionCount").textContent = section.items.length + " " + wordItems(section.items.length);
       document.getElementById("courseList").innerHTML = courseExamples(section);
 
       openScreen("section");
