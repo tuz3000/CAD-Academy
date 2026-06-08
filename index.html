@@ -3,29 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CAD Академия Mini App</title>
+  <title>CAD Академия</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+    :root {
+      --bg: #0f1117;
+      --panel: rgba(255,255,255,.075);
+      --panel2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.12);
+      --stroke2: rgba(255,255,255,.17);
+      --text: #ffffff;
+      --muted: #b8bccb;
+      --muted2: #8f95a8;
+      --accent1: #7dd3fc;
+      --accent2: #a78bfa;
+      --shadow: 0 14px 34px rgba(0,0,0,.24);
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background: #0f1117;
-      color: #fff;
+      color: var(--text);
     }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
 
     .app {
       width: 100%;
       max-width: 430px;
       margin: 0 auto;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at top right, rgba(125,211,252,.18), transparent 34%),
-        radial-gradient(circle at 0% 20%, rgba(167,139,250,.16), transparent 30%),
-        linear-gradient(180deg, #171923 0%, #0f1117 55%, #090a0f 100%);
       padding: 18px;
+      background:
+        radial-gradient(circle at top right, rgba(125,211,252,.20), transparent 34%),
+        radial-gradient(circle at 0% 18%, rgba(167,139,250,.18), transparent 30%),
+        linear-gradient(180deg, #171923 0%, #0f1117 55%, #090a0f 100%);
     }
 
     .screen { display: none; }
@@ -35,113 +52,160 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
       gap: 8px;
+      margin-bottom: 18px;
     }
 
     .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid var(--stroke);
       border-radius: 999px;
       padding: 7px 11px;
-      font-size: 12px;
       color: #ddd;
+      font-size: 12px;
       text-decoration: none;
       white-space: nowrap;
     }
 
+    .hero {
+      border-radius: 28px;
+      padding: 20px;
+      background:
+        radial-gradient(circle at top right, rgba(125,211,252,.22), transparent 42%),
+        linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.055));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: -55px;
+      bottom: -70px;
+      width: 145px;
+      height: 145px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(167,139,250,.28), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
     h1 {
-      font-size: 30px;
-      line-height: 1.05;
-      margin: 10px 0 8px;
-      letter-spacing: -.04em;
+      font-size: 31px;
+      line-height: 1.03;
+      letter-spacing: -.045em;
+      margin: 0 0 10px;
     }
 
     .subtitle {
-      color: #b8bccb;
+      color: var(--muted);
       font-size: 14px;
       line-height: 1.45;
-      margin-bottom: 18px;
+      margin: 0 0 16px;
     }
 
-    .quick-panel {
-      background: rgba(255,255,255,.075);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      padding: 16px;
-      margin: 16px 0 18px;
-      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
 
-    .quick-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 6px;
+    .hero-tag {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      color: #e7e9f3;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .quick-desc {
-      color: #b8bccb;
-      font-size: 13px;
-      line-height: 1.35;
-      margin-bottom: 12px;
-    }
-
-    .buy {
+    .main-btn {
       width: 100%;
       border: 0;
-      background: linear-gradient(135deg, #7dd3fc, #a78bfa);
-      color: #08111f;
-      font-weight: 900;
       border-radius: 18px;
       padding: 16px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: #07111f;
+      font-weight: 900;
       font-size: 16px;
       cursor: pointer;
       box-shadow: 0 10px 35px rgba(125,211,252,.20);
     }
 
-    .support {
-      width: 100%;
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      color: #fff;
-      font-weight: 700;
-      border-radius: 18px;
-      padding: 14px;
-      font-size: 15px;
-    }
-
-    .bot-actions {
+    .secondary-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 10px;
     }
 
-    .bot-action {
+    .small-btn {
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
+      background: rgba(255,255,255,.075);
       color: #fff;
-      font-weight: 700;
       border-radius: 16px;
       padding: 13px 10px;
       font-size: 14px;
-      text-align: center;
+      font-weight: 800;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
     }
 
-    .section-label {
-      margin: 20px 0 10px;
-      font-size: 16px;
+    .support-btn {
+      width: 100%;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.075);
+      color: #fff;
       font-weight: 800;
+      border-radius: 18px;
+      padding: 14px;
+      font-size: 15px;
+    }
+
+    .main-btn:active,
+    .small-btn:active,
+    .support-btn:active,
+    .direction-card:active,
+    .material-card:active {
+      transform: scale(.985);
+    }
+
+    .section-title-row {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 20px 0 10px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
       color: #fff;
     }
 
+    .section-counter {
+      color: var(--muted2);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
     .section-note {
-      color: #aeb3c3;
+      color: var(--muted);
       font-size: 13px;
       line-height: 1.35;
       margin-bottom: 12px;
@@ -149,64 +213,58 @@
 
     .search {
       width: 100%;
+      margin: 0 0 14px;
       padding: 14px 16px;
-      border: 1px solid rgba(255,255,255,.12);
       border-radius: 16px;
-      background: rgba(255,255,255,.07);
-      color: white;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.075);
+      color: #fff;
       outline: none;
-      margin-bottom: 16px;
       font-size: 15px;
     }
 
-    .search::placeholder { color: rgba(255,255,255,.45); }
+    .search::placeholder { color: rgba(255,255,255,.42); }
 
-    .section-card {
-      border-radius: 22px;
-      padding: 18px;
+    .directions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .direction-card {
+      border-radius: 23px;
+      padding: 16px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.12);
       cursor: pointer;
-      transition: .18s;
-      margin-bottom: 12px;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 10px 26px rgba(0,0,0,.16);
     }
 
-    .section-card:before {
+    .direction-card:before {
       content: "";
       position: absolute;
-      right: -38px;
-      top: -38px;
-      width: 105px;
-      height: 105px;
+      right: -42px;
+      top: -42px;
+      width: 120px;
+      height: 120px;
       border-radius: 999px;
       background: var(--glow, rgba(125,211,252,.16));
+      pointer-events: none;
     }
 
-    .section-card:active,
-    .course-card:active,
-    .bot-action:active,
-    .buy:active,
-    .support:active {
-      transform: scale(.985);
-    }
-
-    .section-title {
+    .direction-head {
       position: relative;
       z-index: 1;
       display: flex;
       align-items: center;
-      gap: 11px;
-      font-size: 21px;
-      font-weight: 800;
-      margin-bottom: 6px;
-      letter-spacing: -.03em;
+      gap: 12px;
+      margin-bottom: 9px;
     }
 
     .program-icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 16px;
       display: grid;
       place-items: center;
@@ -223,25 +281,33 @@
       display: block;
     }
 
-    .section-desc {
+    .direction-name {
+      min-width: 0;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+    }
+
+    .direction-desc {
       position: relative;
       z-index: 1;
       color: #c4c7d4;
       font-size: 13px;
       line-height: 1.38;
-      margin-bottom: 10px;
+      margin-bottom: 11px;
     }
 
-    .preview-list {
+    .preview {
       position: relative;
       z-index: 1;
       display: grid;
       gap: 7px;
-      margin: 12px 0 10px;
+      margin-bottom: 10px;
     }
 
     .preview-label {
-      color: rgba(255,255,255,.55);
+      color: rgba(255,255,255,.52);
       font-size: 11px;
       font-weight: 900;
       text-transform: uppercase;
@@ -263,7 +329,7 @@
 
     .preview-item:before {
       content: "›";
-      color: #7dd3fc;
+      color: var(--accent1);
       font-weight: 900;
       flex: 0 0 auto;
     }
@@ -282,7 +348,7 @@
       padding-left: 2px;
     }
 
-    .stats {
+    .pills {
       position: relative;
       z-index: 1;
       display: flex;
@@ -309,55 +375,59 @@
       font-size: 14px;
     }
 
-    .hero {
+    .direction-hero {
       border-radius: 24px;
-      padding: 20px;
+      padding: 18px;
       margin-bottom: 16px;
       background:
         radial-gradient(circle at top right, var(--heroGlow, rgba(125,211,252,.28)), rgba(255,255,255,.07) 45%);
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid var(--stroke);
     }
 
-    .hero-title-row {
+    .direction-hero-head {
       display: flex;
       gap: 12px;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .hero .program-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+    .direction-hero .program-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 19px;
     }
 
-    .hero h1 {
+    .direction-hero h1 {
       margin: 0;
       font-size: 27px;
     }
 
-    .course-card {
+    .materials {
+      display: grid;
+      gap: 10px;
+    }
+
+    .material-card {
       padding: 15px;
       border-radius: 18px;
       background: rgba(255,255,255,.075);
       border: 1px solid rgba(255,255,255,.10);
-      margin-bottom: 10px;
     }
 
-    .course-head {
+    .material-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
     }
 
-    .course-title {
+    .material-section {
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.2;
     }
 
-    .course-desc {
+    .material-meta {
       color: #b8bccb;
       font-size: 13px;
       margin-top: 7px;
@@ -375,15 +445,13 @@
       padding: 9px 10px;
     }
 
-    .material-name b {
-      color: #7dd3fc;
-    }
+    .material-name b { color: var(--accent1); }
 
     .price {
       font-size: 12px;
-      color: #7dd3fc;
+      color: var(--accent1);
       white-space: nowrap;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .locked {
@@ -399,26 +467,20 @@
     .bottom {
       position: sticky;
       bottom: 10px;
-      margin-top: 22px;
+      margin-top: 20px;
       z-index: 5;
     }
 
-    .loading {
-      color: #b8bccb;
+    .loading, .empty {
+      color: var(--muted);
       background: rgba(255,255,255,.07);
       border-radius: 16px;
       padding: 14px;
       font-size: 14px;
+      line-height: 1.4;
     }
 
-    .empty {
-      display: none;
-      color: #b8bccb;
-      background: rgba(255,255,255,.07);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 14px;
-    }
+    .empty { display: none; }
 
     .footer {
       color: rgba(255,255,255,.35);
@@ -431,8 +493,8 @@
     @media (max-width: 380px) {
       .app { padding: 15px; }
       h1 { font-size: 27px; }
-      .section-title { font-size: 19px; }
-      .program-icon { width: 44px; height: 44px; }
+      .direction-name { font-size: 18px; }
+      .program-icon { width: 46px; height: 46px; }
     }
   </style>
 </head>
@@ -446,69 +508,78 @@
         <a class="badge" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">Поддержка</a>
       </div>
 
-      <h1>📐 CAD Академия</h1>
-      <div class="subtitle">
-        Обучающие видеокурсы для архитекторов, дизайнеров, инженеров и строителей.
-        В карточках ниже показаны категории, разделы и названия материалов из таблицы.
+      <section class="hero">
+        <div class="hero-content">
+          <h1>📐 CAD Академия</h1>
+          <p class="subtitle">
+            Видеокурсы для архитекторов, дизайнеров, инженеров и строителей.
+            Выбери направление и посмотри, какие материалы есть внутри.
+          </p>
+
+          <div class="hero-tags">
+            <span class="hero-tag">Revit</span>
+            <span class="hero-tag">AutoCAD</span>
+            <span class="hero-tag">3ds Max</span>
+            <span class="hero-tag">ArchiCAD</span>
+          </div>
+
+          <button class="main-btn" onclick="openBotCommand('plans')">🔓 Получить доступ</button>
+
+          <div class="secondary-actions">
+            <button class="small-btn" onclick="openBotCommand('plans')">📋 Тарифы</button>
+            <button class="small-btn" onclick="openBotCommand('status')">⭐ Моя подписка</button>
+          </div>
+
+          <a class="support-btn" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Написать в поддержку</a>
+        </div>
+      </section>
+
+      <div class="section-title-row">
+        <div class="section-title">📚 Направления и материалы</div>
+        <div class="section-counter" id="homeCounter">Загрузка…</div>
       </div>
 
-      <div class="quick-panel">
-        <div class="quick-title">🚀 Быстрые действия</div>
-        <div class="quick-desc">
-          Если хочешь купить доступ — нажми первую кнопку. Если доступ уже есть — проверь подписку.
-        </div>
-
-        <button class="buy" onclick="openBotCommand('plans')">🔓 Получить доступ</button>
-
-        <div class="bot-actions">
-          <button class="bot-action" onclick="openBotCommand('plans')">📋 Тарифы</button>
-          <button class="bot-action" onclick="openBotCommand('status')">⭐ Моя подписка</button>
-        </div>
-
-        <a class="support" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Написать в поддержку</a>
-      </div>
-
-      <div class="section-label">📚 Категории, разделы и материалы</div>
       <div class="section-note">
-        Категория — это группа. Раздел и название материала показываются внутри карточки.
+        В карточках показаны категории, разделы и названия материалов из каталога.
       </div>
 
       <input class="search" placeholder="Поиск: Revit, AutoCAD, название материала..." oninput="filterCards(this.value)" />
 
-      <div id="sections">
+      <div id="directions" class="directions">
         <div class="loading">Загружаю курсы из Google Таблицы...</div>
       </div>
 
       <div class="footer">CAD Академия · каталог курсов в Telegram</div>
     </div>
 
-    <div id="section" class="screen">
+    <div id="direction" class="screen">
       <div class="back" onclick="openScreen('home')">← Назад</div>
-      <div class="hero" id="sectionHero">
-        <div class="hero-title-row">
-          <div class="program-icon" id="sectionIcon"></div>
-          <h1 id="sectionTitle">Раздел</h1>
+
+      <section class="direction-hero" id="directionHero">
+        <div class="direction-hero-head">
+          <div class="program-icon" id="directionIcon"></div>
+          <h1 id="directionTitle">Направление</h1>
         </div>
-        <div class="subtitle" id="sectionDesc">Курсы раздела</div>
-        <div class="stats">
-          <span class="pill" id="sectionCount">0 материалов</span>
+        <p class="subtitle" id="directionDesc">Материалы направления</p>
+        <div class="pills">
+          <span class="pill" id="directionCount">0 материалов</span>
           <span class="pill">🔒 доступ после оплаты</span>
         </div>
-      </div>
+      </section>
 
-      <div id="courseList"></div>
+      <div id="materialList" class="materials"></div>
 
       <div class="locked">
-        Это презентационный каталог. Сами видеоуроки находятся внутри закрытой Telegram-библиотеки.
+        Это витрина каталога. Сами видеоуроки находятся внутри закрытой Telegram-библиотеки.
         После оплаты ты получишь доступ к материалам, навигации и поиску по курсам.
       </div>
 
       <div class="bottom">
-        <button class="buy" onclick="openBotCommand('plans')">🔓 Оформить доступ</button>
-        <a class="support" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Поддержка</a>
-        <div class="bot-actions">
-          <button class="bot-action" onclick="openBotCommand('plans')">📋 Тарифы</button>
-          <button class="bot-action" onclick="openBotCommand('status')">⭐ Моя подписка</button>
+        <button class="main-btn" onclick="openBotCommand('plans')">🔓 Оформить доступ</button>
+        <a class="support-btn" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Поддержка</a>
+        <div class="secondary-actions">
+          <button class="small-btn" onclick="openBotCommand('plans')">📋 Тарифы</button>
+          <button class="small-btn" onclick="openBotCommand('status')">⭐ Моя подписка</button>
         </div>
       </div>
     </div>
@@ -532,7 +603,7 @@
     const BOT_URL = "https://t.me/CAD_Academy_bot";
 
     let courses = [];
-    let sections = [];
+    let directions = [];
 
     const fallbackCourses = [
       { category:"Revit курсы", section:"Ландшафт в Revit", material:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"" },
@@ -560,7 +631,7 @@
       return icons[type] || icons.cad;
     }
 
-    const sectionVisuals = [
+    const directionVisuals = [
       { match:["шаблон","template"], icon:"revitTemplate", desc:"Готовые шаблоны, стандарты и ускорение работы в Revit.", glow:"rgba(125,211,252,.22)" },
       { match:["семейств"], icon:"revitFamily", desc:"Семейства, параметры, библиотеки и элементы Revit.", glow:"rgba(34,211,238,.20)" },
       { match:["revit"], icon:"revit", desc:"BIM-проектирование, шаблоны, семейства и рабочая документация.", glow:"rgba(125,211,252,.22)" },
@@ -607,9 +678,9 @@
       return "материалов";
     }
 
-    function visualFor(section){
-      const n = normalize(section);
-      return sectionVisuals.find(item => item.match.some(m => n.includes(normalize(m)))) || {
+    function visualFor(name){
+      const n = normalize(name);
+      return directionVisuals.find(item => item.match.some(m => n.includes(normalize(m)))) || {
         icon:"cad",
         desc:"Обучающие материалы и видеокурсы внутри библиотеки CAD Академии.",
         glow:"rgba(125,211,252,.20)"
@@ -758,30 +829,30 @@
       return result;
     }
 
-    function buildSections(){
+    function buildDirections(){
       const grouped = {};
       courses.forEach(course => {
         if(!grouped[course.category]) grouped[course.category] = [];
         grouped[course.category].push(course);
       });
 
-      sections = Object.entries(grouped).map(([title, items]) => ({
+      directions = Object.entries(grouped).map(([title, items]) => ({
         title,
         items,
         visual: visualFor(title)
       }));
     }
 
-    function previewHtml(section){
-      const visible = section.items.slice(0, 4);
-      const hidden = Math.max(0, section.items.length - visible.length);
+    function previewHtml(direction){
+      const visible = direction.items.slice(0, 3);
+      const hidden = Math.max(0, direction.items.length - visible.length);
 
       return `
-        <div class="preview-list">
-          <div class="preview-label">Разделы и названия материалов</div>
-          ${visible.map(course => {
-            const sectionName = course.section || course.title;
-            const materialName = course.material || course.title;
+        <div class="preview">
+          <div class="preview-label">Что внутри</div>
+          ${visible.map(item => {
+            const sectionName = item.section || item.title;
+            const materialName = item.material || item.title;
             const same = normalize(sectionName) === normalize(materialName);
             return `
               <div class="preview-item">
@@ -797,92 +868,94 @@
       `;
     }
 
-    function renderHomeSections(list = sections){
-      const root = document.getElementById("sections");
+    function renderDirections(list = directions){
+      const root = document.getElementById("directions");
+      const counter = document.getElementById("homeCounter");
+
+      counter.textContent = `${directions.length} направлений · ${courses.length} ${wordItems(courses.length)}`;
 
       if(!list.length){
         root.innerHTML = '<div class="empty" style="display:block">Ничего не найдено. Попробуй: Revit, AutoCAD, 3ds Max.</div>';
         return;
       }
 
-      root.innerHTML = list.map(section => `
-        <div class="section-card searchable" style="--glow:${section.visual.glow}" onclick="openSection('${escapeAttr(section.title)}')">
-          <div class="section-title">
-            <div class="program-icon">${appIcon(section.visual.icon)}</div>
-            <span>${escapeHtml(section.title)}</span>
+      root.innerHTML = list.map(direction => `
+        <article class="direction-card" style="--glow:${direction.visual.glow}" onclick="openDirection('${escapeAttr(direction.title)}')">
+          <div class="direction-head">
+            <div class="program-icon">${appIcon(direction.visual.icon)}</div>
+            <div class="direction-name">${escapeHtml(direction.title)}</div>
           </div>
-          <div class="section-desc">${escapeHtml(section.visual.desc)}</div>
-          ${previewHtml(section)}
-          <div class="stats">
-            <span class="pill">${section.items.length} ${wordItems(section.items.length)}</span>
+          <div class="direction-desc">${escapeHtml(direction.visual.desc)}</div>
+          ${previewHtml(direction)}
+          <div class="pills">
+            <span class="pill">${direction.items.length} ${wordItems(direction.items.length)}</span>
             <span class="pill">🔒 доступ после оплаты</span>
           </div>
-        </div>
+        </article>
       `).join("");
     }
 
     function filterCards(query){
       const q = normalize(query);
       if(!q){
-        renderHomeSections(sections);
+        renderDirections(directions);
         return;
       }
 
-      const filtered = sections.filter(section => {
+      const filtered = directions.filter(direction => {
         const haystack = [
-          section.title,
-          section.visual.desc,
-          ...section.items.map(item => [item.section, item.material, item.title, item.author, item.tariff].join(" "))
+          direction.title,
+          direction.visual.desc,
+          ...direction.items.map(item => [item.section, item.material, item.title, item.author, item.tariff].join(" "))
         ].join(" ");
         return normalize(haystack).includes(q);
       });
 
-      renderHomeSections(filtered);
+      renderDirections(filtered);
     }
 
-    function courseExamples(section){
-      return section.items.slice(0, 50).map(course => {
+    function renderMaterials(direction){
+      return direction.items.slice(0, 80).map(item => {
         const meta = [];
-        if(course.lessons && course.lessons !== "0") meta.push(course.lessons + " уроков");
-        if(course.duration) meta.push(course.duration);
-        if(course.author) meta.push(course.author);
-        const price = priceText(course.price);
-        const sectionName = course.section || course.title;
-        const materialName = course.material || course.title;
+        if(item.lessons && item.lessons !== "0") meta.push(item.lessons + " уроков");
+        if(item.duration) meta.push(item.duration);
+        if(item.author) meta.push(item.author);
+
+        const price = priceText(item.price);
+        const sectionName = item.section || item.title;
+        const materialName = item.material || item.title;
         const same = normalize(sectionName) === normalize(materialName);
 
         return `
-          <div class="course-card">
-            <div class="course-head">
+          <article class="material-card">
+            <div class="material-head">
               <div>
-                <div class="course-title">${escapeHtml(sectionName)}</div>
-                <div class="course-desc">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
+                <div class="material-section">${escapeHtml(sectionName)}</div>
+                <div class="material-meta">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
               </div>
               ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
             </div>
 
             ${!same ? `<div class="material-name"><b>Название материала:</b><br>${escapeHtml(materialName)}</div>` : ""}
 
-            ${course.tariff ? `<div class="course-desc">${escapeHtml(course.tariff)}</div>` : ""}
-          </div>
+            ${item.tariff ? `<div class="material-meta">${escapeHtml(item.tariff)}</div>` : ""}
+          </article>
         `;
       }).join("");
     }
 
-    function openSection(title){
-      const section = sections.find(item => item.title === title);
-      if(!section) return;
+    function openDirection(title){
+      const direction = directions.find(item => item.title === title);
+      if(!direction) return;
 
-      const hero = document.getElementById("sectionHero");
-      hero.style.setProperty("--heroGlow", section.visual.glow);
+      document.getElementById("directionHero").style.setProperty("--heroGlow", direction.visual.glow);
+      document.getElementById("directionIcon").innerHTML = appIcon(direction.visual.icon);
+      document.getElementById("directionTitle").textContent = direction.title;
+      document.getElementById("directionDesc").textContent = direction.visual.desc;
+      document.getElementById("directionCount").textContent = direction.items.length + " " + wordItems(direction.items.length);
+      document.getElementById("materialList").innerHTML = renderMaterials(direction);
 
-      document.getElementById("sectionIcon").innerHTML = appIcon(section.visual.icon);
-      document.getElementById("sectionTitle").textContent = section.title;
-      document.getElementById("sectionDesc").textContent = section.visual.desc;
-      document.getElementById("sectionCount").textContent = section.items.length + " " + wordItems(section.items.length);
-      document.getElementById("courseList").innerHTML = courseExamples(section);
-
-      openScreen("section");
+      openScreen("direction");
     }
 
     function openScreen(id){
@@ -913,8 +986,8 @@
         courses = fallbackCourses;
       }
 
-      buildSections();
-      renderHomeSections();
+      buildDirections();
+      renderDirections();
     }
 
     init();
