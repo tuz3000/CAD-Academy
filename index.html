@@ -9,520 +9,559 @@
   <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    :root {
-      --bg: #0f1117;
-      --panel: rgba(255,255,255,.075);
-      --panel2: rgba(255,255,255,.10);
-      --stroke: rgba(255,255,255,.12);
-      --stroke2: rgba(255,255,255,.17);
-      --text: #ffffff;
-      --muted: #b8bccb;
-      --muted2: #8f95a8;
-      --accent1: #7dd3fc;
-      --accent2: #a78bfa;
-      --shadow: 0 14px 34px rgba(0,0,0,.24);
+    :root{
+      --bg:#0f1117;
+      --card:rgba(255,255,255,.078);
+      --card2:rgba(255,255,255,.11);
+      --line:rgba(255,255,255,.12);
+      --line2:rgba(255,255,255,.18);
+      --text:#fff;
+      --muted:#b8bccb;
+      --muted2:#8f95a8;
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --success:#22c55e;
+      --shadow:0 14px 34px rgba(0,0,0,.24);
     }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: #0f1117;
-      color: var(--text);
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background:#0f1117;
+      color:var(--text);
     }
 
-    button, input { font: inherit; }
-    button { color: inherit; }
+    button,input{font:inherit}
+    button{color:inherit}
 
-    .app {
-      width: 100%;
-      max-width: 430px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding: 18px;
+    .app{
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      min-height:100vh;
+      padding:18px;
       background:
-        radial-gradient(circle at top right, rgba(125,211,252,.20), transparent 34%),
-        radial-gradient(circle at 0% 18%, rgba(167,139,250,.18), transparent 30%),
-        linear-gradient(180deg, #171923 0%, #0f1117 55%, #090a0f 100%);
+        radial-gradient(circle at top right, rgba(125,211,252,.18), transparent 34%),
+        radial-gradient(circle at 0% 18%, rgba(167,139,250,.16), transparent 30%),
+        linear-gradient(180deg,#171923 0%,#0f1117 55%,#090a0f 100%);
     }
 
-    .screen { display: none; }
-    .screen.active { display: block; }
+    .screen{display:none}
+    .screen.active{display:block}
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:16px;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      padding: 7px 11px;
-      color: #ddd;
-      font-size: 12px;
-      text-decoration: none;
-      white-space: nowrap;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 11px;
+      color:#ddd;
+      font-size:12px;
+      text-decoration:none;
+      white-space:nowrap;
     }
 
-    .hero {
-      border-radius: 28px;
-      padding: 20px;
+    .hero{
+      border-radius:28px;
+      padding:20px;
       background:
         radial-gradient(circle at top right, rgba(125,211,252,.22), transparent 42%),
         linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.055));
-      border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
-      overflow: hidden;
-      position: relative;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      margin-bottom:14px;
+      position:relative;
+      overflow:hidden;
     }
 
-    .hero:after {
-      content: "";
-      position: absolute;
-      right: -55px;
-      bottom: -70px;
-      width: 145px;
-      height: 145px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(167,139,250,.28), transparent 70%);
-      pointer-events: none;
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-55px;
+      bottom:-70px;
+      width:145px;
+      height:145px;
+      border-radius:999px;
+      background:radial-gradient(circle,rgba(167,139,250,.28),transparent 70%);
+      pointer-events:none;
     }
 
-    .hero-content { position: relative; z-index: 1; }
+    .hero-inner{position:relative;z-index:1}
 
-    h1 {
-      font-size: 31px;
-      line-height: 1.03;
-      letter-spacing: -.045em;
-      margin: 0 0 10px;
+    h1{
+      margin:0 0 10px;
+      font-size:31px;
+      line-height:1.03;
+      letter-spacing:-.045em;
     }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.45;
-      margin: 0 0 16px;
+    .subtitle{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
     }
 
-    .hero-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    .hero-tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
     }
 
-    .hero-tag {
-      border-radius: 999px;
-      padding: 7px 10px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      color: #e7e9f3;
-      font-size: 12px;
-      font-weight: 700;
+    .hero-tag{
+      border-radius:999px;
+      padding:7px 10px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      color:#e7e9f3;
+      font-size:12px;
+      font-weight:800;
     }
 
-    .main-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 18px;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: #07111f;
-      font-weight: 900;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 10px 35px rgba(125,211,252,.20);
+    .main-btn{
+      width:100%;
+      border:0;
+      border-radius:18px;
+      padding:16px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#07111f;
+      font-weight:950;
+      font-size:16px;
+      cursor:pointer;
+      box-shadow:0 10px 35px rgba(125,211,252,.20);
     }
 
-    .secondary-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
+    .secondary-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
     }
 
-    .small-btn {
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.075);
-      color: #fff;
-      border-radius: 16px;
-      padding: 13px 10px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
+    .small-btn{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.075);
+      color:#fff;
+      border-radius:16px;
+      padding:13px 10px;
+      font-size:14px;
+      font-weight:850;
+      cursor:pointer;
+      text-align:center;
+      text-decoration:none;
     }
 
-    .support-btn {
-      width: 100%;
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.075);
-      color: #fff;
-      font-weight: 800;
-      border-radius: 18px;
-      padding: 14px;
-      font-size: 15px;
+    .support-btn{
+      width:100%;
+      display:block;
+      text-align:center;
+      text-decoration:none;
+      margin-top:10px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.075);
+      color:#fff;
+      font-weight:850;
+      border-radius:18px;
+      padding:14px;
+      font-size:15px;
     }
 
-    .main-btn:active,
-    .small-btn:active,
-    .support-btn:active,
-    .direction-card:active,
-    .material-card:active {
-      transform: scale(.985);
+    .main-btn:active,.small-btn:active,.support-btn:active,.program-card:active,.material-card:active{transform:scale(.985)}
+
+    .block-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:10px;
+      margin:20px 0 10px;
     }
 
-    .section-title-row {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 20px 0 10px;
+    .block-title{
+      font-size:17px;
+      font-weight:950;
     }
 
-    .section-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #fff;
+    .block-counter{
+      color:var(--muted2);
+      font-size:12px;
+      white-space:nowrap;
     }
 
-    .section-counter {
-      color: var(--muted2);
-      font-size: 12px;
-      white-space: nowrap;
+    .note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.36;
+      margin-bottom:12px;
     }
 
-    .section-note {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-      margin-bottom: 12px;
+    .search{
+      width:100%;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.075);
+      color:#fff;
+      outline:none;
+      margin-bottom:14px;
+      font-size:15px;
     }
 
-    .search {
-      width: 100%;
-      margin: 0 0 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.075);
-      color: #fff;
-      outline: none;
-      font-size: 15px;
+    .search::placeholder{color:rgba(255,255,255,.42)}
+
+    .programs{
+      display:grid;
+      gap:12px;
     }
 
-    .search::placeholder { color: rgba(255,255,255,.42); }
-
-    .directions {
-      display: grid;
-      gap: 12px;
+    .program-card{
+      border-radius:23px;
+      padding:16px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 10px 26px rgba(0,0,0,.16);
     }
 
-    .direction-card {
-      border-radius: 23px;
-      padding: 16px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 26px rgba(0,0,0,.16);
+    .program-card:before{
+      content:"";
+      position:absolute;
+      right:-42px;
+      top:-42px;
+      width:120px;
+      height:120px;
+      border-radius:999px;
+      background:var(--glow,rgba(125,211,252,.16));
+      pointer-events:none;
     }
 
-    .direction-card:before {
-      content: "";
-      position: absolute;
-      right: -42px;
-      top: -42px;
-      width: 120px;
-      height: 120px;
-      border-radius: 999px;
-      background: var(--glow, rgba(125,211,252,.16));
-      pointer-events: none;
+    .program-head{
+      position:relative;
+      z-index:1;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:9px;
     }
 
-    .direction-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 9px;
+    .program-icon{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 24px rgba(0,0,0,.20);
+      overflow:hidden;
+      flex:0 0 auto;
     }
 
-    .program-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.16);
-      box-shadow: 0 10px 24px rgba(0,0,0,.20);
-      overflow: hidden;
-      flex: 0 0 auto;
+    .program-icon svg{
+      width:100%;
+      height:100%;
+      display:block;
     }
 
-    .program-icon svg {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .program-name{
+      min-width:0;
+      font-size:21px;
+      font-weight:950;
+      letter-spacing:-.035em;
+      line-height:1.08;
     }
 
-    .direction-name {
-      min-width: 0;
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: -.03em;
-      line-height: 1.1;
+    .program-desc{
+      position:relative;
+      z-index:1;
+      color:#c4c7d4;
+      font-size:13px;
+      line-height:1.38;
+      margin-bottom:11px;
     }
 
-    .direction-desc {
-      position: relative;
-      z-index: 1;
-      color: #c4c7d4;
-      font-size: 13px;
-      line-height: 1.38;
-      margin-bottom: 11px;
+    .section-chips{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
     }
 
-    .preview {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 7px;
-      margin-bottom: 10px;
+    .section-chip{
+      border-radius:999px;
+      padding:7px 9px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+      color:#e9ebf5;
+      font-size:12px;
+      font-weight:850;
     }
 
-    .preview-label {
-      color: rgba(255,255,255,.52);
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .05em;
+    .preview{
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap:7px;
+      margin-bottom:10px;
     }
 
-    .preview-item {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      padding: 9px 10px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.07);
-      color: #eef0f7;
-      font-size: 13px;
-      line-height: 1.32;
+    .preview-label{
+      color:rgba(255,255,255,.52);
+      font-size:11px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.05em;
     }
 
-    .preview-item:before {
-      content: "›";
-      color: var(--accent1);
-      font-weight: 900;
-      flex: 0 0 auto;
+    .preview-item{
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      padding:9px 10px;
+      border-radius:14px;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.07);
+      color:#eef0f7;
+      font-size:13px;
+      line-height:1.32;
     }
 
-    .preview-item small {
-      display: block;
-      color: #aeb3c3;
-      font-size: 12px;
-      line-height: 1.25;
-      margin-top: 3px;
+    .preview-item:before{
+      content:"›";
+      color:var(--accent);
+      font-weight:950;
+      flex:0 0 auto;
     }
 
-    .preview-more {
-      color: #aeb3c3;
-      font-size: 12px;
-      padding-left: 2px;
+    .preview-item small{
+      display:block;
+      color:#aeb3c3;
+      font-size:12px;
+      line-height:1.25;
+      margin-top:3px;
     }
 
-    .pills {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    .preview-more{
+      color:#aeb3c3;
+      font-size:12px;
+      padding-left:2px;
     }
 
-    .pill {
-      background: rgba(255,255,255,.09);
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 12px;
-      color: #f1f1f1;
-      border: 1px solid rgba(255,255,255,.06);
+    .pills{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
     }
 
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 14px;
-      color: #ddd;
-      cursor: pointer;
-      font-size: 14px;
+    .pill{
+      background:rgba(255,255,255,.09);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      color:#f1f1f1;
+      border:1px solid rgba(255,255,255,.06);
     }
 
-    .direction-hero {
-      border-radius: 24px;
-      padding: 18px;
-      margin-bottom: 16px;
-      background:
-        radial-gradient(circle at top right, var(--heroGlow, rgba(125,211,252,.28)), rgba(255,255,255,.07) 45%);
-      border: 1px solid var(--stroke);
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-bottom:14px;
+      color:#ddd;
+      cursor:pointer;
+      font-size:14px;
     }
 
-    .direction-hero-head {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 10px;
+    .program-hero{
+      border-radius:24px;
+      padding:18px;
+      margin-bottom:14px;
+      background:radial-gradient(circle at top right,var(--heroGlow,rgba(125,211,252,.28)),rgba(255,255,255,.07) 45%);
+      border:1px solid var(--line);
     }
 
-    .direction-hero .program-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 19px;
+    .program-hero-head{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:10px;
     }
 
-    .direction-hero h1 {
-      margin: 0;
-      font-size: 27px;
+    .program-hero .program-icon{
+      width:56px;
+      height:56px;
+      border-radius:19px;
     }
 
-    .materials {
-      display: grid;
-      gap: 10px;
+    .program-hero h1{
+      margin:0;
+      font-size:28px;
     }
 
-    .section-group {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 16px;
+    .tabs{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      scrollbar-width:none;
+      margin-bottom:14px;
+      padding-bottom:2px;
     }
 
-    .section-group-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 0 2px;
+    .tabs::-webkit-scrollbar{display:none}
+
+    .tab{
+      flex:0 0 auto;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.075);
+      color:#fff;
+      border-radius:999px;
+      padding:10px 12px;
+      font-size:13px;
+      font-weight:850;
+      cursor:pointer;
+      white-space:nowrap;
     }
 
-    .section-group-title {
-      font-size: 16px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: -.02em;
+    .tab.active{
+      border-color:rgba(125,211,252,.35);
+      background:linear-gradient(135deg,rgba(125,211,252,.20),rgba(167,139,250,.18));
     }
 
-    .section-group-count {
-      color: #7dd3fc;
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
+    .materials{
+      display:grid;
+      gap:12px;
     }
 
-    .material-card {
-      padding: 15px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.075);
-      border: 1px solid rgba(255,255,255,.10);
+    .section-block{
+      display:grid;
+      gap:10px;
     }
 
-    .material-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:0 2px;
+      margin-top:4px;
     }
 
-    .material-section {
-      font-size: 16px;
-      font-weight: 900;
-      line-height: 1.2;
+    .section-title b{
+      font-size:16px;
+      letter-spacing:-.02em;
     }
 
-    .material-meta {
-      color: #b8bccb;
-      font-size: 13px;
-      margin-top: 7px;
-      line-height: 1.36;
+    .section-title span{
+      color:var(--accent);
+      font-size:12px;
+      font-weight:950;
+      white-space:nowrap;
     }
 
-    .material-name {
-      color: #fff;
-      font-size: 13px;
-      margin-top: 8px;
-      line-height: 1.35;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 13px;
-      padding: 9px 10px;
+    .material-card{
+      padding:15px;
+      border-radius:18px;
+      background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.10);
     }
 
-    .material-name b { color: var(--accent1); }
-
-    .price {
-      font-size: 12px;
-      color: var(--accent1);
-      white-space: nowrap;
-      font-weight: 900;
+    .material-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
     }
 
-    .locked {
-      background: rgba(255,255,255,.07);
-      padding: 14px;
-      border-radius: 16px;
-      color: #cfd2df;
-      font-size: 13px;
-      line-height: 1.42;
-      margin-top: 14px;
+    .material-name{
+      font-size:16px;
+      font-weight:950;
+      line-height:1.2;
     }
 
-    .bottom {
-      position: sticky;
-      bottom: 10px;
-      margin-top: 20px;
-      z-index: 5;
+    .material-meta{
+      color:#b8bccb;
+      font-size:13px;
+      margin-top:7px;
+      line-height:1.36;
     }
 
-    .loading, .empty {
-      color: var(--muted);
-      background: rgba(255,255,255,.07);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 14px;
-      line-height: 1.4;
+    .price{
+      font-size:12px;
+      color:var(--accent);
+      white-space:nowrap;
+      font-weight:950;
     }
 
-    .empty { display: none; }
-
-    .footer {
-      color: rgba(255,255,255,.35);
-      text-align: center;
-      font-size: 12px;
-      line-height: 1.35;
-      padding: 20px 0 4px;
+    .course-btn{
+      width:100%;
+      margin-top:12px;
+      border:1px solid rgba(125,211,252,.20);
+      background:rgba(125,211,252,.12);
+      color:#fff;
+      border-radius:14px;
+      padding:12px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
     }
 
-    @media (max-width: 380px) {
-      .app { padding: 15px; }
-      h1 { font-size: 27px; }
-      .direction-name { font-size: 18px; }
-      .program-icon { width: 46px; height: 46px; }
+    .locked{
+      background:rgba(255,255,255,.07);
+      padding:14px;
+      border-radius:16px;
+      color:#cfd2df;
+      font-size:13px;
+      line-height:1.42;
+      margin-top:14px;
+    }
+
+    .bottom{
+      position:sticky;
+      bottom:10px;
+      margin-top:20px;
+      z-index:5;
+    }
+
+    .loading,.empty{
+      color:var(--muted);
+      background:rgba(255,255,255,.07);
+      border-radius:16px;
+      padding:14px;
+      font-size:14px;
+      line-height:1.4;
+    }
+
+    .empty{display:none}
+
+    .footer{
+      color:rgba(255,255,255,.35);
+      text-align:center;
+      font-size:12px;
+      line-height:1.35;
+      padding:20px 0 4px;
+    }
+
+    @media (max-width:380px){
+      .app{padding:15px}
+      h1{font-size:28px}
+      .program-name{font-size:19px}
+      .program-icon{width:46px;height:46px}
     }
   </style>
 </head>
@@ -532,23 +571,23 @@
 
     <div id="home" class="screen active">
       <div class="top">
-        <div class="badge">CAD / BIM / 3D каталог</div>
+        <div class="badge">CAD / BIM / 3D</div>
         <a class="badge" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">Поддержка</a>
       </div>
 
       <section class="hero">
-        <div class="hero-content">
+        <div class="hero-inner">
           <h1>📐 CAD Академия</h1>
           <p class="subtitle">
             Видеокурсы для архитекторов, дизайнеров, инженеров и строителей.
-            Выбери направление и посмотри, какие материалы есть внутри.
+            Выбери программу, затем раздел и нужный материал.
           </p>
 
           <div class="hero-tags">
             <span class="hero-tag">Revit</span>
             <span class="hero-tag">AutoCAD</span>
             <span class="hero-tag">3ds Max</span>
-            <span class="hero-tag">ArchiCAD</span>
+            <span class="hero-tag">SketchUp</span>
           </div>
 
           <button class="main-btn" onclick="openBotCommand('plans')">🔓 Получить доступ</button>
@@ -562,40 +601,44 @@
         </div>
       </section>
 
-      <div class="section-title-row">
-        <div class="section-title">📚 Программы и разделы</div>
-        <div class="section-counter" id="homeCounter">Загрузка…</div>
+      <div class="block-head">
+        <div class="block-title">📚 Программы</div>
+        <div class="block-counter" id="homeCounter">Загрузка…</div>
       </div>
 
-      <div class="section-note">
-        Например: Revit — основная программа, а внутри неё разделы: Курсы, Шаблоны, Семейства.
+      <div class="note">
+        Обычная структура каталога: программа → раздел → материал. Например: Revit → Курсы / Шаблон / Семейства.
       </div>
 
-      <input class="search" placeholder="Поиск: Revit, AutoCAD, название материала..." oninput="filterCards(this.value)" />
+      <input class="search" placeholder="Поиск: Revit, AutoCAD, шаблоны, автор..." oninput="filterPrograms(this.value)" />
 
-      <div id="directions" class="directions">
-        <div class="loading">Загружаю курсы из Google Таблицы...</div>
+      <div id="programs" class="programs">
+        <div class="loading">Загружаю каталог из Google Таблицы...</div>
       </div>
 
       <div class="footer">CAD Академия · каталог курсов в Telegram</div>
     </div>
 
-    <div id="direction" class="screen">
+    <div id="program" class="screen">
       <div class="back" onclick="openScreen('home')">← Назад</div>
 
-      <section class="direction-hero" id="directionHero">
-        <div class="direction-hero-head">
-          <div class="program-icon" id="directionIcon"></div>
-          <h1 id="directionTitle">Направление</h1>
+      <section class="program-hero" id="programHero">
+        <div class="program-hero-head">
+          <div class="program-icon" id="programIcon"></div>
+          <h1 id="programTitle">Программа</h1>
         </div>
-        <p class="subtitle" id="directionDesc">Материалы направления</p>
+        <p class="subtitle" id="programDesc">Материалы программы</p>
         <div class="pills">
-          <span class="pill" id="directionCount">0 материалов</span>
-          <span class="pill">🔒 доступ после оплаты</span>
+          <span class="pill" id="programCount">0 материалов</span>
+          <span class="pill" id="sectionCount">0 разделов</span>
         </div>
       </section>
 
-      <div id="materialList" class="materials"></div>
+      <div class="tabs" id="sectionTabs"></div>
+
+      <input class="search" placeholder="Поиск внутри программы..." oninput="filterMaterials(this.value)" />
+
+      <div id="materials" class="materials"></div>
 
       <div class="locked">
         Это витрина каталога. Сами видеоуроки находятся внутри закрытой Telegram-библиотеки.
@@ -605,10 +648,6 @@
       <div class="bottom">
         <button class="main-btn" onclick="openBotCommand('plans')">🔓 Оформить доступ</button>
         <a class="support-btn" href="https://t.me/Revit_help_bot" target="_blank" onclick="closeMiniAppSoon()">💬 Поддержка</a>
-        <div class="secondary-actions">
-          <button class="small-btn" onclick="openBotCommand('plans')">📋 Тарифы</button>
-          <button class="small-btn" onclick="openBotCommand('status')">⭐ Моя подписка</button>
-        </div>
       </div>
     </div>
 
@@ -629,50 +668,50 @@
     const SHEET_ID = "1FH4z7ouhBK_H1P9HtMZC2SLIZEzDgvJYB-v_ZPzsJyo";
     const SHEET_GID = "0";
     const BOT_URL = "https://t.me/CAD_Academy_bot";
+    const DEFAULT_PLANS = "https://t.me/CAD_Academy_bot?start=plans";
 
-    let courses = [];
-    let directions = [];
+    let catalog = [];
+    let programs = [];
+    let currentProgram = null;
+    let activeSection = "Все";
 
-    const fallbackCourses = [
-      { category:"Revit курсы", section:"Ландшафт в Revit", material:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"" },
-      { category:"AutoCAD курсы", section:"AutoCAD: чертежи и оформление", material:"AutoCAD: чертежи и оформление", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" },
-      { category:"3ds Max курсы", section:"3ds Max: моделирование и визуализация", material:"3ds Max: моделирование и визуализация", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"", link:"" }
+    const fallback = [
+      { category:"Revit", section:"Курсы", material:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:DEFAULT_PLANS, buttonText:"Оформить доступ" },
+      { category:"Revit", section:"Шаблон", material:"Шаблон My Revit", lessons:"", duration:"", author:"My Revit", tariff:"3 дня", price:"1497", link:DEFAULT_PLANS, buttonText:"Оформить доступ" },
+      { category:"Revit", section:"Семейства", material:"Параметрические семейства", lessons:"", duration:"", author:"INT Lines", tariff:"3 дня", price:"1497", link:DEFAULT_PLANS, buttonText:"Оформить доступ" },
+      { category:"AutoCAD", section:"Курсы", material:"Базовый курс по AutoCAD", lessons:"4", duration:"2", author:"Алексей Меркулов", tariff:"1 месяц", price:"297", link:DEFAULT_PLANS, buttonText:"Оформить доступ" }
     ];
 
-    function appIcon(type){
+    function icon(type){
       const icons = {
-        revit: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0C1E55"/><path d="M29 0h15v44H29z" fill="#1DA6F7" opacity=".88"/><path d="M10 33V11.5h9.1c4.3 0 6.9 2.3 6.9 5.7 0 2.7-1.5 4.7-4.1 5.4l4.2 10.4h-5.3L17.3 24h-2.2v9H10Zm5.1-12.9h3.4c1.8 0 2.8-.9 2.8-2.5 0-1.6-1-2.5-2.8-2.5h-3.4v5Z" fill="white"/></svg>`,
-        revitTemplate: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0C1E55"/><path d="M28 0h16v44H28z" fill="#1DA6F7" opacity=".88"/><path d="M9.8 31V12.4h7.2c3.4 0 5.4 1.8 5.4 4.7 0 2.1-1.1 3.7-3.1 4.3L22.6 31h-4.3l-2.8-8h-1.7v8H9.8Zm4-11.3h2.7c1.4 0 2.3-.8 2.3-2.1s-.8-2.1-2.3-2.1h-2.7v4.2Z" fill="white"/><path d="M26.5 17h8v2.4h-2.7V27h-2.6v-7.6h-2.7V17Z" fill="white"/></svg>`,
-        revitFamily: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0C1E55"/><path d="M28 0h16v44H28z" fill="#19B5D8" opacity=".9"/><path d="M9.8 31V12.4h7.2c3.4 0 5.4 1.8 5.4 4.7 0 2.1-1.1 3.7-3.1 4.3L22.6 31h-4.3l-2.8-8h-1.7v8H9.8Zm4-11.3h2.7c1.4 0 2.3-.8 2.3-2.1s-.8-2.1-2.3-2.1h-2.7v4.2Z" fill="white"/><path d="M27 18h8v2.2h-5.4v2h4.5v2.2h-4.5V29H27V18Z" fill="white"/></svg>`,
-        autocad: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#6E0E16"/><path d="M22 6 10 37h5.1l2.2-5.9h9.4l2.2 5.9H34L22 6Zm-2.9 20.9L22 18.8l2.9 8.1h-5.8Z" fill="white"/><path d="M24.5 11.4 34 37h-5.1l-1.6-4.4-2.8-7.6Z" fill="#FF7B87" opacity=".5"/></svg>`,
-        civil: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#8B3A0D"/><path d="M12 11v22M32 11v22" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M15.5 15.5h13M14.5 22h15M15.5 28.5h13" stroke="#FFE7C2" stroke-width="2.6" stroke-linecap="round"/></svg>`,
-        max3d: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#065F46"/><path d="M22 7 10 14l12 7 12-7-12-7Z" fill="#B9F6D3"/><path d="M10 14v15l12 8V21L10 14Z" fill="#6EE7B7" opacity=".9"/><path d="M34 14v15l-12 8V21l12-7Z" fill="#0EAE7F" opacity=".95"/></svg>`,
-        archicad: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#6B1B63"/><path d="M22 10 11.5 34h4.4l2-5h8.1l2 5h4.5L22 10Zm-2.5 14.7L22 18.3l2.5 6.4h-5Z" fill="white"/></svg>`,
-        sketchup: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0D3C73"/><path d="M22 8 11 13.8 22 19.6l11-5.8L22 8Z" stroke="white" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 13.8v12.4L22 36V19.6L11 13.8Zm22 0v12.4L22 36" stroke="#C8E7FF" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
-        twinmotion: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#173C8F"/><path d="M27 0h17v44H27z" fill="#7C3AED" opacity=".72"/><path d="M11 12h22v4h-9v16h-4V16h-9v-4Z" fill="white"/></svg>`,
-        homestyler: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0F766E"/><path d="M12 22.5 22 14l10 8.5V31a1.5 1.5 0 0 1-1.5 1.5h-5.2v-7h-6.6v7h-5.2A1.5 1.5 0 0 1 12 31v-8.5Z" fill="white"/><path d="M17.6 32.5v-7h8.8v7" stroke="#8EF3EA" stroke-width="1.4"/></svg>`,
-        install: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#334155"/><rect x="9" y="10" width="26" height="17" rx="3" fill="#E2E8F0" opacity=".96"/><path d="M22 14v9m0 0-3.2-3.2M22 23l3.2-3.2" stroke="#334155" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 32h14" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-        itr: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#14532D"/><path d="M12 22c0-5.5 4.5-10 10-10s10 4.5 10 10v1H12v-1Z" fill="#D1FAE5"/><path d="M14 23h16v3a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3v-3Z" fill="white"/><path d="M22 12v4" stroke="#14532D" stroke-width="2" stroke-linecap="round"/></svg>`,
-        ai: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#5B21B6"/><circle cx="12" cy="22" r="3.2" fill="white"/><circle cx="31.5" cy="13" r="3.2" fill="#C4B5FD"/><circle cx="31.5" cy="31" r="3.2" fill="#67E8F9"/><circle cx="22" cy="22" r="3.2" fill="#E9D5FF"/><path d="M15.2 22H18.8M24.8 20.1l4.1-4.2M24.8 23.9l4.1 4.2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`,
-        cad: `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="14" fill="#0EA5E9"/><path d="M14 14h7v7h-7zm9 0h7v7h-7zm-9 9h7v7h-7zm9 0h7v7h-7z" fill="white" opacity=".9"/></svg>`
+        revit:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#0C1E55"/><path d="M29 0h15v44H29z" fill="#1DA6F7" opacity=".88"/><path d="M10 33V11.5h9.1c4.3 0 6.9 2.3 6.9 5.7 0 2.7-1.5 4.7-4.1 5.4l4.2 10.4h-5.3L17.3 24h-2.2v9H10Zm5.1-12.9h3.4c1.8 0 2.8-.9 2.8-2.5 0-1.6-1-2.5-2.8-2.5h-3.4v5Z" fill="white"/></svg>`,
+        autocad:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#6E0E16"/><path d="M22 6 10 37h5.1l2.2-5.9h9.4l2.2 5.9H34L22 6Zm-2.9 20.9L22 18.8l2.9 8.1h-5.8Z" fill="white"/><path d="M24.5 11.4 34 37h-5.1l-1.6-4.4-2.8-7.6Z" fill="#FF7B87" opacity=".5"/></svg>`,
+        civil:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#8B3A0D"/><path d="M12 11v22M32 11v22" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M15.5 15.5h13M14.5 22h15M15.5 28.5h13" stroke="#FFE7C2" stroke-width="2.6" stroke-linecap="round"/></svg>`,
+        max3d:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#065F46"/><path d="M22 7 10 14l12 7 12-7-12-7Z" fill="#B9F6D3"/><path d="M10 14v15l12 8V21L10 14Z" fill="#6EE7B7" opacity=".9"/><path d="M34 14v15l-12 8V21l12-7Z" fill="#0EAE7F" opacity=".95"/></svg>`,
+        archicad:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#6B1B63"/><path d="M22 10 11.5 34h4.4l2-5h8.1l2 5h4.5L22 10Zm-2.5 14.7L22 18.3l2.5 6.4h-5Z" fill="white"/></svg>`,
+        sketchup:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#0D3C73"/><path d="M22 8 11 13.8 22 19.6l11-5.8L22 8Z" stroke="white" stroke-width="2.2" stroke-linejoin="round"/><path d="M11 13.8v12.4L22 36V19.6L11 13.8Zm22 0v12.4L22 36" stroke="#C8E7FF" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
+        twinmotion:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#173C8F"/><path d="M27 0h17v44H27z" fill="#7C3AED" opacity=".72"/><path d="M11 12h22v4h-9v16h-4V16h-9v-4Z" fill="white"/></svg>`,
+        homestyler:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#0F766E"/><path d="M12 22.5 22 14l10 8.5V31a1.5 1.5 0 0 1-1.5 1.5h-5.2v-7h-6.6v7h-5.2A1.5 1.5 0 0 1 12 31v-8.5Z" fill="white"/><path d="M17.6 32.5v-7h8.8v7" stroke="#8EF3EA" stroke-width="1.4"/></svg>`,
+        ai:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#5B21B6"/><circle cx="12" cy="22" r="3.2" fill="white"/><circle cx="31.5" cy="13" r="3.2" fill="#C4B5FD"/><circle cx="31.5" cy="31" r="3.2" fill="#67E8F9"/><circle cx="22" cy="22" r="3.2" fill="#E9D5FF"/><path d="M15.2 22H18.8M24.8 20.1l4.1-4.2M24.8 23.9l4.1 4.2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>`,
+        install:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#334155"/><rect x="9" y="10" width="26" height="17" rx="3" fill="#E2E8F0" opacity=".96"/><path d="M22 14v9m0 0-3.2-3.2M22 23l3.2-3.2" stroke="#334155" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 32h14" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+        itr:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#14532D"/><path d="M12 22c0-5.5 4.5-10 10-10s10 4.5 10 10v1H12v-1Z" fill="#D1FAE5"/><path d="M14 23h16v3a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3v-3Z" fill="white"/><path d="M22 12v4" stroke="#14532D" stroke-width="2" stroke-linecap="round"/></svg>`,
+        cad:`<svg viewBox="0 0 44 44" fill="none"><rect width="44" height="44" rx="14" fill="#0EA5E9"/><path d="M14 14h7v7h-7zm9 0h7v7h-7zm-9 9h7v7h-7zm9 0h7v7h-7z" fill="white" opacity=".9"/></svg>`
       };
       return icons[type] || icons.cad;
     }
 
-    const directionVisuals = [
-      { match:["шаблон","template"], icon:"revitTemplate", desc:"Готовые шаблоны, стандарты и ускорение работы в Revit.", glow:"rgba(125,211,252,.22)" },
-      { match:["семейств"], icon:"revitFamily", desc:"Семейства, параметры, библиотеки и элементы Revit.", glow:"rgba(34,211,238,.20)" },
-      { match:["revit"], icon:"revit", desc:"BIM-проектирование, шаблоны, семейства и рабочая документация.", glow:"rgba(125,211,252,.22)" },
-      { match:["autocad","auto cad"], icon:"autocad", desc:"Чертежи, оформление, DWG, листы и рабочие процессы AutoCAD.", glow:"rgba(248,113,113,.22)" },
-      { match:["3ds","max"], icon:"max3d", desc:"3D-моделирование, материалы, сцены, визуализация и рендер.", glow:"rgba(74,222,128,.20)" },
-      { match:["archicad","archi"], icon:"archicad", desc:"Архитектурное проектирование, модель, планы и документация.", glow:"rgba(236,72,153,.20)" },
-      { match:["sketchup","sketch"], icon:"sketchup", desc:"Быстрое 3D-моделирование, концепции и интерьерные задачи.", glow:"rgba(96,165,250,.20)" },
-      { match:["twinmotion"], icon:"twinmotion", desc:"Realtime-визуализация, сцены, анимация и презентация проектов.", glow:"rgba(139,92,246,.22)" },
-      { match:["homestyler"], icon:"homestyler", desc:"Интерьеры, планировки и быстрые визуальные решения.", glow:"rgba(34,211,238,.20)" },
-      { match:["civil"], icon:"civil", desc:"Инженерные задачи, инфраструктура и технические материалы.", glow:"rgba(245,158,11,.22)" },
-      { match:["итр"], icon:"itr", desc:"Материалы для инженеров, технадзора и строительных специалистов.", glow:"rgba(52,211,153,.20)" },
-      { match:["нейросет","ai"], icon:"ai", desc:"AI-инструменты для архитектуры, дизайна и ускорения работы.", glow:"rgba(34,211,238,.22)" },
-      { match:["установка"], icon:"install", desc:"Установка программ, настройка и подготовка рабочего окружения.", glow:"rgba(148,163,184,.18)" }
+    const visuals = [
+      {match:["revit"], type:"revit", desc:"BIM-проектирование, курсы, шаблоны и семейства.", glow:"rgba(125,211,252,.22)"},
+      {match:["autocad","auto cad"], type:"autocad", desc:"Чертежи, DWG, блоки, подшивки и рабочая документация.", glow:"rgba(248,113,113,.22)"},
+      {match:["civil"], type:"civil", desc:"Инженерные задачи, инфраструктура и Civil 3D.", glow:"rgba(245,158,11,.22)"},
+      {match:["3ds","max"], type:"max3d", desc:"3D-моделирование, материалы, сцены и рендер.", glow:"rgba(74,222,128,.20)"},
+      {match:["archicad","archi"], type:"archicad", desc:"Архитектурное проектирование и документация.", glow:"rgba(236,72,153,.20)"},
+      {match:["sketchup","sketch"], type:"sketchup", desc:"Быстрое 3D-моделирование и интерьерная подача.", glow:"rgba(96,165,250,.20)"},
+      {match:["twinmotion"], type:"twinmotion", desc:"Realtime-визуализация и презентация проектов.", glow:"rgba(139,92,246,.22)"},
+      {match:["homestyler"], type:"homestyler", desc:"Интерьеры, планировки и визуальные решения.", glow:"rgba(34,211,238,.20)"},
+      {match:["нейросет","ai"], type:"ai", desc:"AI-инструменты для архитектуры и дизайна.", glow:"rgba(34,211,238,.22)"},
+      {match:["итр"], type:"itr", desc:"Материалы для инженеров и строительных специалистов.", glow:"rgba(52,211,153,.20)"},
+      {match:["установка"], type:"install", desc:"Установка программ и подготовка рабочего окружения.", glow:"rgba(148,163,184,.18)"}
     ];
 
     function normalize(str){
@@ -698,26 +737,25 @@
       return String(str || "").replaceAll("'","\\'");
     }
 
-    function wordItems(n){
-      const last = n % 10;
-      const last2 = n % 100;
-      if(last === 1 && last2 !== 11) return "материал";
-      if([2,3,4].includes(last) && ![12,13,14].includes(last2)) return "материала";
-      return "материалов";
+    function word(n, one, two, five){
+      const l=n%10,l2=n%100;
+      if(l===1 && l2!==11) return one;
+      if([2,3,4].includes(l) && ![12,13,14].includes(l2)) return two;
+      return five;
     }
 
     function visualFor(name){
-      const n = normalize(name);
-      return directionVisuals.find(item => item.match.some(m => n.includes(normalize(m)))) || {
-        icon:"cad",
-        desc:"Обучающие материалы и видеокурсы внутри библиотеки CAD Академии.",
-        glow:"rgba(125,211,252,.20)"
+      const n=normalize(name);
+      return visuals.find(v => v.match.some(m => n.includes(normalize(m)))) || {
+        type:"cad",
+        desc:"Обучающие материалы внутри библиотеки CAD Академии.",
+        glow:"rgba(125,211,252,.18)"
       };
     }
 
     function priceText(price){
-      const value = String(price || "").trim();
-      if(!value || value === "0") return "";
+      const value=String(price || "").trim();
+      if(!value || value==="0") return "";
       if(/[₽руб]/i.test(value)) return value;
       return value + " ₽";
     }
@@ -729,121 +767,119 @@
       return "";
     }
 
-    function findValue(row, names){
-      const targets = names.map(normalize);
-      for(const [key, value] of Object.entries(row)){
+    function findValue(row,names){
+      const targets=names.map(normalize);
+      for(const [key,value] of Object.entries(row)){
         if(targets.includes(normalize(key))) return value;
       }
-      for(const [key, value] of Object.entries(row)){
-        const nk = normalize(key);
+      for(const [key,value] of Object.entries(row)){
+        const nk=normalize(key);
         if(targets.some(t => nk.includes(t) || t.includes(nk))) return value;
       }
       return "";
     }
 
-    function looksLikeHeaderRow(row){
-      const values = Object.values(row).map(normalize).join(" ");
-      return values.includes("категория") && (values.includes("раздел") || values.includes("курс"));
-    }
-
-    function loadGoogleSheet(){
-      return new Promise((resolve, reject) => {
-        const callbackName = "__cadSheetCallback_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-        const timeout = setTimeout(() => {
-          cleanup();
-          reject(new Error("Google Sheet loading timeout"));
-        }, 12000);
+    function loadSheet(){
+      return new Promise((resolve,reject)=>{
+        const callback="__cadSheetCallback_"+Date.now()+"_"+Math.floor(Math.random()*10000);
+        const timeout=setTimeout(()=>{ cleanup(); reject(new Error("timeout")); },12000);
 
         function cleanup(){
           clearTimeout(timeout);
-          try { delete window[callbackName]; } catch(e) { window[callbackName] = undefined; }
+          try{ delete window[callback]; }catch(e){ window[callback]=undefined; }
           if(script && script.parentNode) script.parentNode.removeChild(script);
         }
 
-        window[callbackName] = (response) => {
+        window[callback]=(response)=>{
           cleanup();
-          if(response && response.status === "error"){
-            reject(new Error(response.errors?.[0]?.detailed_message || "Google Sheet error"));
-          } else {
-            resolve(response);
-          }
+          if(response && response.status==="error") reject(new Error("sheet error"));
+          else resolve(response);
         };
 
-        const script = document.createElement("script");
-        const tqx = encodeURIComponent(`responseHandler:${callbackName};out:json`);
-        const tq = encodeURIComponent("select *");
-        script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=${tqx}&tq=${tq}`;
-        script.onerror = () => {
-          cleanup();
-          reject(new Error("Google Sheet script loading failed"));
-        };
+        const script=document.createElement("script");
+        const tqx=encodeURIComponent(`responseHandler:${callback};out:json`);
+        const tq=encodeURIComponent("select *");
+        script.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=${tqx}&tq=${tq}`;
+        script.onerror=()=>{ cleanup(); reject(new Error("load error")); };
         document.body.appendChild(script);
       });
     }
 
-    function parseGoogleTable(response){
-      const table = response?.table;
+    function looksLikeHeader(row){
+      const values=Object.values(row).map(normalize).join(" ");
+      return values.includes("категория") && values.includes("раздел") && values.includes("название");
+    }
+
+    function parseSheet(response){
+      const table=response?.table;
       if(!table?.cols?.length || !table?.rows?.length) return [];
 
-      let headers = table.cols.map((col, index) => {
-        const label = String(col.label || col.id || "").trim();
-        return label || `Колонка ${index + 1}`;
-      });
-
-      let rows = table.rows.map(row => {
-        const obj = {};
-        headers.forEach((header, index) => obj[header] = cellValue(row.c?.[index]));
+      let headers=table.cols.map((col,i)=>String(col.label || col.id || "").trim() || `Колонка ${i+1}`);
+      let rows=table.rows.map(r=>{
+        const obj={};
+        headers.forEach((h,i)=>obj[h]=cellValue(r.c?.[i]));
         return obj;
       });
 
-      const headerText = normalize(headers.join(" "));
-      const headersAreReal = headerText.includes("категория") && (headerText.includes("раздел") || headerText.includes("курс"));
+      const headerText=normalize(headers.join(" "));
+      const realHeaders=headerText.includes("категория") && headerText.includes("раздел") && headerText.includes("название");
 
-      if(!headersAreReal && rows.length && looksLikeHeaderRow(rows[0])){
-        headers = Object.values(rows[0]).map((value, index) => String(value || "").trim() || `Колонка ${index + 1}`);
-        rows = table.rows.slice(1).map(row => {
-          const obj = {};
-          headers.forEach((header, index) => obj[header] = cellValue(row.c?.[index]));
+      if(!realHeaders && rows.length && looksLikeHeader(rows[0])){
+        headers=Object.values(rows[0]).map((v,i)=>String(v || "").trim() || `Колонка ${i+1}`);
+        rows=table.rows.slice(1).map(r=>{
+          const obj={};
+          headers.forEach((h,i)=>obj[h]=cellValue(r.c?.[i]));
           return obj;
         });
       }
 
-      const result = [];
-      let lastCategory = "";
+      const result=[];
+      let lastCategory="";
+      let lastSection="";
 
-      for(const row of rows){
-        const rawCategory = findValue(row, ["Категория", "Category"]);
-        const category = rawCategory || lastCategory;
-        if(rawCategory) lastCategory = rawCategory;
+      rows.forEach(row=>{
+        const rawCategory=findValue(row,["Категория","Category"]);
+        const rawSection=findValue(row,["Раздел","Section"]);
+        const rawMaterial=findValue(row,["Название материала","Материал","Название","Курс","Title"]);
 
-        const section = findValue(row, ["Раздел", "Section"]);
-        const material = findValue(row, ["Название материала", "Материал", "Название", "Курс", "Title"]);
-        const lessons = findValue(row, ["Кол-во уроков", "Количество уроков", "Уроков", "Lessons"]);
-        const duration = findValue(row, ["Продолжительность", "Длительность", "Duration"]);
-        const author = findValue(row, ["Автор", "Author"]);
-        const tariff = findValue(row, ["Тариф", "Tariff"]);
-        const price = findValue(row, ["Цена", "Price"]);
-        const link = findValue(row, ["Ссылка", "Link", "URL"]);
-        const buttonText = findValue(row, ["Текст кнопки", "Кнопка", "Button"]);
+        if(rawCategory){
+          lastCategory=rawCategory;
+          lastSection="";
+        }
 
-        const cleanSection = String(section || material || "").trim();
-        const cleanMaterial = String(material || section || "").trim();
-        const norm = normalize(cleanMaterial || cleanSection);
+        if(rawSection){
+          lastSection=rawSection;
+        }
 
-        const isJunk =
-          (!cleanSection && !cleanMaterial) ||
-          cleanSection === "0" ||
-          cleanMaterial === "0" ||
-          norm === "оформить доступ" ||
-          (!link && !price && !lessons && !duration && !author && !tariff);
+        const category=String(rawCategory || lastCategory || "").trim();
+        const section=String(rawSection || lastSection || "").trim();
+        const material=String(rawMaterial || "").trim();
 
-        if(isJunk) continue;
+        const lessons=findValue(row,["Кол-во уроков","Количество уроков","Уроков","Lessons"]);
+        const duration=findValue(row,["Продолжительность","Длительность","Duration"]);
+        const author=findValue(row,["Автор","Author"]);
+        const tariff=findValue(row,["Тариф","Tariff"]);
+        const price=findValue(row,["Цена","Price"]);
+        const link=findValue(row,["Ссылка","Link","URL"]);
+        const buttonText=findValue(row,["Текст кнопки","Кнопка","Button"]);
+
+        const norm=normalize(material || section);
+        const hasUseful=link || price || lessons || duration || author || tariff;
+        const isJunk=
+          !category ||
+          !section ||
+          !material ||
+          material==="0" ||
+          section==="0" ||
+          norm==="оформить доступ" ||
+          !hasUseful;
+
+        if(isJunk) return;
 
         result.push({
-          category: String(category || "Без категории").trim(),
-          section: cleanSection,
-          material: cleanMaterial,
-          title: cleanMaterial || cleanSection,
+          category,
+          section,
+          material,
           lessons,
           duration,
           author,
@@ -852,186 +888,237 @@
           link,
           buttonText: buttonText || "Оформить доступ"
         });
-      }
+      });
 
       return result;
     }
 
-    function buildDirections(){
-      const grouped = {};
-      courses.forEach(course => {
-        if(!grouped[course.category]) grouped[course.category] = [];
-        grouped[course.category].push(course);
+    function buildPrograms(){
+      const grouped={};
+
+      catalog.forEach(item=>{
+        if(!grouped[item.category]) grouped[item.category]=[];
+        grouped[item.category].push(item);
       });
 
-      directions = Object.entries(grouped).map(([title, items]) => ({
-        title,
-        items,
-        visual: visualFor(title)
-      }));
-    }
-
-    function groupItemsBySection(items){
-      const grouped = {};
-      items.forEach(item => {
-        const sectionName = item.section || "Материалы";
-        if(!grouped[sectionName]) grouped[sectionName] = [];
-        grouped[sectionName].push(item);
+      programs=Object.entries(grouped).map(([title,items])=>{
+        const sections=[...new Set(items.map(i=>i.section).filter(Boolean))];
+        const prices=items.map(i=>parseInt(String(i.price).replace(/[^\d]/g,""),10)).filter(Boolean);
+        const minPrice=prices.length ? Math.min(...prices) : null;
+        return {title,items,sections,visual:visualFor(title),minPrice};
       });
-      return Object.entries(grouped).map(([title, items]) => ({ title, items }));
     }
 
-    function previewHtml(direction){
-      const groups = groupItemsBySection(direction.items).slice(0, 4);
-      const hiddenGroups = Math.max(0, groupItemsBySection(direction.items).length - groups.length);
+    function programPreview(program){
+      const examples=program.items.slice(0,3);
+      const hidden=Math.max(0,program.items.length-examples.length);
 
       return `
         <div class="preview">
-          <div class="preview-label">Разделы внутри программы</div>
-          ${groups.map(group => {
-            const first = group.items[0];
-            const materialName = first?.material || first?.title || "";
-            return `
-              <div class="preview-item">
-                <span>
-                  ${escapeHtml(group.title)}
-                  ${materialName ? `<small>${escapeHtml(materialName)}${group.items.length > 1 ? ` · ещё ${group.items.length - 1}` : ""}</small>` : ""}
-                </span>
-              </div>
-            `;
-          }).join("")}
-          ${hiddenGroups ? `<div class="preview-more">+ ещё ${hiddenGroups} разделов</div>` : ""}
+          <div class="preview-label">Примеры материалов</div>
+          ${examples.map(item=>`
+            <div class="preview-item">
+              <span>
+                ${escapeHtml(item.material)}
+                <small>${escapeHtml(item.section)}${item.author ? " · " + escapeHtml(item.author) : ""}</small>
+              </span>
+            </div>
+          `).join("")}
+          ${hidden ? `<div class="preview-more">+ ещё ${hidden} ${word(hidden,"материал","материала","материалов")}</div>` : ""}
         </div>
       `;
     }
 
-    function renderDirections(list = directions){
-      const root = document.getElementById("directions");
-      const counter = document.getElementById("homeCounter");
-
-      counter.textContent = `${directions.length} направлений · ${courses.length} ${wordItems(courses.length)}`;
+    function renderPrograms(list=programs){
+      const root=document.getElementById("programs");
+      document.getElementById("homeCounter").textContent=`${programs.length} программ · ${catalog.length} ${word(catalog.length,"материал","материала","материалов")}`;
 
       if(!list.length){
-        root.innerHTML = '<div class="empty" style="display:block">Ничего не найдено. Попробуй: Revit, AutoCAD, 3ds Max.</div>';
+        root.innerHTML='<div class="empty" style="display:block">Ничего не найдено. Попробуй: Revit, AutoCAD, SketchUp.</div>';
         return;
       }
 
-      root.innerHTML = list.map(direction => `
-        <article class="direction-card" style="--glow:${direction.visual.glow}" onclick="openDirection('${escapeAttr(direction.title)}')">
-          <div class="direction-head">
-            <div class="program-icon">${appIcon(direction.visual.icon)}</div>
-            <div class="direction-name">${escapeHtml(direction.title)}</div>
+      root.innerHTML=list.map(program=>`
+        <article class="program-card" style="--glow:${program.visual.glow}" onclick="openProgram('${escapeAttr(program.title)}')">
+          <div class="program-head">
+            <div class="program-icon">${icon(program.visual.type)}</div>
+            <div class="program-name">${escapeHtml(program.title)}</div>
           </div>
-          <div class="direction-desc">${escapeHtml(direction.visual.desc)}</div>
-          ${previewHtml(direction)}
+
+          <div class="program-desc">${escapeHtml(program.visual.desc)}</div>
+
+          <div class="section-chips">
+            ${program.sections.slice(0,4).map(s=>`<span class="section-chip">${escapeHtml(s)}</span>`).join("")}
+            ${program.sections.length > 4 ? `<span class="section-chip">+${program.sections.length-4}</span>` : ""}
+          </div>
+
+          ${programPreview(program)}
+
           <div class="pills">
-            <span class="pill">${direction.items.length} ${wordItems(direction.items.length)}</span>
-            <span class="pill">🔒 доступ после оплаты</span>
+            <span class="pill">${program.items.length} ${word(program.items.length,"материал","материала","материалов")}</span>
+            <span class="pill">${program.sections.length} ${word(program.sections.length,"раздел","раздела","разделов")}</span>
+            ${program.minPrice ? `<span class="pill">от ${program.minPrice} ₽</span>` : ""}
           </div>
         </article>
       `).join("");
     }
 
-    function filterCards(query){
-      const q = normalize(query);
-      if(!q){
-        renderDirections(directions);
-        return;
-      }
+    function filterPrograms(query){
+      const q=normalize(query);
+      if(!q){ renderPrograms(programs); return; }
 
-      const filtered = directions.filter(direction => {
-        const haystack = [
-          direction.title,
-          direction.visual.desc,
-          ...direction.items.map(item => [item.section, item.material, item.title, item.author, item.tariff].join(" "))
+      const filtered=programs.filter(program=>{
+        const haystack=[
+          program.title,
+          program.visual.desc,
+          program.sections.join(" "),
+          ...program.items.map(i=>[i.section,i.material,i.author,i.tariff,i.price].join(" "))
         ].join(" ");
         return normalize(haystack).includes(q);
       });
 
-      renderDirections(filtered);
+      renderPrograms(filtered);
     }
 
-    function renderMaterials(direction){
-      const groups = groupItemsBySection(direction.items);
+    function groupBySection(items){
+      const grouped={};
+      items.forEach(item=>{
+        if(!grouped[item.section]) grouped[item.section]=[];
+        grouped[item.section].push(item);
+      });
+      return Object.entries(grouped).map(([title,items])=>({title,items}));
+    }
 
-      return groups.map(group => `
-        <div class="section-group">
-          <div class="section-group-head">
-            <div class="section-group-title">${escapeHtml(group.title)}</div>
-            <div class="section-group-count">${group.items.length} ${wordItems(group.items.length)}</div>
+    function renderTabs(program){
+      const tabs=document.getElementById("sectionTabs");
+      const sections=program.sections;
+      tabs.innerHTML=[
+        `<button class="tab ${activeSection==="Все" ? "active" : ""}" onclick="setSection('Все')">Все</button>`,
+        ...sections.map(s=>`<button class="tab ${activeSection===s ? "active" : ""}" onclick="setSection('${escapeAttr(s)}')">${escapeHtml(s)}</button>`)
+      ].join("");
+    }
+
+    function materialCard(item){
+      const meta=[];
+      if(item.lessons && item.lessons!=="0") meta.push(item.lessons+" уроков");
+      if(item.duration) meta.push(item.duration);
+      if(item.author) meta.push(item.author);
+
+      const price=priceText(item.price);
+      const link=item.link || DEFAULT_PLANS;
+
+      return `
+        <article class="material-card">
+          <div class="material-top">
+            <div>
+              <div class="material-name">${escapeHtml(item.material)}</div>
+              <div class="material-meta">${meta.length ? escapeHtml(meta.join(" · ")) : "Материал из библиотеки CAD Академии"}</div>
+            </div>
+            ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
           </div>
 
-          ${group.items.map(item => {
-            const meta = [];
-            if(item.lessons && item.lessons !== "0") meta.push(item.lessons + " уроков");
-            if(item.duration) meta.push(item.duration);
-            if(item.author) meta.push(item.author);
+          ${item.tariff ? `<div class="material-meta">${escapeHtml(item.tariff)}</div>` : ""}
 
-            const price = priceText(item.price);
-            const materialName = item.material || item.title || group.title;
+          <button class="course-btn" onclick="event.stopPropagation(); openUrl('${escapeAttr(link)}')">
+            ${escapeHtml(item.buttonText || "Оформить доступ")}
+          </button>
+        </article>
+      `;
+    }
 
-            return `
-              <article class="material-card">
-                <div class="material-head">
-                  <div>
-                    <div class="material-section">${escapeHtml(materialName)}</div>
-                    <div class="material-meta">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
-                  </div>
-                  ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
-                </div>
+    function renderMaterials(query=""){
+      if(!currentProgram) return;
 
-                ${item.tariff ? `<div class="material-meta">${escapeHtml(item.tariff)}</div>` : ""}
-              </article>
-            `;
-          }).join("")}
-        </div>
+      const q=normalize(query);
+      let items=currentProgram.items;
+
+      if(activeSection !== "Все"){
+        items=items.filter(i=>i.section===activeSection);
+      }
+
+      if(q){
+        items=items.filter(i=>normalize([i.section,i.material,i.author,i.tariff,i.price].join(" ")).includes(q));
+      }
+
+      const root=document.getElementById("materials");
+
+      if(!items.length){
+        root.innerHTML='<div class="empty" style="display:block">В этом разделе ничего не найдено.</div>';
+        return;
+      }
+
+      const groups=groupBySection(items);
+      root.innerHTML=groups.map(group=>`
+        <section class="section-block">
+          <div class="section-title">
+            <b>${escapeHtml(group.title)}</b>
+            <span>${group.items.length} ${word(group.items.length,"материал","материала","материалов")}</span>
+          </div>
+          ${group.items.map(materialCard).join("")}
+        </section>
       `).join("");
     }
 
-    function openDirection(title){
-      const direction = directions.find(item => item.title === title);
-      if(!direction) return;
+    function openProgram(title){
+      currentProgram=programs.find(p=>p.title===title);
+      if(!currentProgram) return;
 
-      document.getElementById("directionHero").style.setProperty("--heroGlow", direction.visual.glow);
-      document.getElementById("directionIcon").innerHTML = appIcon(direction.visual.icon);
-      document.getElementById("directionTitle").textContent = direction.title;
-      document.getElementById("directionDesc").textContent = direction.visual.desc;
-      document.getElementById("directionCount").textContent = direction.items.length + " " + wordItems(direction.items.length);
-      document.getElementById("materialList").innerHTML = renderMaterials(direction);
+      activeSection="Все";
 
-      openScreen("direction");
+      document.getElementById("programHero").style.setProperty("--heroGlow",currentProgram.visual.glow);
+      document.getElementById("programIcon").innerHTML=icon(currentProgram.visual.type);
+      document.getElementById("programTitle").textContent=currentProgram.title;
+      document.getElementById("programDesc").textContent=currentProgram.visual.desc;
+      document.getElementById("programCount").textContent=currentProgram.items.length+" "+word(currentProgram.items.length,"материал","материала","материалов");
+      document.getElementById("sectionCount").textContent=currentProgram.sections.length+" "+word(currentProgram.sections.length,"раздел","раздела","разделов");
+
+      renderTabs(currentProgram);
+      renderMaterials("");
+      openScreen("program");
+    }
+
+    function setSection(section){
+      activeSection=section;
+      renderTabs(currentProgram);
+      renderMaterials(document.querySelector("#program .search").value || "");
+    }
+
+    function filterMaterials(query){
+      renderMaterials(query);
     }
 
     function openScreen(id){
-      document.querySelectorAll(".screen").forEach(screen => screen.classList.remove("active"));
+      document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
-      window.scrollTo({top:0, behavior:"smooth"});
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    function openUrl(url){
+      if(tg && String(url).includes("t.me/")) tg.openTelegramLink(url);
+      else if(tg) tg.openLink(url);
+      else window.open(url,"_blank");
     }
 
     function openBotCommand(command){
-      const url = `${BOT_URL}?start=${encodeURIComponent(command)}`;
-      if(tg) tg.openTelegramLink(url);
-      else window.open(url, "_blank");
+      openUrl(`${BOT_URL}?start=${encodeURIComponent(command)}`);
     }
 
     function closeMiniAppSoon(){
-      setTimeout(() => {
-        try { tg?.close(); } catch(e) {}
-      }, 250);
+      setTimeout(()=>{ try{ tg?.close(); }catch(e){} },250);
     }
 
     async function init(){
       try{
-        const response = await loadGoogleSheet();
-        const parsed = parseGoogleTable(response);
-        courses = parsed.length ? parsed : fallbackCourses;
+        const response=await loadSheet();
+        const parsed=parseSheet(response);
+        catalog=parsed.length ? parsed : fallback;
       }catch(error){
         console.error(error);
-        courses = fallbackCourses;
+        catalog=fallback;
       }
 
-      buildDirections();
-      renderDirections();
+      buildPrograms();
+      renderPrograms();
     }
 
     init();
