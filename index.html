@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no" />
   <title>CAD Академия</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
     :root{
       --bg:#060914;
-      --bg2:#0d1428;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --stroke:rgba(255,255,255,.10);
+      --bg2:#0b1222;
+      --panel:rgba(255,255,255,.058);
+      --panel2:rgba(255,255,255,.085);
+      --stroke:rgba(255,255,255,.11);
       --stroke2:rgba(255,255,255,.16);
       --text:#f8fafc;
-      --muted:rgba(248,250,252,.72);
+      --muted:rgba(248,250,252,.70);
       --muted2:rgba(248,250,252,.50);
       --cyan:#22d3ee;
       --violet:#8b5cf6;
@@ -22,21 +23,24 @@
       --amber:#f59e0b;
       --red:#ef4444;
       --shadow:0 20px 60px rgba(0,0,0,.40);
-      --radius:26px;
       --max:980px;
       --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
     }
+
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{
       margin:0;min-height:100%;
       background:
-        radial-gradient(circle at 12% 0%, rgba(34,211,238,.18), transparent 28%),
-        radial-gradient(circle at 92% 4%, rgba(139,92,246,.22), transparent 30%),
-        linear-gradient(180deg,#060914 0%,#0b1222 55%,#060914 100%);
-      color:var(--text);font-family:var(--font);
+        radial-gradient(circle at 10% 0%, rgba(34,211,238,.18), transparent 28%),
+        radial-gradient(circle at 92% 4%, rgba(139,92,246,.23), transparent 30%),
+        linear-gradient(180deg,#060914 0%,#0b1222 56%,#060914 100%);
+      color:var(--text);
+      font-family:var(--font);
     }
-    body{padding:14px 12px 36px}
+
+    body{padding:14px 12px 34px}
     button,input{font:inherit}
+    button{color:inherit}
     .app{max-width:var(--max);margin:0 auto}
 
     .topbar{
@@ -46,304 +50,456 @@
     .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .logo{
       width:52px;height:52px;border-radius:18px;display:grid;place-items:center;flex:0 0 auto;
-      background:linear-gradient(135deg, #22d3ee, #8b5cf6);
+      background:linear-gradient(135deg,#22d3ee,#8b5cf6);
       color:#06111e;font-weight:950;font-size:18px;letter-spacing:-.05em;
-      box-shadow:0 18px 40px rgba(34,211,238,.18);position:relative;overflow:hidden;
+      box-shadow:0 18px 40px rgba(34,211,238,.18);
+      position:relative;overflow:hidden;
     }
-    .logo:after{
+    .logo::after{
       content:"";position:absolute;left:-8px;top:-18px;width:48px;height:48px;border-radius:999px;
       background:rgba(255,255,255,.36);filter:blur(12px)
     }
     .brand-copy h1{
       margin:0;font-size:21px;line-height:1.02;letter-spacing:-.055em;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .brand-copy p{
       margin:4px 0 0;font-size:12px;color:var(--muted2);
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
+
     .sync{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:999px;
-      padding:9px 12px;font-size:12px;color:var(--muted);white-space:nowrap;backdrop-filter:blur(18px)
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.055);
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      backdrop-filter:blur(18px);
     }
     .sync .dot{
       display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--amber);
-      margin-right:7px;vertical-align:1px;box-shadow:0 0 0 4px rgba(245,158,11,.12)
+      margin-right:7px;vertical-align:1px;
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
     .sync.ok .dot{background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
     .sync.bad .dot{background:var(--red);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
 
     .hero{
-      border:1px solid var(--stroke);border-radius:30px;
+      border:1px solid var(--stroke);
+      border-radius:30px;
       background:
-        linear-gradient(135deg, rgba(34,211,238,.13), rgba(139,92,246,.15)),
+        linear-gradient(135deg,rgba(34,211,238,.13),rgba(139,92,246,.15)),
         rgba(255,255,255,.05);
-      padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:14px
+      padding:20px;
+      box-shadow:var(--shadow);
+      position:relative;overflow:hidden;
+      margin-bottom:14px;
     }
-    .hero:before{
-      content:"";position:absolute;right:-80px;top:-90px;width:240px;height:240px;border-radius:999px;
-      background:radial-gradient(circle, rgba(139,92,246,.34), transparent 66%)
+    .hero::before{
+      content:"";position:absolute;right:-82px;top:-90px;width:240px;height:240px;border-radius:999px;
+      background:radial-gradient(circle,rgba(139,92,246,.34),transparent 66%);
     }
-    .hero:after{
+    .hero::after{
       content:"";position:absolute;left:-80px;bottom:-100px;width:250px;height:250px;border-radius:999px;
-      background:radial-gradient(circle, rgba(34,211,238,.22), transparent 64%)
+      background:radial-gradient(circle,rgba(34,211,238,.22),transparent 64%);
     }
-    .hero > *{position:relative;z-index:1}
+    .hero>*{position:relative;z-index:1}
     .hero-pill{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.10);
-      color:rgba(248,250,252,.88);font-size:12px;margin-bottom:14px
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.10);
+      color:rgba(248,250,252,.88);
+      font-size:12px;
+      margin-bottom:14px;
     }
     .hero h2{
-      margin:0;max-width:700px;font-size:33px;line-height:1.0;letter-spacing:-.065em
+      margin:0;max-width:720px;
+      font-size:32px;line-height:1.02;letter-spacing:-.062em;
     }
     .hero p{
-      margin:12px 0 0;max-width:650px;color:var(--muted);font-size:15px;line-height:1.46
+      margin:12px 0 0;max-width:680px;
+      color:var(--muted);
+      font-size:15px;line-height:1.46;
     }
     .hero-actions{
-      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;
     }
     .cta{
-      min-height:46px;border:none;border-radius:16px;padding:0 16px;font-weight:860;cursor:pointer
+      min-height:46px;border:none;border-radius:16px;padding:0 16px;
+      font-weight:860;cursor:pointer;
     }
     .cta.primary{
-      background:linear-gradient(135deg, #22d3ee, #8b5cf6);color:#fff;box-shadow:0 16px 32px rgba(0,0,0,.22)
+      background:linear-gradient(135deg,#22d3ee,#8b5cf6);
+      color:#fff;
+      box-shadow:0 16px 32px rgba(0,0,0,.22);
     }
     .cta.secondary{
-      background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--stroke)
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid var(--stroke);
     }
 
-    .search-shell{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:24px;
-      padding:14px;margin-bottom:14px;box-shadow:0 16px 42px rgba(0,0,0,.16);backdrop-filter:blur(18px)
+    .search-panel{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.055);
+      border-radius:24px;
+      padding:14px;
+      margin-bottom:14px;
+      box-shadow:0 16px 42px rgba(0,0,0,.16);
+      backdrop-filter:blur(18px);
     }
     .searchbox{
-      position:relative;border:1px solid var(--stroke2);background:rgba(8,11,25,.84);
-      border-radius:19px;overflow:hidden;margin-bottom:12px
+      position:relative;
+      border:1px solid var(--stroke2);
+      background:rgba(8,11,25,.86);
+      border-radius:19px;
+      overflow:hidden;
+      margin-bottom:12px;
     }
     .searchbox input{
-      width:100%;min-height:54px;border:none;outline:none;background:transparent;color:var(--text);
-      padding:0 48px 0 48px;font-size:15px
+      width:100%;
+      min-height:54px;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      padding:0 48px;
+      font-size:15px;
     }
     .searchbox input::placeholder{color:rgba(248,250,252,.42)}
-    .searchbox .icon{
-      position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:rgba(248,250,252,.56)
+    .searchbox .search-icon{
+      position:absolute;left:16px;top:50%;transform:translateY(-50%);
+      font-size:18px;color:rgba(248,250,252,.56);
     }
     .searchbox .clear{
-      display:none;place-items:center;position:absolute;right:12px;top:50%;transform:translateY(-50%);
-      width:30px;height:30px;border-radius:999px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer
+      display:none;place-items:center;
+      position:absolute;right:12px;top:50%;transform:translateY(-50%);
+      width:30px;height:30px;border-radius:999px;border:none;
+      background:rgba(255,255,255,.08);
+      color:#fff;cursor:pointer;
     }
     .searchbox .clear.show{display:grid}
-    .discover-row{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap
+
+    .quick-row{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
     }
-    .discover-row p{
-      margin:0;color:var(--muted2);font-size:13px
+    .quick-row p{
+      margin:0;color:var(--muted2);font-size:13px;
     }
     .quick-chips{
-      display:flex;gap:8px;overflow-x:auto;scrollbar-width:none
+      display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+      max-width:100%;
     }
     .quick-chips::-webkit-scrollbar{display:none}
     .qchip{
-      border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.06);color:#fff;
-      padding:8px 11px;font-size:12px;cursor:pointer;white-space:nowrap
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      padding:8px 11px;
+      font-size:12px;
+      cursor:pointer;
+      white-space:nowrap;
     }
 
     .action-row{
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;margin-bottom:14px;
     }
     .quick{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:20px;min-height:72px;
-      padding:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;
-      box-shadow:0 12px 34px rgba(0,0,0,.14)
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.055);
+      border-radius:20px;
+      min-height:72px;
+      padding:14px;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      box-shadow:0 12px 34px rgba(0,0,0,.14);
+      text-align:left;
     }
-    .quick b{display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:4px}
-    .quick span{display:block;font-size:12px;line-height:1.26;color:var(--muted2)}
+    .quick b{
+      display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:4px;
+    }
+    .quick span{
+      display:block;font-size:12px;line-height:1.26;color:var(--muted2);
+    }
     .quick .qicon{
       width:42px;height:42px;border-radius:15px;display:grid;place-items:center;flex:0 0 auto;
-      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.08);font-size:20px
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:20px;
     }
 
     .shell{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.05);border-radius:26px;
-      padding:14px;margin-bottom:14px;box-shadow:0 16px 42px rgba(0,0,0,.16);backdrop-filter:blur(18px)
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      border-radius:26px;
+      padding:14px;
+      margin-bottom:14px;
+      box-shadow:0 16px 42px rgba(0,0,0,.16);
+      backdrop-filter:blur(18px);
     }
     .section-head{
-      display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px;flex-wrap:wrap
+      display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap;
+      margin-bottom:12px;
     }
-    .section-head h3{margin:0;font-size:18px;letter-spacing:-.045em}
-    .section-head span{font-size:12px;color:var(--muted2);white-space:nowrap}
+    .section-head h3{
+      margin:0;font-size:18px;letter-spacing:-.045em;
+    }
+    .section-head span{
+      font-size:12px;color:var(--muted2);white-space:nowrap;
+    }
 
-    .visual-grid{
-      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px
+    .accordion{
+      display:grid;
+      gap:10px;
     }
-    .visual-card{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:22px;
-      min-height:148px;padding:12px;cursor:pointer;position:relative;overflow:hidden;transition:.16s ease
+    .cat{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.055);
+      border-radius:23px;
+      overflow:hidden;
+      position:relative;
     }
-    .visual-card.active{
+    .cat.active{
       border-color:rgba(34,211,238,.28);
       background:
-        linear-gradient(135deg, rgba(34,211,238,.13), rgba(139,92,246,.14)),
+        linear-gradient(135deg,rgba(34,211,238,.10),rgba(139,92,246,.12)),
         rgba(255,255,255,.06);
-      box-shadow:0 14px 32px rgba(0,0,0,.18)
     }
-    .visual-card:before{
-      content:"";position:absolute;right:-16px;top:-16px;width:78px;height:78px;border-radius:999px;
-      background:var(--glow);opacity:.95
+    .cat-head{
+      width:100%;
+      border:none;
+      background:transparent;
+      padding:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      cursor:pointer;
+      text-align:left;
+      position:relative;
+      overflow:hidden;
     }
-    .vicon{
-      width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
-      background:var(--grad);border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 18px rgba(0,0,0,.16);
-      position:relative;z-index:1;margin-bottom:12px;color:#fff;overflow:hidden
+    .cat-head::before{
+      content:"";
+      position:absolute;right:-22px;top:-24px;
+      width:100px;height:100px;border-radius:999px;
+      background:var(--glow);
+      opacity:.92;
     }
-    .vicon svg{width:28px;height:28px;display:block}
-    .visual-card h4{
-      margin:0 0 5px;font-size:15px;letter-spacing:-.03em;position:relative;z-index:1;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+    .cat-left{
+      display:flex;align-items:center;gap:14px;min-width:0;position:relative;z-index:1;
     }
-    .visual-card p{
-      margin:0;color:var(--muted2);font-size:12px;line-height:1.26;position:relative;z-index:1
+    .app-icon{
+      width:70px;height:70px;border-radius:20px;
+      display:grid;place-items:center;flex:0 0 auto;
+      background:var(--grad);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 14px 26px rgba(0,0,0,.20);
+      color:#fff;
+      overflow:hidden;
     }
-    .vcount{
-      position:absolute;right:12px;bottom:12px;z-index:1;border-radius:999px;padding:7px 9px;
-      background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:850
+    .app-icon svg{
+      width:62px;height:62px;display:block;
+    }
+    .cat-title{
+      min-width:0;
+    }
+    .cat-title h4{
+      margin:0 0 5px;
+      font-size:16px;
+      letter-spacing:-.025em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .cat-title p{
+      margin:0;
+      color:var(--muted2);
+      font-size:13px;
+      line-height:1.28;
+    }
+    .cat-right{
+      position:relative;z-index:1;
+      display:flex;align-items:center;gap:8px;flex:0 0 auto;
+    }
+    .cat-count{
+      border-radius:999px;
+      padding:8px 10px;
+      background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.085);
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .chev{
+      width:34px;height:34px;
+      border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.08);
+      color:rgba(248,250,252,.82);
+      transition:.18s ease;
+    }
+    .cat.active .chev{transform:rotate(180deg)}
+    .cat-body{
+      display:none;
+      padding:0 12px 12px;
+      position:relative;
+      z-index:1;
+    }
+    .cat.active .cat-body{display:block}
+
+    .inside-list{
+      display:grid;
+      gap:8px;
+      padding-top:2px;
+    }
+    .inside-course{
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(0,0,0,.16);
+      border-radius:18px;
+      padding:12px;
+    }
+    .inside-top{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+    }
+    .inside-course h5{
+      margin:0;
+      font-size:15px;
+      line-height:1.18;
+      letter-spacing:-.025em;
+    }
+    .price{
+      white-space:nowrap;
+      border-radius:999px;
+      padding:7px 9px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.18);
+      color:#dcfce7;
+      font-weight:900;
+      font-size:12px;
+    }
+    .meta{
+      display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;
+    }
+    .tag{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.07);
+      color:rgba(248,250,252,.72);
+      border-radius:999px;
+      padding:6px 8px;
+      font-size:11px;
+      line-height:1;
+    }
+    .course-text{
+      margin:9px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.38;
+    }
+    .buy-btn{
+      width:100%;
+      min-height:40px;
+      border-radius:14px;
+      border:1px solid rgba(34,211,238,.25);
+      background:linear-gradient(135deg,rgba(34,211,238,.24),rgba(139,92,246,.24));
+      color:#fff;
+      cursor:pointer;
+      font-weight:850;
+      margin-top:10px;
     }
 
-    .list-wrap{margin-top:14px}
-    .category-list{display:grid;gap:8px}
-    .category-item{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.05);border-radius:18px;padding:11px 12px;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer
-    }
-    .category-item.active{
-      border-color:rgba(34,211,238,.28);background:rgba(255,255,255,.08)
-    }
-    .category-left{display:flex;align-items:center;gap:10px;min-width:0}
-    .mini-icon{
-      width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--grad);
-      border:1px solid rgba(255,255,255,.16);flex:0 0 auto;color:#fff;overflow:hidden
-    }
-    .mini-icon svg{width:22px;height:22px;display:block}
-    .category-copy{min-width:0}
-    .category-copy h4{margin:0 0 3px;font-size:14px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .category-copy p{margin:0;color:var(--muted2);font-size:12px}
-    .category-count{
-      border-radius:999px;padding:7px 9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);
-      font-size:12px;font-weight:850;white-space:nowrap
-    }
-
-    .sticky-tools{
-      position:sticky;top:8px;z-index:5;background:linear-gradient(180deg, rgba(6,9,20,.96), rgba(6,9,20,.74));
-      padding-bottom:10px;margin-bottom:2px
-    }
     .chips{
-      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none
+      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:12px;
     }
     .chips::-webkit-scrollbar{display:none}
     .chip{
-      border:1px solid var(--stroke);border-radius:999px;background:rgba(255,255,255,.055);color:rgba(248,250,252,.82);
-      padding:10px 12px;white-space:nowrap;font-size:13px;cursor:pointer
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:rgba(255,255,255,.055);
+      color:rgba(248,250,252,.82);
+      padding:10px 12px;
+      white-space:nowrap;
+      font-size:13px;
+      cursor:pointer;
     }
     .chip.active{
-      border-color:rgba(34,211,238,.28);background:linear-gradient(135deg, rgba(34,211,238,.18), rgba(139,92,246,.20));color:#fff
+      border-color:rgba(34,211,238,.28);
+      background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(139,92,246,.20));
+      color:#fff;
     }
 
-    .course-list{display:grid;gap:10px}
-    .course-card{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:22px;padding:14px;position:relative;overflow:hidden
+    .results-panel{
+      display:none;
     }
-    .course-card:before{
-      content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#22d3ee,#8b5cf6)
+    .results-panel.show{
+      display:block;
     }
-    .course-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .course-title{margin:0;font-size:17px;line-height:1.16;letter-spacing:-.035em}
-    .price{
-      white-space:nowrap;border-radius:999px;padding:8px 10px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.18);
-      color:#dcfce7;font-weight:900;font-size:12px
-    }
-    .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .tag{
-      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.07);color:rgba(248,250,252,.72);
-      border-radius:999px;padding:6px 8px;font-size:11px;line-height:1
-    }
-    .course-text{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.42}
-    .course-actions{display:flex;gap:8px;margin-top:12px}
-    .btn{
-      min-height:42px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;color:#fff;
-      background:rgba(255,255,255,.08);font-weight:850;cursor:pointer;flex:1
-    }
-    .btn.primary{
-      border-color:rgba(34,211,238,.26);background:linear-gradient(135deg, rgba(34,211,238,.24), rgba(139,92,246,.24))
+    .result-list{
+      display:grid;gap:8px;
     }
 
     .empty,.loading{
-      text-align:center;padding:22px 10px;color:var(--muted);font-size:14px;line-height:1.42
+      text-align:center;
+      padding:22px 10px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.42;
     }
     .empty{display:none}
-    .footer{text-align:center;color:rgba(248,250,252,.42);font-size:12px;line-height:1.4;padding:8px 4px 2px}
 
-    .fab{
-      position:fixed;right:14px;bottom:74px;z-index:12;min-height:52px;border:none;border-radius:18px;padding:0 16px;
-      background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 18px 42px rgba(0,0,0,.30)
+    .footer{
+      text-align:center;
+      color:rgba(248,250,252,.42);
+      font-size:12px;
+      line-height:1.4;
+      padding:8px 4px 2px;
     }
+
     .toast{
-      position:fixed;left:12px;right:12px;bottom:16px;max-width:var(--max);margin:0 auto;border:1px solid var(--stroke);
-      border-radius:18px;background:rgba(6,8,22,.94);color:#fff;padding:13px 14px;box-shadow:0 18px 50px rgba(0,0,0,.45);
-      backdrop-filter:blur(18px);transform:translateY(120%);opacity:0;transition:.23s ease;z-index:30;font-size:14px;line-height:1.35
+      position:fixed;left:12px;right:12px;bottom:16px;max-width:var(--max);margin:0 auto;
+      border:1px solid var(--stroke);
+      border-radius:18px;
+      background:rgba(6,8,22,.94);
+      color:#fff;
+      padding:13px 14px;
+      box-shadow:0 18px 50px rgba(0,0,0,.45);
+      backdrop-filter:blur(18px);
+      transform:translateY(120%);
+      opacity:0;
+      transition:.23s ease;
+      z-index:30;
+      font-size:14px;
+      line-height:1.35;
     }
     .toast.show{transform:translateY(0);opacity:1}
 
-    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.54);opacity:0;pointer-events:none;transition:.2s ease;z-index:18}
-    .backdrop.show{opacity:1;pointer-events:auto}
-    .modal{
-      position:fixed;left:0;right:0;bottom:0;z-index:20;max-width:var(--max);margin:0 auto;padding:0 12px 12px;
-      transform:translateY(105%);transition:.24s ease
-    }
-    .modal.show{transform:translateY(0)}
-    .modal-card{
-      border:1px solid var(--stroke);background:linear-gradient(180deg, rgba(12,16,30,.98), rgba(8,11,24,.98));
-      border-radius:28px 28px 22px 22px;padding:14px;box-shadow:0 -18px 50px rgba(0,0,0,.30)
-    }
-    .drag{width:54px;height:5px;border-radius:999px;background:rgba(255,255,255,.18);margin:2px auto 12px}
-    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-    .modal-head h4{margin:0;font-size:18px;letter-spacing:-.04em}
-    .close{
-      width:34px;height:34px;border-radius:12px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:#fff;cursor:pointer
-    }
-    .modal-list{display:grid;gap:10px;max-height:58vh;overflow:auto;padding-right:2px}
-    .modal-item{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);border-radius:20px;padding:13px
-    }
-    .modal-item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-    .modal-item h5{margin:0;font-size:15px;line-height:1.18;letter-spacing:-.03em}
-    .modal-item .mprice{white-space:nowrap;font-size:16px;font-weight:950;color:#dcfce7;letter-spacing:-.04em}
-    .modal-item p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
-    .modal-item .meta{margin-top:10px}
-    .modal-btn{
-      min-height:40px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;width:100%;
-      color:#fff;background:linear-gradient(135deg, rgba(34,211,238,.24), rgba(139,92,246,.24));font-weight:850;cursor:pointer;margin-top:12px
-    }
-
-    @media (max-width:900px){
-      .visual-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:840px){
       .action-row{grid-template-columns:1fr}
-    }
-    @media (max-width:620px){
-      .visual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
     @media (max-width:540px){
       body{padding:12px 10px 28px}
       .hero{padding:18px;border-radius:28px}
       .hero h2{font-size:28px}
       .sync{display:none}
-      .course-actions{flex-direction:column}
       .brand-copy h1{font-size:19px}
       .logo{width:50px;height:50px}
-      .visual-card{min-height:138px}
+      .app-icon{width:66px;height:66px;border-radius:19px}
+      .app-icon svg{width:60px;height:60px}
+      .cat-head{padding:11px}
+      .cat-left{gap:12px}
+      .cat-title h4{font-size:15px}
+      .cat-title p{font-size:12px}
+      .cat-count{display:none}
     }
   </style>
 </head>
+
 <body>
   <main class="app">
     <header class="topbar">
@@ -358,110 +514,78 @@
     </header>
 
     <section class="hero">
-      <div class="hero-pill">📐 Легкий поиск нужного курса</div>
-      <h2>Находи курсы и по поиску, и графически по значкам официального стиля</h2>
-      <p>Сделал иконки разделов более похожими на официальные программы: по цвету, форме и визуальному характеру. Так пользователь быстрее находит нужный раздел.</p>
+      <div class="hero-pill">📐 Сквозной каталог курсов</div>
+      <h2>Найди нужный курс через поиск или раскрой раздел с программой</h2>
+      <p>
+        Разделы теперь открываются как список: нажми на программу — внутри сразу появятся все курсы,
+        цена и кнопка оформления доступа.
+      </p>
       <div class="hero-actions">
-        <button class="cta primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Найти курс</button>
-        <button class="cta secondary" onclick="openTariffsModal()">Все тарифы</button>
+        <button class="cta primary" onclick="scrollToCatalog()">Выбрать курс</button>
+        <button class="cta secondary" onclick="openPlans()">Тарифы</button>
       </div>
     </section>
 
-    <section class="search-shell">
+    <section class="search-panel">
       <div class="searchbox">
-        <span class="icon">⌕</span>
-        <input id="searchInput" type="search" placeholder="Найти курс, программу, автора или тему..." oninput="renderAll()" />
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" type="search" placeholder="Поиск по курсу, программе, автору или теме..." oninput="renderAll()" />
         <button class="clear" id="clearSearch" onclick="clearSearch()">×</button>
       </div>
-      <div class="discover-row">
-        <p>Быстрый поиск: нажми на популярное направление</p>
+      <div class="quick-row">
+        <p>Быстрый поиск</p>
         <div class="quick-chips" id="quickChips"></div>
       </div>
     </section>
 
     <section class="action-row">
-      <button class="quick" onclick="openTariffsModal()">
+      <button class="quick" onclick="openPlans()">
         <span>
           <b>Тарифы</b>
-          <span>Все курсы и цены</span>
+          <span>Команда /plans</span>
         </span>
         <span class="qicon">💳</span>
       </button>
       <button class="quick" onclick="openSubscription()">
         <span>
           <b>Моя подписка</b>
-          <span>Проверить доступ</span>
+          <span>Команда /status</span>
         </span>
         <span class="qicon">🔐</span>
       </button>
       <button class="quick" onclick="openSupport()">
         <span>
           <b>Поддержка</b>
-          <span>Если не открылся доступ</span>
+          <span>Команда /help</span>
         </span>
         <span class="qicon">💬</span>
       </button>
     </section>
 
-    <section class="shell">
-      <div class="section-head">
-        <h3>Разделы по программам</h3>
-        <span id="categorySummary">Загрузка категорий…</span>
-      </div>
-      <div class="visual-grid" id="visualGrid">
-        <div class="loading">Загружаю значки разделов…</div>
-      </div>
-
-      <div class="list-wrap">
-        <div class="section-head" style="margin:0 0 10px">
-          <h3 style="font-size:16px">Список категорий</h3>
-          <span>для быстрого просмотра</span>
-        </div>
-        <div class="category-list" id="categoryList"></div>
-      </div>
-    </section>
-
     <section class="shell" id="catalog">
       <div class="section-head">
-        <h3>Курсы</h3>
-        <span id="countLabel">Загрузка…</span>
+        <h3>Категории курсов</h3>
+        <span id="categorySummary">Загрузка категорий…</span>
       </div>
 
-      <div class="sticky-tools">
-        <div class="chips" id="chips"></div>
-      </div>
+      <div class="chips" id="chips"></div>
 
-      <div class="course-list" id="courseList">
+      <div class="accordion" id="accordion">
         <div class="loading">Загружаю курсы из таблицы…</div>
       </div>
-      <div class="empty" id="emptyState">Ничего не найдено. Попробуй поиск или нажми на нужную категорию выше.</div>
+      <div class="empty" id="emptyState">Ничего не найдено. Попробуй другое слово или выбери раздел вручную.</div>
     </section>
 
     <div class="footer">
-      CAD Академия · поиск, категории, официально-похожие иконки и покупка доступа
+      CAD Академия · сквозной поиск · раскрывающиеся разделы · оформление доступа
     </div>
   </main>
-
-  <button class="fab" onclick="openTariffsModal()">Тарифы</button>
-
-  <div class="backdrop" id="backdrop" onclick="closeTariffsModal()"></div>
-  <div class="modal" id="tariffsModal">
-    <div class="modal-card">
-      <div class="drag"></div>
-      <div class="modal-head">
-        <h4>Курсы и тарифы</h4>
-        <button class="close" onclick="closeTariffsModal()">✕</button>
-      </div>
-      <div id="tariffContainer">
-        <div class="loading">Загрузка…</div>
-      </div>
-    </div>
-  </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
     const tg = window.Telegram?.WebApp;
+
     if (tg) {
       tg.ready();
       tg.expand();
@@ -476,23 +600,54 @@
       SHEET_GID: "0",
       LINKS: {
         bot: "https://t.me/CAD_Academy_bot",
-        subscription: "https://t.me/CAD_Academy_bot?start=subscription",
-        support: "https://t.me/Revit_help_bot"
+        plans: "https://t.me/CAD_Academy_bot?start=plans",
+        subscription: "https://t.me/CAD_Academy_bot?start=status",
+        support: "https://t.me/CAD_Academy_bot?start=help"
       }
     };
 
     const fallbackCourses = [
-      { category:"Revit", title:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" },
-      { category:"AutoCAD", title:"AutoCAD: чертежи и оформление", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"397", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" },
-      { category:"3ds Max", title:"3ds Max: моделирование и визуализация", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"397", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" }
+      {
+        category:"Revit",
+        title:"Ландшафт в Revit",
+        lessons:"18",
+        duration:"2 часа",
+        author:"Владимир Выборный",
+        tariff:"1 месяц доступ",
+        price:"197",
+        link:"https://t.me/CAD_Academy_bot?start=plans",
+        buttonText:"Оформить доступ"
+      },
+      {
+        category:"AutoCAD",
+        title:"AutoCAD: чертежи и оформление",
+        lessons:"",
+        duration:"",
+        author:"",
+        tariff:"1 месяц доступ",
+        price:"397",
+        link:"https://t.me/CAD_Academy_bot?start=plans",
+        buttonText:"Оформить доступ"
+      },
+      {
+        category:"3ds Max",
+        title:"3ds Max: моделирование и визуализация",
+        lessons:"",
+        duration:"",
+        author:"",
+        tariff:"1 месяц доступ",
+        price:"397",
+        link:"https://t.me/CAD_Academy_bot?start=plans",
+        buttonText:"Оформить доступ"
+      }
     ];
 
     let allCourses = [];
-    let categories = ["Все"];
+    let categories = [];
+    let openCategory = "";
     let activeCategory = "Все";
 
     const visuals = [
-      { match:["все"], title:"Все курсы", note:"Весь каталог", grad:"linear-gradient(135deg,#164e63,#7c3aed)", glow:"rgba(139,92,246,.22)", icon:"all" },
       { match:["revit"], title:"Revit", note:"BIM и проектирование", grad:"linear-gradient(135deg,#2563eb,#1d4ed8)", glow:"rgba(56,189,248,.22)", icon:"revit" },
       { match:["шаблон","template"], title:"Revit шаблоны", note:"Шаблоны и стандарты", grad:"linear-gradient(135deg,#0f766e,#06b6d4)", glow:"rgba(6,182,212,.22)", icon:"templates" },
       { match:["семейств"], title:"Revit семейства", note:"Семейства и библиотеки", grad:"linear-gradient(135deg,#0f766e,#14b8a6)", glow:"rgba(20,184,166,.22)", icon:"families" },
@@ -510,108 +665,22 @@
 
     function iconSVG(type){
       const icons = {
-        all: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="4" width="6" height="6" rx="1.5" fill="currentColor" opacity=".95"/>
-            <rect x="14" y="4" width="6" height="6" rx="1.5" fill="currentColor" opacity=".85"/>
-            <rect x="4" y="14" width="6" height="6" rx="1.5" fill="currentColor" opacity=".75"/>
-            <rect x="14" y="14" width="6" height="6" rx="1.5" fill="currentColor" opacity=".65"/>
-          </svg>
-        `,
-        revit: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 19V6.8l6.8-2.6 7.2 2.5V19l-7.1 2L5 19Z" fill="rgba(255,255,255,.20)"/>
-            <path d="M5 19V6.8l6.8 4.1V21L5 19Z" fill="rgba(255,255,255,.12)"/>
-            <path d="M11.8 4.2 19 6.7 11.8 10.9 5 6.8l6.8-2.6Z" fill="rgba(255,255,255,.28)"/>
-            <path d="M9.1 17V8.2h4.2c1.8 0 2.9 1 2.9 2.4 0 1.2-.7 2.1-1.9 2.4L16.2 17h-2.5l-1.6-3.5h-.8V17H9.1Zm2.2-5.1h1.6c.8 0 1.3-.4 1.3-1.1s-.5-1.1-1.3-1.1h-1.6v2.2Z" fill="white"/>
-          </svg>
-        `,
-        templates: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="5" y="4" width="11" height="15" rx="2.2" fill="rgba(255,255,255,.20)"/>
-            <rect x="8" y="7" width="9" height="13" rx="2.2" fill="rgba(255,255,255,.12)"/>
-            <path d="M9.5 9.5H14.5M9.5 12.5H14.5M9.5 15.5H12.8" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        families: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="10" width="6.5" height="6.5" rx="1.6" fill="rgba(255,255,255,.18)"/>
-            <rect x="13.5" y="7" width="6.5" height="6.5" rx="1.6" fill="rgba(255,255,255,.26)"/>
-            <rect x="9.3" y="4" width="5.2" height="5.2" rx="1.3" fill="rgba(255,255,255,.12)"/>
-            <path d="M10.5 13h3M13.5 13v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        autocad: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 3 5 20h3.1l1.4-3.5h5l1.4 3.5H19L12 3Z" fill="white"/>
-            <path d="M10.3 13.5 12 9.3l1.7 4.2h-3.4Z" fill="rgba(127,29,29,.78)"/>
-          </svg>
-        `,
-        civil: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 4c1.9 3.2 1.9 12.8 0 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            <path d="M18 4c-1.9 3.2-1.9 12.8 0 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            <path d="M9.5 7.5h5M9 12h6M9.5 16.5h5" stroke="rgba(255,255,255,.86)" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        max: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 3 5 7.2 12 11.2 19 7.2 12 3Z" fill="rgba(255,255,255,.30)"/>
-            <path d="M5 7.2V16.8L12 21V11.2L5 7.2Z" fill="rgba(255,255,255,.16)"/>
-            <path d="M19 7.2V16.8L12 21V11.2L19 7.2Z" fill="rgba(255,255,255,.10)"/>
-            <path d="M12 3v8.2" stroke="white" stroke-width="1.6" opacity=".9"/>
-          </svg>
-        `,
-        archicad: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M5 19h14" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M7 19V10c0-3 2.3-5.5 5-5.5S17 7 17 10v9" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M10 19v-4h4v4" stroke="rgba(255,255,255,.82)" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        sketchup: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M4 8 12 4l8 4-8 4-8-4Z" fill="rgba(255,255,255,.26)"/>
-            <path d="M4 8v8l8 4V12L4 8Z" fill="rgba(255,255,255,.14)"/>
-            <path d="M20 8v8l-8 4V12l8-4Z" fill="rgba(255,255,255,.10)"/>
-          </svg>
-        `,
-        twinmotion: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M6 5h12v3h-4v11h-4V8H6V5Z" fill="white"/>
-            <circle cx="17" cy="17" r="3.2" fill="rgba(255,255,255,.18)"/>
-          </svg>
-        `,
-        home: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-7.5Z" fill="rgba(255,255,255,.20)" stroke="white" stroke-width="1.4" stroke-linejoin="round"/>
-          </svg>
-        `,
-        install: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="5" y="5" width="14" height="10" rx="2" fill="rgba(255,255,255,.18)"/>
-            <path d="M12 8v6M9.5 11.5 12 14l2.5-2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 19h8" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        itr: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M4 10 12 4l8 6v2H4v-2Z" fill="rgba(255,255,255,.22)"/>
-            <path d="M8 12v2.5a4 4 0 0 0 8 0V12" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M12 8v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        `,
-        ai: `
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="6" cy="12" r="2.2" fill="rgba(255,255,255,.92)"/>
-            <circle cx="18" cy="7" r="2.2" fill="rgba(255,255,255,.82)"/>
-            <circle cx="18" cy="17" r="2.2" fill="rgba(255,255,255,.72)"/>
-            <circle cx="12" cy="12" r="2.2" fill="rgba(255,255,255,.62)"/>
-            <path d="M8.2 12h1.6M13.6 10.6l2.5-2M13.6 13.4l2.5 2" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        `
+        revit: `<svg viewBox="0 0 24 24" fill="none"><path d="M5 19V6.8l6.8-2.6 7.2 2.5V19l-7.1 2L5 19Z" fill="rgba(255,255,255,.20)"/><path d="M5 19V6.8l6.8 4.1V21L5 19Z" fill="rgba(255,255,255,.12)"/><path d="M11.8 4.2 19 6.7 11.8 10.9 5 6.8l6.8-2.6Z" fill="rgba(255,255,255,.28)"/><path d="M9.1 17V8.2h4.2c1.8 0 2.9 1 2.9 2.4 0 1.2-.7 2.1-1.9 2.4L16.2 17h-2.5l-1.6-3.5h-.8V17H9.1Zm2.2-5.1h1.6c.8 0 1.3-.4 1.3-1.1s-.5-1.1-1.3-1.1h-1.6v2.2Z" fill="white"/></svg>`,
+        templates: `<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="11" height="15" rx="2.2" fill="rgba(255,255,255,.20)"/><rect x="8" y="7" width="9" height="13" rx="2.2" fill="rgba(255,255,255,.12)"/><path d="M9.5 9.5H14.5M9.5 12.5H14.5M9.5 15.5H12.8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        families: `<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="6.5" height="6.5" rx="1.6" fill="rgba(255,255,255,.18)"/><rect x="13.5" y="7" width="6.5" height="6.5" rx="1.6" fill="rgba(255,255,255,.26)"/><rect x="9.3" y="4" width="5.2" height="5.2" rx="1.3" fill="rgba(255,255,255,.12)"/><path d="M10.5 13h3M13.5 13v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        autocad: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 20h3.1l1.4-3.5h5l1.4 3.5H19L12 3Z" fill="white"/><path d="M10.3 13.5 12 9.3l1.7 4.2h-3.4Z" fill="rgba(127,29,29,.78)"/></svg>`,
+        civil: `<svg viewBox="0 0 24 24" fill="none"><path d="M6 4c1.9 3.2 1.9 12.8 0 16" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M18 4c-1.9 3.2-1.9 12.8 0 16" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M9.5 7.5h5M9 12h6M9.5 16.5h5" stroke="rgba(255,255,255,.86)" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        max: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 5 7.2 12 11.2 19 7.2 12 3Z" fill="rgba(255,255,255,.30)"/><path d="M5 7.2V16.8L12 21V11.2L5 7.2Z" fill="rgba(255,255,255,.16)"/><path d="M19 7.2V16.8L12 21V11.2L19 7.2Z" fill="rgba(255,255,255,.10)"/><path d="M12 3v8.2" stroke="white" stroke-width="1.6" opacity=".9"/></svg>`,
+        archicad: `<svg viewBox="0 0 24 24" fill="none"><path d="M5 19h14" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M7 19V10c0-3 2.3-5.5 5-5.5S17 7 17 10v9" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M10 19v-4h4v4" stroke="rgba(255,255,255,.82)" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        sketchup: `<svg viewBox="0 0 24 24" fill="none"><path d="M4 8 12 4l8 4-8 4-8-4Z" fill="rgba(255,255,255,.26)"/><path d="M4 8v8l8 4V12L4 8Z" fill="rgba(255,255,255,.14)"/><path d="M20 8v8l-8 4V12l8-4Z" fill="rgba(255,255,255,.10)"/></svg>`,
+        twinmotion: `<svg viewBox="0 0 24 24" fill="none"><path d="M6 5h12v3h-4v11h-4V8H6V5Z" fill="white"/><circle cx="17" cy="17" r="3.2" fill="rgba(255,255,255,.18)"/></svg>`,
+        home: `<svg viewBox="0 0 24 24" fill="none"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-7.5Z" fill="rgba(255,255,255,.20)" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg>`,
+        install: `<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="10" rx="2" fill="rgba(255,255,255,.18)"/><path d="M12 8v6M9.5 11.5 12 14l2.5-2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 19h8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        itr: `<svg viewBox="0 0 24 24" fill="none"><path d="M4 10 12 4l8 6v2H4v-2Z" fill="rgba(255,255,255,.22)"/><path d="M8 12v2.5a4 4 0 0 0 8 0V12" stroke="white" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+        ai: `<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.2" fill="rgba(255,255,255,.92)"/><circle cx="18" cy="7" r="2.2" fill="rgba(255,255,255,.82)"/><circle cx="18" cy="17" r="2.2" fill="rgba(255,255,255,.72)"/><circle cx="12" cy="12" r="2.2" fill="rgba(255,255,255,.62)"/><path d="M8.2 12h1.6M13.6 10.6l2.5-2M13.6 13.4l2.5 2" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+        default: `<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="currentColor" opacity=".95"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="currentColor" opacity=".85"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="currentColor" opacity=".75"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="currentColor" opacity=".65"/></svg>`
       };
-      return icons[type] || icons.all;
+      return icons[type] || icons.default;
     }
 
     function vibrate(type="light"){
@@ -628,8 +697,8 @@
 
     function openUrl(url){
       vibrate();
-      if(!url || String(url).includes("REPLACE_")){
-        showToast("Ссылка ещё не настроена.");
+      if(!url){
+        showToast("Ссылка пока не настроена.");
         return;
       }
       if(tg && String(url).includes("t.me/")) tg.openTelegramLink(url);
@@ -637,8 +706,13 @@
       else window.open(url, "_blank", "noopener,noreferrer");
     }
 
-    function openSupport(){ openUrl(CONFIG.LINKS.support); }
+    function openPlans(){ openUrl(CONFIG.LINKS.plans); }
     function openSubscription(){ openUrl(CONFIG.LINKS.subscription); }
+    function openSupport(){ openUrl(CONFIG.LINKS.support); }
+
+    function scrollToCatalog(){
+      document.getElementById("catalog").scrollIntoView({behavior:"smooth", block:"start"});
+    }
 
     function normalize(str){
       return String(str ?? "")
@@ -652,8 +726,11 @@
 
     function escapeHtml(str){
       return String(str ?? "")
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
     function escapeAttr(str){
@@ -661,7 +738,8 @@
     }
 
     function wordCourses(n){
-      const last = n % 10, last2 = n % 100;
+      const last = n % 10;
+      const last2 = n % 100;
       if(last === 1 && last2 !== 11) return "курс";
       if([2,3,4].includes(last) && ![12,13,14].includes(last2)) return "курса";
       return "курсов";
@@ -696,7 +774,10 @@
     function loadGoogleSheet(){
       return new Promise((resolve, reject) => {
         const callbackName = "__cadSheetCallback_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-        const timeout = setTimeout(() => { cleanup(); reject(new Error("Google Sheet loading timeout")); }, 12000);
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("Google Sheet loading timeout"));
+        }, 12000);
 
         function cleanup(){
           clearTimeout(timeout);
@@ -717,7 +798,10 @@
         const tqx = encodeURIComponent(`responseHandler:${callbackName};out:json`);
         const tq = encodeURIComponent("select *");
         script.src = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?gid=${CONFIG.SHEET_GID}&tqx=${tqx}&tq=${tq}`;
-        script.onerror = () => { cleanup(); reject(new Error("Google Sheet script loading failed")); };
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("Google Sheet script loading failed"));
+        };
         document.body.appendChild(script);
       });
     }
@@ -726,13 +810,19 @@
       const table = response?.table;
       if(!table?.cols?.length || !table?.rows?.length) return [];
 
-      const headers = table.cols.map((col, index) => String(col.label || col.id || "").trim() || `Колонка ${index+1}`);
+      const headers = table.cols.map((col, index) => {
+        const label = String(col.label || col.id || "").trim();
+        return label || `Колонка ${index + 1}`;
+      });
+
       const result = [];
       let lastCategory = "";
 
       for(const row of table.rows){
         const obj = {};
-        headers.forEach((header, index) => obj[header] = cellValue(row.c?.[index]));
+        headers.forEach((header, index) => {
+          obj[header] = cellValue(row.c?.[index]);
+        });
 
         const rawCategory = findValue(obj, ["Категория", "Category"]);
         const category = rawCategory || lastCategory;
@@ -743,6 +833,7 @@
         const price = findValue(obj, ["Цена", "Price"]);
         const buttonText = findValue(obj, ["Текст кнопки", "Кнопка", "Button"]);
         const meaningful = title || link || (category && price && price !== "0");
+
         if(!meaningful) continue;
         if(!title && !link) continue;
 
@@ -758,6 +849,7 @@
           buttonText: buttonText || "Оформить доступ"
         });
       }
+
       return result;
     }
 
@@ -772,207 +864,182 @@
     function visualForCategory(category){
       const n = normalize(category);
       const found = visuals.find(v => v.match.some(m => n.includes(normalize(m))));
-      return found || { title:category || "Курсы", note:"Раздел", grad:"linear-gradient(135deg,#22d3ee,#8b5cf6)", glow:"rgba(139,92,246,.22)", icon:"all" };
+      return found || {
+        title: category || "Курсы",
+        note: "Раздел",
+        grad: "linear-gradient(135deg,#22d3ee,#8b5cf6)",
+        glow: "rgba(139,92,246,.22)",
+        icon: "default"
+      };
     }
 
-    function categoryMatches(course, selected){
-      if(selected === "Все") return true;
-      const c = normalize(course.category);
-      const s = normalize(selected);
-      return c === s || c.includes(s) || s.includes(c);
+    function courseMatchesCategory(course, category){
+      return normalize(course.category) === normalize(category);
     }
 
     function searchMatches(course, query){
       if(!query) return true;
-      const haystack = [course.category, course.title, course.lessons, course.duration, course.author, course.tariff, course.price].join(" ");
+      const haystack = [
+        course.category,
+        course.title,
+        course.lessons,
+        course.duration,
+        course.author,
+        course.tariff,
+        course.price
+      ].join(" ");
       return normalize(haystack).includes(normalize(query));
     }
 
-    function filteredCourses(){
+    function groupedCourses(){
       const query = document.getElementById("searchInput").value.trim();
-      return allCourses.filter(course => categoryMatches(course, activeCategory) && searchMatches(course, query));
+      return categories.map(category => {
+        const courses = allCourses.filter(course => courseMatchesCategory(course, category) && searchMatches(course, query));
+        return { category, courses };
+      }).filter(group => group.courses.length > 0 || !query);
     }
 
-    function setCategory(category){
-      activeCategory = category;
-      renderAll();
-      document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
-    }
+    function courseCard(course){
+      const price = priceText(course.price);
+      const meta = [];
+      if(course.lessons) meta.push(`${course.lessons} уроков`);
+      if(course.duration) meta.push(course.duration);
+      if(course.author) meta.push(course.author);
 
-    function clearSearch(){
-      document.getElementById("searchInput").value = "";
-      renderAll();
+      return `
+        <div class="inside-course">
+          <div class="inside-top">
+            <h5>${escapeHtml(course.title)}</h5>
+            ${price ? `<span class="price">${escapeHtml(price)}</span>` : ""}
+          </div>
+
+          <div class="meta">
+            ${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}
+          </div>
+
+          ${course.tariff ? `<p class="course-text">${escapeHtml(course.tariff)}</p>` : ""}
+
+          <button class="buy-btn" onclick="event.stopPropagation(); openUrl('${escapeAttr(course.link || CONFIG.LINKS.plans)}')">
+            ${escapeHtml(course.buttonText || "Оформить доступ")}
+          </button>
+        </div>
+      `;
     }
 
     function renderQuickChips(){
       const wrap = document.getElementById("quickChips");
-      const preferred = ["Revit","AutoCAD","3ds Max","ArchiCAD","Нейросети","SketchUp"];
-      wrap.innerHTML = preferred.map(item => `<button class="qchip" onclick="applyQuick('${escapeAttr(item)}')">${escapeHtml(item)}</button>`).join("");
-    }
-
-    function applyQuick(text){
-      document.getElementById("searchInput").value = text;
-      activeCategory = "Все";
-      renderAll();
-      document.getElementById('catalog').scrollIntoView({behavior:'smooth', block:'start'});
-    }
-
-    function renderVisualGrid(){
-      const grid = document.getElementById("visualGrid");
-      const summary = document.getElementById("categorySummary");
-      const items = categories.map(cat => {
-        const count = cat === "Все" ? allCourses.length : allCourses.filter(item => categoryMatches(item, cat)).length;
-        return { name:cat, count, visual:visualForCategory(cat) };
-      });
-
-      summary.textContent = `${categories.length - 1} категорий · нажми на иконку, чтобы отфильтровать`;
-
-      grid.innerHTML = items.map(item => `
-        <article class="visual-card ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
-                 style="--grad:${item.visual.grad};--glow:${item.visual.glow}"
-                 onclick="setCategory('${escapeAttr(item.name)}')">
-          <div class="vicon">${iconSVG(item.visual.icon)}</div>
-          <h4>${escapeHtml(item.name === "Все" ? "Все курсы" : item.name)}</h4>
-          <p>${escapeHtml(item.visual.note)}</p>
-          <div class="vcount">${item.count}</div>
-        </article>
-      `).join("");
-    }
-
-    function renderCategoryList(){
-      const list = document.getElementById("categoryList");
-      const items = categories.map(cat => {
-        const count = cat === "Все" ? allCourses.length : allCourses.filter(item => categoryMatches(item, cat)).length;
-        return { name:cat, count, visual:visualForCategory(cat) };
-      });
-
-      list.innerHTML = items.map(item => `
-        <article class="category-item ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
-                 onclick="setCategory('${escapeAttr(item.name)}')">
-          <div class="category-left">
-            <div class="mini-icon" style="--grad:${item.visual.grad}">${iconSVG(item.visual.icon)}</div>
-            <div class="category-copy">
-              <h4>${escapeHtml(item.name === "Все" ? "Все курсы" : item.name)}</h4>
-              <p>${escapeHtml(item.visual.note)}</p>
-            </div>
-          </div>
-          <div class="category-count">${item.count}</div>
-        </article>
+      const preferred = ["Revit","AutoCAD","3ds Max","ArchiCAD","SketchUp","Нейросети"];
+      wrap.innerHTML = preferred.map(item => `
+        <button class="qchip" onclick="applyQuick('${escapeAttr(item)}')">${escapeHtml(item)}</button>
       `).join("");
     }
 
     function renderChips(){
       const wrap = document.getElementById("chips");
-      wrap.innerHTML = categories.map(category => `
-        <button class="chip ${normalize(category) === normalize(activeCategory) ? "active" : ""}" onclick="setCategory('${escapeAttr(category)}')">
-          ${escapeHtml(category)}
-        </button>
-      `).join("");
+      wrap.innerHTML = `
+        <button class="chip ${activeCategory === "Все" ? "active" : ""}" onclick="setCategory('Все')">Все</button>
+        ${categories.map(category => `
+          <button class="chip ${normalize(category) === normalize(activeCategory) ? "active" : ""}" onclick="setCategory('${escapeAttr(category)}')">
+            ${escapeHtml(category)}
+          </button>
+        `).join("")}
+      `;
     }
 
-    function renderCourses(){
+    function renderAccordion(){
       const query = document.getElementById("searchInput").value.trim();
+      const accordion = document.getElementById("accordion");
+      const empty = document.getElementById("emptyState");
+      const groups = groupedCourses();
+
+      const totalVisible = groups.reduce((sum, group) => sum + group.courses.length, 0);
+      document.getElementById("categorySummary").textContent = query
+        ? `Найдено: ${totalVisible} ${wordCourses(totalVisible)}`
+        : `${categories.length} разделов · нажми на раздел, чтобы раскрыть`;
       document.getElementById("clearSearch").classList.toggle("show", !!query);
 
-      const items = filteredCourses();
-      const list = document.getElementById("courseList");
-      const empty = document.getElementById("emptyState");
-      document.getElementById("countLabel").textContent = `${items.length} ${wordCourses(items.length)}`;
-
-      if(!items.length){
-        list.innerHTML = "";
+      if(!groups.length || totalVisible === 0){
+        accordion.innerHTML = "";
         empty.style.display = "block";
         return;
       }
+
       empty.style.display = "none";
 
-      list.innerHTML = items.map(course => {
-        const price = priceText(course.price);
-        const meta = [];
-        if(course.category) meta.push(course.category);
-        if(course.lessons) meta.push(`${course.lessons} уроков`);
-        if(course.duration) meta.push(course.duration);
-        if(course.author) meta.push(course.author);
+      accordion.innerHTML = groups.map(group => {
+        const visual = visualForCategory(group.category);
+        const isOpen = query || normalize(openCategory) === normalize(group.category) || normalize(activeCategory) === normalize(group.category);
+        const count = group.courses.length;
 
         return `
-          <article class="course-card">
-            <div class="course-top">
-              <div>
-                <h4 class="course-title">${escapeHtml(course.title)}</h4>
-                <div class="meta">${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
+          <article class="cat ${isOpen ? "active" : ""}" style="--grad:${visual.grad};--glow:${visual.glow}">
+            <button class="cat-head" onclick="toggleCategory('${escapeAttr(group.category)}')">
+              <div class="cat-left">
+                <div class="app-icon">${iconSVG(visual.icon)}</div>
+                <div class="cat-title">
+                  <h4>${escapeHtml(group.category)}</h4>
+                  <p>${escapeHtml(visual.note)}</p>
+                </div>
               </div>
-              ${price ? `<span class="price">${escapeHtml(price)}</span>` : ""}
-            </div>
-            ${course.tariff ? `<p class="course-text">${escapeHtml(course.tariff)}</p>` : ""}
-            <div class="course-actions">
-              <button class="btn primary" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
-                ${escapeHtml(course.buttonText || "Оформить доступ")}
-              </button>
+              <div class="cat-right">
+                <span class="cat-count">${count} ${wordCourses(count)}</span>
+                <span class="chev">⌄</span>
+              </div>
+            </button>
+
+            <div class="cat-body">
+              <div class="inside-list">
+                ${group.courses.map(course => courseCard(course)).join("")}
+              </div>
             </div>
           </article>
         `;
       }).join("");
     }
 
-    function renderTariffs(category = ""){
-      const target = document.getElementById("tariffContainer");
-      let items = allCourses;
-      if(category) items = allCourses.filter(course => categoryMatches(course, category));
-
-      if(!items.length){
-        target.innerHTML = `<div class="loading">Нет данных для отображения.</div>`;
-        return;
-      }
-
-      target.innerHTML = `
-        <div class="modal-list">
-          ${items.map(course => {
-            const price = priceText(course.price);
-            const meta = [];
-            if(course.category) meta.push(course.category);
-            if(course.lessons) meta.push(`${course.lessons} уроков`);
-            if(course.duration) meta.push(course.duration);
-            if(course.author) meta.push(course.author);
-
-            return `
-              <div class="modal-item">
-                <div class="modal-item-top">
-                  <h5>${escapeHtml(course.title)}</h5>
-                  ${price ? `<div class="mprice">${escapeHtml(price)}</div>` : ""}
-                </div>
-                ${course.tariff ? `<p>${escapeHtml(course.tariff)}</p>` : ""}
-                <div class="meta">${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
-                <button class="modal-btn" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
-                  ${escapeHtml(course.buttonText || "Оформить доступ")}
-                </button>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      `;
-    }
-
-    function openTariffsModal(category = ""){
-      vibrate();
-      renderTariffs(category);
-      document.getElementById("backdrop").classList.add("show");
-      document.getElementById("tariffsModal").classList.add("show");
-    }
-
-    function closeTariffsModal(){
-      document.getElementById("backdrop").classList.remove("show");
-      document.getElementById("tariffsModal").classList.remove("show");
-    }
-
     function renderAll(){
-      renderVisualGrid();
-      renderCategoryList();
       renderChips();
-      renderCourses();
+      renderAccordion();
+    }
+
+    function setCategory(category){
+      activeCategory = category;
+      if(category === "Все"){
+        openCategory = "";
+        document.getElementById("searchInput").value = "";
+      } else {
+        openCategory = category;
+        document.getElementById("searchInput").value = "";
+      }
+      renderAll();
+      scrollToCatalog();
+    }
+
+    function toggleCategory(category){
+      document.getElementById("searchInput").value = "";
+      activeCategory = category;
+      openCategory = normalize(openCategory) === normalize(category) ? "" : category;
+      renderAll();
+    }
+
+    function clearSearch(){
+      document.getElementById("searchInput").value = "";
+      activeCategory = "Все";
+      openCategory = "";
+      renderAll();
+    }
+
+    function applyQuick(text){
+      document.getElementById("searchInput").value = text;
+      activeCategory = "Все";
+      openCategory = "";
+      renderAll();
+      scrollToCatalog();
     }
 
     async function initData(){
       renderQuickChips();
+
       try{
         const response = await loadGoogleSheet();
         const parsed = parseGoogleTable(response);
@@ -986,13 +1053,12 @@
         showToast("Не удалось загрузить таблицу. Проверь доступ по ссылке.");
       }
 
-      categories = ["Все", ...Array.from(new Set(allCourses.map(c => c.category).filter(Boolean)))];
+      categories = Array.from(new Set(allCourses.map(course => course.category).filter(Boolean)));
       renderAll();
-      renderTariffs();
     }
 
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape") closeTariffsModal();
+    document.addEventListener("keydown", (event) => {
+      if(event.key === "Escape") clearSearch();
     });
 
     initData();
