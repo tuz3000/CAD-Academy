@@ -5,25 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no" />
   <title>CAD Академия</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
   <style>
     :root{
-      --bg:#050713;
-      --bg2:#0a1020;
+      --bg:#070a14;
+      --bg2:#0b1020;
+      --panel:rgba(255,255,255,.06);
+      --panel-2:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.10);
+      --stroke-2:rgba(255,255,255,.16);
       --text:#f8fafc;
       --muted:rgba(248,250,252,.70);
       --muted2:rgba(248,250,252,.52);
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.085);
-      --stroke:rgba(255,255,255,.105);
-      --stroke2:rgba(255,255,255,.16);
-      --cyan:#06b6d4;
-      --violet:#7c3aed;
-      --green:#22c55e;
-      --amber:#f59e0b;
-      --red:#ef4444;
-      --shadow:0 22px 70px rgba(0,0,0,.42);
-      --radius:26px;
+      --brand:#7c3aed;
+      --brand2:#06b6d4;
+      --success:#22c55e;
+      --danger:#ef4444;
+      --shadow:0 18px 50px rgba(0,0,0,.38);
+      --radius:24px;
       --radius-sm:18px;
       --max:940px;
       --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
@@ -33,156 +31,149 @@
     html,body{
       margin:0;min-height:100%;
       background:
-        radial-gradient(circle at 10% 0%, rgba(6,182,212,.22), transparent 30%),
-        radial-gradient(circle at 94% 5%, rgba(124,58,237,.26), transparent 31%),
-        radial-gradient(circle at 50% 118%, rgba(34,197,94,.10), transparent 34%),
-        linear-gradient(180deg,#050713 0%,#0a1020 52%,#050713 100%);
+        radial-gradient(circle at 12% 0%, rgba(6,182,212,.18), transparent 30%),
+        radial-gradient(circle at 92% 5%, rgba(124,58,237,.22), transparent 32%),
+        linear-gradient(180deg, #070a14 0%, #0b1020 55%, #070a14 100%);
       color:var(--text);
       font-family:var(--font);
     }
 
-    body{padding:16px 12px 34px}
+    body{padding:14px 12px 34px}
     button,input{font:inherit}
-    button{color:inherit}
     .app{max-width:var(--max);margin:0 auto}
 
     .topbar{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       margin-bottom:14px;
     }
-
-    .brand{display:flex;align-items:center;gap:12px;min-width:0}
-    .brand-logo{
-      width:52px;height:52px;border-radius:18px;flex:0 0 auto;
-      display:grid;place-items:center;
-      color:#04111d;font-weight:950;font-size:18px;letter-spacing:-.055em;
-      background:linear-gradient(135deg, rgba(34,211,238,.97), rgba(124,58,237,.96));
-      box-shadow:0 18px 46px rgba(6,182,212,.18);
-      overflow:hidden;position:relative;
+    .brand{
+      display:flex;align-items:center;gap:12px;min-width:0;
     }
-    .brand-logo::after{
-      content:"";position:absolute;inset:-28px auto auto -8px;width:56px;height:56px;
-      border-radius:999px;background:rgba(255,255,255,.34);filter:blur(13px)
+    .logo{
+      width:52px;height:52px;border-radius:18px;display:grid;place-items:center;flex:0 0 auto;
+      background:linear-gradient(135deg, rgba(34,211,238,.98), rgba(124,58,237,.96));
+      color:#07111d;font-weight:950;font-size:18px;letter-spacing:-.05em;
+      box-shadow:0 18px 40px rgba(6,182,212,.18);
+      position:relative;overflow:hidden;
     }
-
+    .logo::after{
+      content:"";position:absolute;left:-8px;top:-18px;width:48px;height:48px;border-radius:999px;
+      background:rgba(255,255,255,.34);filter:blur(12px)
+    }
     .brand-copy h1{
       margin:0;font-size:21px;line-height:1.02;letter-spacing:-.055em;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .brand-copy p{
-      margin:4px 0 0;font-size:12px;color:var(--muted2);line-height:1.2;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+      margin:4px 0 0;font-size:12px;color:var(--muted2);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
 
-    .sync-badge{
+    .sync{
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.055);
       border-radius:999px;
       padding:9px 12px;
-      font-size:12px;
       color:var(--muted);
+      font-size:12px;
       white-space:nowrap;
       backdrop-filter:blur(18px);
     }
-    .sync-dot{
-      display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--amber);
+    .sync .dot{
+      display:inline-block;width:7px;height:7px;border-radius:999px;background:#f59e0b;
       margin-right:7px;vertical-align:1px;
-      box-shadow:0 0 0 4px rgba(245,158,11,.10);
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
-    .sync-badge.ok .sync-dot{background:var(--green);box-shadow:0 0 0 4px rgba(34,197,94,.10)}
-    .sync-badge.bad .sync-dot{background:var(--red);box-shadow:0 0 0 4px rgba(239,68,68,.10)}
+    .sync.ok .dot{background:var(--success);box-shadow:0 0 0 4px rgba(34,197,94,.12)}
+    .sync.bad .dot{background:var(--danger);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
 
     .hero{
-      position:relative;overflow:hidden;isolation:isolate;
       border:1px solid var(--stroke);
-      border-radius:32px;
-      padding:22px;
+      border-radius:30px;
       background:
-        linear-gradient(135deg, rgba(6,182,212,.14), rgba(124,58,237,.13)),
-        rgba(255,255,255,.052);
+        linear-gradient(135deg, rgba(6,182,212,.14), rgba(124,58,237,.15)),
+        rgba(255,255,255,.05);
+      padding:22px;
       box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
       margin-bottom:14px;
     }
     .hero::before{
-      content:"";position:absolute;right:-72px;top:-80px;width:245px;height:245px;border-radius:999px;
-      background:radial-gradient(circle, rgba(124,58,237,.35), transparent 66%);
-      z-index:-1
+      content:"";position:absolute;right:-80px;top:-85px;width:240px;height:240px;border-radius:999px;
+      background:radial-gradient(circle, rgba(124,58,237,.34), transparent 66%);
     }
     .hero::after{
-      content:"";position:absolute;left:-80px;bottom:-110px;width:285px;height:285px;border-radius:999px;
-      background:radial-gradient(circle, rgba(6,182,212,.22), transparent 64%);
-      z-index:-1
+      content:"";position:absolute;left:-86px;bottom:-100px;width:260px;height:260px;border-radius:999px;
+      background:radial-gradient(circle, rgba(6,182,212,.24), transparent 64%);
     }
-
-    .hero-pill{
+    .hero > *{position:relative;z-index:1}
+    .hero .pill{
       display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(255,255,255,.09);
       border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.08);
       color:rgba(248,250,252,.88);
       font-size:12px;
       margin-bottom:14px;
     }
-
     .hero h2{
-      margin:0;max-width:720px;
+      margin:0;max-width:680px;
       font-size:34px;line-height:1.0;letter-spacing:-.068em;
     }
     .hero p{
-      margin:14px 0 0;max-width:680px;
+      margin:12px 0 0;max-width:630px;
       color:var(--muted);font-size:15px;line-height:1.48;
     }
-
-    .hero-stats{
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;margin-top:16px;
+    .hero-actions{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;
     }
-    .stat{
+    .cta{
+      min-height:48px;border:none;border-radius:16px;padding:0 16px;
+      font-weight:850;cursor:pointer;
+    }
+    .cta.primary{
+      background:linear-gradient(135deg, rgba(34,211,238,.96), rgba(124,58,237,.96));
+      color:#fff;
+      box-shadow:0 16px 34px rgba(0,0,0,.22);
+    }
+    .cta.secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.058);
-      border-radius:19px;
-      padding:12px;
-      backdrop-filter:blur(18px);
     }
-    .stat strong{display:block;font-size:19px;letter-spacing:-.04em}
-    .stat span{display:block;margin-top:3px;font-size:12px;color:var(--muted2);line-height:1.25}
 
-    .action-grid{
-      display:grid;grid-template-columns:1.18fr 1fr 1fr;gap:10px;margin-bottom:14px;
+    .action-row{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+      margin-bottom:14px;
     }
-    .action{
-      min-height:75px;
+    .quick{
       border:1px solid var(--stroke);
-      border-radius:23px;
-      padding:15px;
       background:rgba(255,255,255,.055);
+      border-radius:20px;
+      min-height:70px;
+      padding:14px;
+      cursor:pointer;
+      text-align:left;
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      text-align:left;cursor:pointer;
-      box-shadow:0 12px 34px rgba(0,0,0,.16);
-      backdrop-filter:blur(18px);
-      transition:.15s ease;
+      box-shadow:0 12px 34px rgba(0,0,0,.14);
     }
-    .action.primary{
-      border-color:rgba(6,182,212,.26);
-      background:
-        linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.21)),
-        rgba(255,255,255,.06);
+    .quick b{
+      display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:4px;
     }
-    .action:active,.program-card:active,.course-card:active,.chip:active,.btn:active,.fab:active,.modal-btn:active{
-      transform:scale(.985);
+    .quick span{
+      display:block;font-size:12px;line-height:1.26;color:var(--muted2);
     }
-    .action strong{display:block;font-size:16px;letter-spacing:-.032em;margin-bottom:4px}
-    .action span{display:block;color:var(--muted2);font-size:12px;line-height:1.28}
-    .action .icon{
-      width:45px;height:45px;border-radius:16px;display:grid;place-items:center;flex:0 0 auto;
-      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.08);font-size:21px;
+    .quick .qicon{
+      width:42px;height:42px;border-radius:15px;display:grid;place-items:center;flex:0 0 auto;
+      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.08);
+      font-size:20px;
     }
 
     .shell{
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.050);
-      border-radius:var(--radius);
+      background:rgba(255,255,255,.05);
+      border-radius:26px;
       padding:14px;
       margin-bottom:14px;
       box-shadow:0 16px 42px rgba(0,0,0,.16);
@@ -191,159 +182,177 @@
     .section-head{
       display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px;
     }
-    .section-head h3{margin:0;font-size:18px;letter-spacing:-.045em}
-    .section-head span{font-size:12px;color:var(--muted2);white-space:nowrap}
+    .section-head h3{
+      margin:0;font-size:18px;letter-spacing:-.045em;
+    }
+    .section-head span{
+      font-size:12px;color:var(--muted2);white-space:nowrap;
+    }
 
-    .program-grid{
+    .category-grid{
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
     }
-    .program-card{
-      min-height:106px;position:relative;overflow:hidden;
+    .category-card{
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.055);
-      border-radius:23px;
+      border-radius:22px;
       padding:12px;
       cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      min-height:112px;
     }
-    .program-card::before{
-      content:"";position:absolute;right:-18px;top:-18px;width:78px;height:78px;border-radius:999px;
-      background:var(--program-glow);opacity:.90;filter:blur(1px);
+    .category-card.active{
+      border-color:rgba(34,211,238,.28);
+      background:
+        linear-gradient(135deg, rgba(6,182,212,.13), rgba(124,58,237,.14)),
+        rgba(255,255,255,.06);
+    }
+    .category-card::before{
+      content:"";position:absolute;right:-16px;top:-16px;width:72px;height:72px;border-radius:999px;
+      background:var(--glow);opacity:.9;
     }
     .program-icon{
-      width:43px;height:43px;border-radius:15px;display:grid;place-items:center;
-      margin-bottom:12px;font-weight:950;font-size:13px;letter-spacing:-.045em;color:#fff;
-      border:1px solid rgba(255,255,255,.14);background:var(--program-grad);
+      width:44px;height:44px;border-radius:15px;display:grid;place-items:center;
+      background:var(--grad);
+      color:#fff;font-weight:950;font-size:13px;letter-spacing:-.04em;
+      border:1px solid rgba(255,255,255,.14);
+      margin-bottom:12px;
       position:relative;z-index:1;
+      box-shadow:0 10px 18px rgba(0,0,0,.14);
     }
-    .program-card h4{margin:0 0 4px;font-size:15px;letter-spacing:-.035em;position:relative;z-index:1}
-    .program-card p{margin:0;color:var(--muted2);font-size:12px;line-height:1.32;position:relative;z-index:1}
+    .category-card h4{
+      margin:0 0 4px;font-size:15px;letter-spacing:-.03em;position:relative;z-index:1;
+    }
+    .category-card p{
+      margin:0;color:var(--muted2);font-size:12px;line-height:1.28;position:relative;z-index:1;
+    }
 
-    .searchbar{
-      position:sticky;top:8px;z-index:4;margin-bottom:12px;
+    .search-wrap{
+      position:sticky;top:8px;z-index:3;margin-bottom:12px;
     }
-    .search-inner{
+    .search{
       position:relative;
-      border:1px solid var(--stroke2);
+      border:1px solid var(--stroke-2);
       background:rgba(8,11,26,.84);
-      border-radius:19px;
+      border-radius:18px;
       overflow:hidden;
       backdrop-filter:blur(18px);
     }
-    .search-inner input{
-      width:100%;min-height:51px;border:none;outline:none;background:transparent;color:var(--text);
-      padding:0 46px 0 44px;font-size:15px;
+    .search input{
+      width:100%;min-height:50px;padding:0 44px 0 44px;border:none;outline:none;background:transparent;color:var(--text);font-size:15px;
     }
-    .search-inner input::placeholder{color:rgba(248,250,252,.42)}
-    .search-icon{
+    .search input::placeholder{color:rgba(248,250,252,.42)}
+    .search .sicon{
       position:absolute;left:15px;top:50%;transform:translateY(-50%);
       color:rgba(248,250,252,.55);font-size:17px;
     }
-    .clear-search{
+    .search .clear{
       display:none;place-items:center;
       position:absolute;right:12px;top:50%;transform:translateY(-50%);
-      width:28px;height:28px;border-radius:999px;border:none;background:rgba(255,255,255,.08);
-      color:#fff;cursor:pointer;font-size:17px;
+      width:28px;height:28px;border-radius:999px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:16px;
     }
-    .clear-search.show{display:grid}
+    .search .clear.show{display:grid}
 
     .chips{
-      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none;
+      display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:12px;
     }
     .chips::-webkit-scrollbar{display:none}
     .chip{
       border:1px solid var(--stroke);
       border-radius:999px;
-      background:rgba(255,255,255,.052);
+      background:rgba(255,255,255,.055);
       color:rgba(248,250,252,.82);
       padding:10px 12px;
       white-space:nowrap;
-      cursor:pointer;
       font-size:13px;
+      cursor:pointer;
     }
     .chip.active{
-      border-color:rgba(6,182,212,.28);
-      background:linear-gradient(135deg, rgba(6,182,212,.20), rgba(124,58,237,.22));
+      border-color:rgba(34,211,238,.28);
+      background:linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.20));
       color:#fff;
     }
 
-    .course-list{display:grid;gap:10px}
+    .course-list{
+      display:grid;gap:10px;
+    }
     .course-card{
-      position:relative;overflow:hidden;
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.055);
-      border-radius:23px;
+      border-radius:22px;
       padding:14px;
-      cursor:pointer;
+      position:relative;
+      overflow:hidden;
     }
     .course-card::before{
       content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-      background:linear-gradient(180deg,#06b6d4,#7c3aed);
+      background:linear-gradient(180deg, #06b6d4, #7c3aed);
     }
-    .course-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-    .course-title{margin:0;font-size:16px;line-height:1.16;letter-spacing:-.034em}
-    .course-desc{margin:9px 0 0;color:var(--muted);font-size:13px;line-height:1.42}
-    .meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-    .badge{
+    .course-top{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+    }
+    .course-title{
+      margin:0;font-size:17px;line-height:1.16;letter-spacing:-.035em;
+    }
+    .price{
+      white-space:nowrap;
+      border-radius:999px;
+      padding:8px 10px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.18);
+      color:#dcfce7;
+      font-weight:900;
+      font-size:12px;
+    }
+    .meta{
+      display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;
+    }
+    .tag{
       border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.07);
+      color:rgba(248,250,252,.72);
       border-radius:999px;
       padding:6px 8px;
-      color:rgba(248,250,252,.72);
       font-size:11px;
       line-height:1;
     }
-    .price-badge{
-      white-space:nowrap;
-      border:1px solid rgba(34,197,94,.18);
-      background:rgba(34,197,94,.12);
-      border-radius:999px;
-      padding:7px 9px;
-      color:#dcfce7;
-      font-size:12px;
-      font-weight:850;
+    .course-text{
+      margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.42;
     }
-    .course-actions{display:flex;gap:8px;margin-top:12px}
+    .course-actions{
+      display:flex;gap:8px;margin-top:12px;
+    }
     .btn{
-      min-height:40px;border:1px solid var(--stroke);border-radius:14px;
-      background:rgba(255,255,255,.074);color:#fff;cursor:pointer;
-      font-weight:800;font-size:13px;flex:1;padding:0 12px;
+      min-height:42px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;
+      color:#fff;background:rgba(255,255,255,.08);font-weight:850;cursor:pointer;flex:1;
     }
     .btn.primary{
-      border-color:rgba(6,182,212,.25);
-      background:linear-gradient(135deg, rgba(6,182,212,.25), rgba(124,58,237,.25));
+      border-color:rgba(34,211,238,.26);
+      background:linear-gradient(135deg, rgba(6,182,212,.24), rgba(124,58,237,.24));
     }
 
-    .feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-    .feature{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);
-      border-radius:21px;padding:14px;
+    .empty,.loading{
+      text-align:center;padding:22px 10px;color:var(--muted);font-size:14px;line-height:1.42;
     }
-    .feature b{display:block;font-size:14px;letter-spacing:-.02em;margin-bottom:5px}
-    .feature span{display:block;color:var(--muted2);font-size:13px;line-height:1.38}
+    .empty{display:none}
 
-    .empty{
-      display:none;text-align:center;padding:23px 10px;color:var(--muted);
-      font-size:14px;line-height:1.4;
+    .footer{
+      text-align:center;color:rgba(248,250,252,.42);font-size:12px;line-height:1.4;padding:8px 4px 2px;
     }
-    .loading{
-      text-align:center;padding:22px 10px;color:var(--muted);
-      font-size:14px;line-height:1.42;
-    }
-    .footer{text-align:center;color:rgba(248,250,252,.43);font-size:12px;line-height:1.42;padding:8px 4px 2px}
 
     .fab{
-      position:fixed;right:14px;bottom:78px;z-index:12;border:none;border-radius:18px;
-      min-height:52px;padding:0 16px;cursor:pointer;
-      background:linear-gradient(135deg, rgba(6,182,212,.96), rgba(124,58,237,.98));
-      color:#fff;font-weight:900;box-shadow:0 18px 42px rgba(0,0,0,.30);
+      position:fixed;right:14px;bottom:74px;z-index:12;
+      min-height:52px;border:none;border-radius:18px;padding:0 16px;
+      background:linear-gradient(135deg, rgba(34,211,238,.96), rgba(124,58,237,.98));
+      color:#fff;font-weight:900;cursor:pointer;
+      box-shadow:0 18px 42px rgba(0,0,0,.30);
     }
 
     .toast{
       position:fixed;left:12px;right:12px;bottom:16px;max-width:var(--max);margin:0 auto;
-      border:1px solid var(--stroke);border-radius:18px;
-      background:rgba(6,8,22,.94);color:#fff;
-      padding:13px 14px;
-      box-shadow:0 18px 50px rgba(0,0,0,.45);
+      border:1px solid var(--stroke);border-radius:18px;background:rgba(6,8,22,.94);
+      color:#fff;padding:13px 14px;box-shadow:0 18px 50px rgba(0,0,0,.45);
       backdrop-filter:blur(18px);
       transform:translateY(120%);opacity:0;transition:.23s ease;z-index:30;
       font-size:14px;line-height:1.35;
@@ -355,7 +364,6 @@
       opacity:0;pointer-events:none;transition:.2s ease;z-index:18;
     }
     .backdrop.show{opacity:1;pointer-events:auto}
-
     .modal{
       position:fixed;left:0;right:0;bottom:0;z-index:20;
       max-width:var(--max);margin:0 auto;padding:0 12px 12px;
@@ -364,197 +372,160 @@
     .modal.show{transform:translateY(0)}
     .modal-card{
       border:1px solid var(--stroke);
-      background:linear-gradient(180deg,rgba(12,16,31,.98),rgba(8,11,24,.98));
-      border-radius:29px 29px 22px 22px;
+      background:linear-gradient(180deg, rgba(12,16,30,.98), rgba(8,11,24,.98));
+      border-radius:28px 28px 22px 22px;
       padding:14px;
       box-shadow:0 -18px 50px rgba(0,0,0,.30);
-      backdrop-filter:blur(18px);
     }
-    .drag{width:54px;height:5px;border-radius:999px;background:rgba(255,255,255,.18);margin:2px auto 12px}
-    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
-    .modal-head h4{margin:0;font-size:18px;letter-spacing:-.045em}
-    .close-btn{
+    .drag{
+      width:54px;height:5px;border-radius:999px;background:rgba(255,255,255,.18);margin:2px auto 12px;
+    }
+    .modal-head{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;
+    }
+    .modal-head h4{margin:0;font-size:18px;letter-spacing:-.04em}
+    .close{
       width:34px;height:34px;border-radius:12px;border:1px solid var(--stroke);
       background:rgba(255,255,255,.06);color:#fff;cursor:pointer;
     }
-    .tariff-list{display:grid;gap:10px;max-height:58vh;overflow:auto;padding-right:2px}
-    .tariff{
-      border:1px solid var(--stroke);background:rgba(255,255,255,.055);
-      border-radius:21px;padding:13px;
+    .modal-list{display:grid;gap:10px;max-height:58vh;overflow:auto;padding-right:2px}
+    .modal-item{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.055);
+      border-radius:20px;
+      padding:13px;
     }
-    .tariff-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-    .tariff h5{margin:0;font-size:16px;letter-spacing:-.034em;line-height:1.18}
-    .tariff .price{font-size:17px;font-weight:950;letter-spacing:-.04em;white-space:nowrap;color:#dcfce7}
-    .tariff p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+    .modal-item-top{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+    }
+    .modal-item h5{
+      margin:0;font-size:15px;line-height:1.18;letter-spacing:-.03em;
+    }
+    .modal-item .mprice{
+      white-space:nowrap;font-size:16px;font-weight:950;color:#dcfce7;letter-spacing:-.04em;
+    }
+    .modal-item p{
+      margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.4;
+    }
+    .modal-item .meta{
+      margin-top:10px;
+    }
     .modal-btn{
-      min-height:40px;border:1px solid var(--stroke);border-radius:14px;
-      background:linear-gradient(135deg, rgba(6,182,212,.24), rgba(124,58,237,.24));
-      color:#fff;cursor:pointer;font-weight:850;font-size:13px;padding:0 12px;width:100%;
+      min-height:40px;border-radius:14px;border:1px solid var(--stroke);padding:0 12px;width:100%;
+      color:#fff;background:linear-gradient(135deg, rgba(6,182,212,.24), rgba(124,58,237,.24));font-weight:850;cursor:pointer;margin-top:12px;
     }
 
-    @media (max-width:850px){
-      .program-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-      .action-grid{grid-template-columns:1fr}
-      .feature-grid{grid-template-columns:1fr}
+    @media (max-width:840px){
+      .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .action-row{grid-template-columns:1fr}
     }
     @media (max-width:540px){
       body{padding:12px 10px 28px}
-      .hero{padding:18px;border-radius:29px}
+      .hero{padding:18px;border-radius:28px}
       .hero h2{font-size:28px}
-      .hero-stats{grid-template-columns:1fr}
-      .program-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .sync-badge{display:none}
-      .brand-copy h1{font-size:19px}
-      .brand-logo{width:50px;height:50px}
-      .shell{border-radius:24px}
-      .program-card{min-height:102px}
+      .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .sync{display:none}
       .course-actions{flex-direction:column}
+      .brand-copy h1{font-size:19px}
+      .logo{width:50px;height:50px}
     }
   </style>
 </head>
-
 <body>
   <main class="app">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-logo">CAD</div>
+        <div class="logo">CAD</div>
         <div class="brand-copy">
           <h1>CAD Академия</h1>
-          <p>Курсы по BIM, CAD, 3D, визуализации и нейросетям</p>
+          <p>Курсы по BIM, CAD, 3D и визуализации</p>
         </div>
       </div>
-      <div class="sync-badge" id="syncBadge"><span class="sync-dot"></span><span id="syncText">Загрузка таблицы</span></div>
+      <div class="sync" id="syncBadge"><span class="dot"></span><span id="syncText">Загрузка каталога</span></div>
     </header>
 
     <section class="hero">
-      <div class="hero-pill">📐 Revit · AutoCAD · Civil · 3ds Max · ArchiCAD · SketchUp · AI</div>
-      <h2>Современная библиотека курсов для архитекторов, дизайнеров, инженеров и строителей</h2>
-      <p>
-        Каталог и цены подтягиваются из Google Таблицы. Ты редактируешь строки в таблице —
-        мини-приложение на GitHub Pages обновляет карточки курсов автоматически.
-      </p>
-
-      <div class="hero-stats">
-        <div class="stat">
-          <strong id="coursesCountHero">—</strong>
-          <span>курсов из таблицы</span>
-        </div>
-        <div class="stat">
-          <strong id="categoriesCountHero">—</strong>
-          <span>категорий обучения</span>
-        </div>
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>доступ через Telegram-бота</span>
-        </div>
+      <div class="pill">📐 Курсы внутри Telegram</div>
+      <h2>Выбери программу, посмотри курс и сразу оформи доступ</h2>
+      <p>Ничего лишнего: разделы, стоимость, краткая информация и кнопка покупки.</p>
+      <div class="hero-actions">
+        <button class="cta primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Выбрать курс</button>
+        <button class="cta secondary" onclick="openTariffsModal()">Все тарифы</button>
       </div>
     </section>
 
-    <section class="action-grid">
-      <button class="action primary" onclick="openTariffsModal()">
+    <section class="action-row">
+      <button class="quick" onclick="openTariffsModal()">
         <span>
-          <strong>Оформить доступ</strong>
-          <span>Все тарифы и ссылки берутся из Google Таблицы</span>
+          <b>Тарифы</b>
+          <span>Все курсы и цены</span>
         </span>
-        <span class="icon">💳</span>
+        <span class="qicon">💳</span>
       </button>
-
-      <button class="action" onclick="openSubscription()">
+      <button class="quick" onclick="openSubscription()">
         <span>
-          <strong>Моя подписка</strong>
-          <span>Проверить срок и статус доступа</span>
+          <b>Моя подписка</b>
+          <span>Проверить доступ</span>
         </span>
-        <span class="icon">🔐</span>
+        <span class="qicon">🔐</span>
       </button>
-
-      <button class="action" onclick="openSupport()">
+      <button class="quick" onclick="openSupport()">
         <span>
-          <strong>Поддержка</strong>
-          <span>Если оплата или доступ не открылись</span>
+          <b>Поддержка</b>
+          <span>Если не открылся доступ</span>
         </span>
-        <span class="icon">💬</span>
+        <span class="qicon">💬</span>
       </button>
     </section>
 
     <section class="shell">
       <div class="section-head">
-        <h3>Экосистема направлений</h3>
-        <span>по твоему каталогу CAD Академии</span>
+        <h3>Разделы</h3>
+        <span id="categorySummary">Выбери программу</span>
       </div>
-      <div class="program-grid" id="programGrid"></div>
+      <div class="category-grid" id="categoryGrid">
+        <div class="loading">Загружаю разделы…</div>
+      </div>
     </section>
 
-    <section class="shell">
+    <section class="shell" id="catalog">
       <div class="section-head">
-        <h3>Каталог курсов</h3>
-        <span id="countLabel">загрузка…</span>
+        <h3>Курсы</h3>
+        <span id="countLabel">Загрузка…</span>
       </div>
 
-      <div class="searchbar">
-        <div class="search-inner">
-          <span class="search-icon">⌕</span>
-          <input id="searchInput" type="search" placeholder="Найти курс, автора, программу или тему..." oninput="renderCourses()" />
-          <button class="clear-search" id="clearSearch" onclick="clearSearch()">×</button>
+      <div class="search-wrap">
+        <div class="search">
+          <span class="sicon">⌕</span>
+          <input id="searchInput" type="search" placeholder="Найти курс, автора или программу..." oninput="renderCourses()" />
+          <button class="clear" id="clearSearch" onclick="clearSearch()">×</button>
         </div>
       </div>
 
       <div class="chips" id="chips"></div>
       <div class="course-list" id="courseList">
-        <div class="loading">Загружаю курсы из Google Таблицы…</div>
+        <div class="loading">Загружаю курсы из таблицы…</div>
       </div>
-      <div class="empty" id="emptyState">Ничего не найдено. Попробуй: Revit, AutoCAD, шаблоны, 3ds Max, ArchiCAD, нейросети.</div>
-    </section>
-
-    <section class="shell">
-      <div class="section-head">
-        <h3>Почему это удобно</h3>
-      </div>
-      <div class="feature-grid">
-        <div class="feature">
-          <b>GitHub хранит дизайн</b>
-          <span>В репозитории лежит только красивый index.html, который открывается как Telegram Mini App.</span>
-        </div>
-        <div class="feature">
-          <b>Google Таблица хранит курсы</b>
-          <span>Добавил курс, цену или ссылку в таблицу — карточка появляется в приложении без правки кода.</span>
-        </div>
-        <div class="feature">
-          <b>Один каталог для клиента</b>
-          <span>Пользователь видит программы, поиск, цены, кнопку оплаты и поддержку в одном интерфейсе.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="shell">
-      <div class="section-head">
-        <h3>Резервная связь</h3>
-      </div>
-      <div class="course-actions" style="margin-top:0">
-        <button class="btn primary" onclick="openMainChannel()">Основной канал</button>
-        <button class="btn" onclick="openBackupChannel()">Базовый / резервный</button>
-        <button class="btn" onclick="openBot()">Бот с курсами</button>
-      </div>
+      <div class="empty" id="emptyState">Ничего не найдено. Попробуй другую программу или слово.</div>
     </section>
 
     <div class="footer">
-      CAD Академия · Mini App для Telegram · данные из Google Таблицы<br>
-      Обновляй курсы, цены и ссылки без изменения GitHub-кода
+      CAD Академия · каталог курсов и оформление доступа
     </div>
   </main>
 
   <button class="fab" onclick="openTariffsModal()">Тарифы</button>
 
   <div class="backdrop" id="backdrop" onclick="closeTariffsModal()"></div>
-
   <div class="modal" id="tariffsModal">
     <div class="modal-card">
       <div class="drag"></div>
       <div class="modal-head">
-        <h4>Доступные курсы и тарифы</h4>
-        <button class="close-btn" onclick="closeTariffsModal()">✕</button>
+        <h4>Курсы и тарифы</h4>
+        <button class="close" onclick="closeTariffsModal()">✕</button>
       </div>
       <div id="tariffContainer">
-        <div class="loading">Загружаю тарифы из Google Таблицы…</div>
+        <div class="loading">Загрузка…</div>
       </div>
     </div>
   </div>
@@ -563,96 +534,51 @@
 
   <script>
     const tg = window.Telegram?.WebApp;
-
     if (tg) {
       tg.ready();
       tg.expand();
       try {
-        tg.setHeaderColor("#050713");
-        tg.setBackgroundColor("#050713");
+        tg.setHeaderColor("#070a14");
+        tg.setBackgroundColor("#070a14");
       } catch(e) {}
     }
 
-    /*
-      ================== НАСТРОЙКИ ==================
-
-      SHEET_ID уже вставлен из твоей ссылки:
-      https://docs.google.com/spreadsheets/d/1FH4z7ouhBK_H1P9HtMZC2SLIZEzDgvJYB-v_ZPzsJyo/edit
-
-      В таблице должны быть колонки:
-      Категория | Раздел | Кол-во уроков | Продолжительность | Автор | Тариф | Цена | Ссылка | Текст кнопки
-
-      Если поменяешь ID таблицы — замени только SHEET_ID.
-      Если таблица будет не на первом листе — замени SHEET_GID.
-    */
     const CONFIG = {
       SHEET_ID: "1FH4z7ouhBK_H1P9HtMZC2SLIZEzDgvJYB-v_ZPzsJyo",
       SHEET_GID: "0",
-
       LINKS: {
         bot: "https://t.me/CAD_Academy_bot",
-        mainChannel: "https://t.me/CAD_Academy",
-        backupChannel: "https://t.me/REPLACE_BACKUP_CHANNEL",
-        support: "https://t.me/REPLACE_SUPPORT",
-        subscription: "https://t.me/CAD_Academy_bot?start=subscription"
+        subscription: "https://t.me/CAD_Academy_bot?start=subscription",
+        support: "https://t.me/REPLACE_SUPPORT"
       }
     };
 
     const fallbackCourses = [
-      {
-        category:"Revit курсы",
-        title:"Ландшафт в Revit",
-        lessons:"18",
-        duration:"2 часа",
-        author:"Владимир Выборный",
-        tariff:"1 месяц доступ",
-        price:"197",
-        link:"https://t.me/CAD_Academy_bot",
-        buttonText:"Оформить доступ"
-      },
-      {
-        category:"AutoCAD курсы",
-        title:"AutoCAD: чертежи и оформление",
-        lessons:"",
-        duration:"",
-        author:"",
-        tariff:"1 месяц доступ",
-        price:"",
-        link:"https://t.me/CAD_Academy_bot",
-        buttonText:"Оформить доступ"
-      },
-      {
-        category:"3ds Max курсы",
-        title:"3ds Max: моделирование и визуализация",
-        lessons:"",
-        duration:"",
-        author:"",
-        tariff:"1 месяц доступ",
-        price:"",
-        link:"https://t.me/CAD_Academy_bot",
-        buttonText:"Оформить доступ"
-      }
-    ];
-
-    const programs = [
-      { key:"Revit", short:"R", title:"Revit", subtitle:"BIM и архитектура", grad:"linear-gradient(135deg,#1d4ed8,#38bdf8)", glow:"rgba(56,189,248,.24)" },
-      { key:"Revit Шаблоны", short:"RT", title:"Revit шаблоны", subtitle:"ускорение работы", grad:"linear-gradient(135deg,#0284c7,#06b6d4)", glow:"rgba(6,182,212,.24)" },
-      { key:"Revit семейства", short:"RF", title:"Revit семейства", subtitle:"параметры и библиотеки", grad:"linear-gradient(135deg,#0f766e,#14b8a6)", glow:"rgba(20,184,166,.24)" },
-      { key:"AutoCAD", short:"AC", title:"AutoCAD", subtitle:"чертежи и оформление", grad:"linear-gradient(135deg,#dc2626,#fb7185)", glow:"rgba(251,113,133,.24)" },
-      { key:"Civil", short:"CV", title:"Civil", subtitle:"инженерные задачи", grad:"linear-gradient(135deg,#f59e0b,#f97316)", glow:"rgba(245,158,11,.22)" },
-      { key:"3ds Max", short:"3D", title:"3ds Max", subtitle:"моделинг и рендер", grad:"linear-gradient(135deg,#10b981,#22c55e)", glow:"rgba(34,197,94,.22)" },
-      { key:"ArchiCAD", short:"AR", title:"ArchiCAD", subtitle:"проектирование", grad:"linear-gradient(135deg,#a21caf,#ec4899)", glow:"rgba(236,72,153,.22)" },
-      { key:"SketchUp", short:"SU", title:"SketchUp", subtitle:"быстрое 3D", grad:"linear-gradient(135deg,#7c3aed,#a78bfa)", glow:"rgba(167,139,250,.24)" },
-      { key:"Twinmotion", short:"TM", title:"Twinmotion", subtitle:"realtime-визуализация", grad:"linear-gradient(135deg,#2563eb,#7c3aed)", glow:"rgba(124,58,237,.24)" },
-      { key:"Homestyler", short:"HS", title:"Homestyler", subtitle:"интерьеры и планировки", grad:"linear-gradient(135deg,#0891b2,#22d3ee)", glow:"rgba(34,211,238,.24)" },
-      { key:"Установка", short:"OS", title:"Установка ПО", subtitle:"настройка среды", grad:"linear-gradient(135deg,#475569,#94a3b8)", glow:"rgba(148,163,184,.20)" },
-      { key:"ИТР", short:"ITR", title:"Курсы для ИТР", subtitle:"инженеры и технадзор", grad:"linear-gradient(135deg,#0f766e,#34d399)", glow:"rgba(52,211,153,.20)" },
-      { key:"Нейросети", short:"AI", title:"Нейросети", subtitle:"AI-инструменты", grad:"linear-gradient(135deg,#7c3aed,#22d3ee)", glow:"rgba(34,211,238,.24)" }
+      { category:"Revit", title:"Ландшафт в Revit", lessons:"18", duration:"2 часа", author:"Владимир Выборный", tariff:"1 месяц доступ", price:"197", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" },
+      { category:"AutoCAD", title:"AutoCAD: чертежи и оформление", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"397", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" },
+      { category:"3ds Max", title:"3ds Max: моделирование и визуализация", lessons:"", duration:"", author:"", tariff:"1 месяц доступ", price:"397", link:"https://t.me/CAD_Academy_bot", buttonText:"Оформить доступ" }
     ];
 
     let allCourses = [];
-    let activeCategory = "Все";
     let categories = ["Все"];
+    let activeCategory = "Все";
+
+    const visuals = [
+      { match:["revit"], short:"R", title:"Revit", note:"BIM", grad:"linear-gradient(135deg,#2563eb,#38bdf8)", glow:"rgba(56,189,248,.22)" },
+      { match:["шаблон", "template"], short:"RT", title:"Revit шаблоны", note:"Шаблоны", grad:"linear-gradient(135deg,#0284c7,#06b6d4)", glow:"rgba(6,182,212,.22)" },
+      { match:["семейств"], short:"RF", title:"Revit семейства", note:"Семейства", grad:"linear-gradient(135deg,#0f766e,#14b8a6)", glow:"rgba(20,184,166,.22)" },
+      { match:["autocad","auto cad"], short:"AC", title:"AutoCAD", note:"Чертежи", grad:"linear-gradient(135deg,#dc2626,#fb7185)", glow:"rgba(251,113,133,.22)" },
+      { match:["civil"], short:"CV", title:"Civil", note:"Инженерия", grad:"linear-gradient(135deg,#f59e0b,#f97316)", glow:"rgba(245,158,11,.22)" },
+      { match:["3ds","3ds max","max"], short:"3D", title:"3ds Max", note:"3D", grad:"linear-gradient(135deg,#10b981,#22c55e)", glow:"rgba(34,197,94,.22)" },
+      { match:["archicad","archi"], short:"AR", title:"ArchiCAD", note:"Проект", grad:"linear-gradient(135deg,#a21caf,#ec4899)", glow:"rgba(236,72,153,.22)" },
+      { match:["sketchup","skethup","sketch"], short:"SU", title:"SketchUp", note:"3D", grad:"linear-gradient(135deg,#7c3aed,#a78bfa)", glow:"rgba(167,139,250,.22)" },
+      { match:["twinmotion"], short:"TM", title:"Twinmotion", note:"Realtime", grad:"linear-gradient(135deg,#2563eb,#7c3aed)", glow:"rgba(124,58,237,.22)" },
+      { match:["homestyler"], short:"HS", title:"Homestyler", note:"Интерьер", grad:"linear-gradient(135deg,#0891b2,#22d3ee)", glow:"rgba(34,211,238,.22)" },
+      { match:["установка", "по ", "program"], short:"OS", title:"Установка ПО", note:"Setup", grad:"linear-gradient(135deg,#475569,#94a3b8)", glow:"rgba(148,163,184,.22)" },
+      { match:["итр"], short:"ITR", title:"ИТР", note:"Инженеры", grad:"linear-gradient(135deg,#0f766e,#34d399)", glow:"rgba(52,211,153,.22)" },
+      { match:["нейросет", "ai"], short:"AI", title:"Нейросети", note:"AI", grad:"linear-gradient(135deg,#7c3aed,#22d3ee)", glow:"rgba(34,211,238,.22)" },
+      { match:["все"], short:"ALL", title:"Все", note:"Каталог", grad:"linear-gradient(135deg,#06b6d4,#7c3aed)", glow:"rgba(124,58,237,.22)" }
+    ];
 
     function vibrate(type="light"){
       try { tg?.HapticFeedback?.impactOccurred(type); } catch(e){}
@@ -663,26 +589,32 @@
       el.textContent = text;
       el.classList.add("show");
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
     }
 
     function openUrl(url){
       vibrate();
       if(!url || String(url).includes("REPLACE_")){
-        showToast("Ссылка ещё не настроена в CONFIG или Google Таблице.");
+        showToast("Ссылка ещё не настроена.");
         return;
       }
-
       if(tg && String(url).includes("t.me/")) tg.openTelegramLink(url);
       else if(tg) tg.openLink(url);
       else window.open(url, "_blank", "noopener,noreferrer");
     }
 
-    function openBot(){ openUrl(CONFIG.LINKS.bot); }
     function openSupport(){ openUrl(CONFIG.LINKS.support); }
-    function openMainChannel(){ openUrl(CONFIG.LINKS.mainChannel); }
-    function openBackupChannel(){ openUrl(CONFIG.LINKS.backupChannel); }
     function openSubscription(){ openUrl(CONFIG.LINKS.subscription); }
+
+    function normalize(str){
+      return String(str ?? "")
+        .trim()
+        .toLowerCase()
+        .replaceAll("ё","е")
+        .replace(/[^\p{L}\p{N}]+/gu, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
     function escapeHtml(str){
       return String(str ?? "")
@@ -697,17 +629,7 @@
       return String(str ?? "").replaceAll("'","\\'");
     }
 
-    function normalize(str){
-      return String(str ?? "")
-        .trim()
-        .toLowerCase()
-        .replaceAll("ё","е")
-        .replace(/[^\p{L}\p{N}]+/gu, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    function wordMaterials(n){
+    function wordCourses(n){
       const last = n % 10;
       const last2 = n % 100;
       if(last === 1 && last2 !== 11) return "курс";
@@ -730,13 +652,13 @@
     }
 
     function findValue(row, names){
-      const normalizedNames = names.map(normalize);
-      for(const [key, value] of Object.entries(row)){
-        if(normalizedNames.includes(normalize(key))) return value;
+      const nNames = names.map(normalize);
+      for (const [key, value] of Object.entries(row)) {
+        if(nNames.includes(normalize(key))) return value;
       }
-      for(const [key, value] of Object.entries(row)){
-        const nKey = normalize(key);
-        if(normalizedNames.some(name => nKey.includes(name) || name.includes(nKey))) return value;
+      for (const [key, value] of Object.entries(row)) {
+        const nk = normalize(key);
+        if(nNames.some(name => nk.includes(name) || name.includes(nk))) return value;
       }
       return "";
     }
@@ -802,10 +724,9 @@
         const link = findValue(obj, ["Ссылка", "Link", "URL"]);
         const price = findValue(obj, ["Цена", "Price"]);
         const buttonText = findValue(obj, ["Текст кнопки", "Кнопка", "Button"]);
-
         const meaningful = title || link || (category && price && price !== "0");
-        if(!meaningful) continue;
 
+        if(!meaningful) continue;
         if(!title && !link) continue;
 
         result.push({
@@ -824,7 +745,7 @@
       return result;
     }
 
-    function updateSyncBadge(status, text){
+    function updateSync(status, text){
       const badge = document.getElementById("syncBadge");
       const label = document.getElementById("syncText");
       badge.classList.remove("ok", "bad");
@@ -832,36 +753,54 @@
       label.textContent = text;
     }
 
-    async function initData(){
-      renderProgramGrid();
+    function visualForCategory(category){
+      const n = normalize(category);
+      const found = visuals.find(v => v.match.some(m => n.includes(normalize(m))));
+      return found || { short:"CAD", title:category || "Курсы", note:"Раздел", grad:"linear-gradient(135deg,#06b6d4,#7c3aed)", glow:"rgba(124,58,237,.22)" };
+    }
 
+    async function initData(){
       try{
         const response = await loadGoogleSheet();
         const parsed = parseGoogleTable(response);
-        if(!parsed.length) throw new Error("Пустая таблица или не найдены строки");
-
+        if(!parsed.length) throw new Error("Пустая таблица");
         allCourses = parsed;
-        updateSyncBadge("ok", "Таблица подключена");
-      }catch(error){
+        updateSync("ok", "Каталог подключён");
+      } catch (error) {
         console.error(error);
         allCourses = fallbackCourses;
-        updateSyncBadge("bad", "Резервные данные");
-        showToast("Не удалось загрузить Google Таблицу. Проверь доступ: anyone with link / viewer.");
+        updateSync("bad", "Резервные данные");
+        showToast("Не удалось загрузить таблицу. Проверь доступ по ссылке.");
       }
 
       categories = ["Все", ...Array.from(new Set(allCourses.map(c => c.category).filter(Boolean)))];
+      renderCategoryCards();
       renderChips();
       renderCourses();
       renderTariffs();
     }
 
-    function renderProgramGrid(){
-      const wrap = document.getElementById("programGrid");
-      wrap.innerHTML = programs.map(item => `
-        <article class="program-card" onclick="filterBy('${escapeAttr(item.key)}')" style="--program-grad:${item.grad};--program-glow:${item.glow}">
-          <div class="program-icon">${escapeHtml(item.short)}</div>
-          <h4>${escapeHtml(item.title)}</h4>
-          <p>${escapeHtml(item.subtitle)}</p>
+    function renderCategoryCards(){
+      const grid = document.getElementById("categoryGrid");
+      const summary = document.getElementById("categorySummary");
+
+      const items = categories.map(cat => {
+        const count = cat === "Все"
+          ? allCourses.length
+          : allCourses.filter(item => categoryMatches(item, cat)).length;
+
+        return { name:cat, count, visual:visualForCategory(cat) };
+      });
+
+      summary.textContent = `${categories.length - 1} разделов`;
+
+      grid.innerHTML = items.map(item => `
+        <article class="category-card ${normalize(item.name) === normalize(activeCategory) ? "active" : ""}"
+                 style="--grad:${item.visual.grad};--glow:${item.visual.glow}"
+                 onclick="setCategory('${escapeAttr(item.name)}')">
+          <div class="program-icon">${escapeHtml(item.visual.short)}</div>
+          <h4>${escapeHtml(item.visual.title === "Все" ? "Все курсы" : item.name)}</h4>
+          <p>${item.count} ${wordCourses(item.count)}</p>
         </article>
       `).join("");
     }
@@ -869,7 +808,7 @@
     function renderChips(){
       const wrap = document.getElementById("chips");
       wrap.innerHTML = categories.map(category => `
-        <button class="chip ${normalize(category) === normalize(activeCategory) ? "active" : ""}" onclick="filterBy('${escapeAttr(category)}')">
+        <button class="chip ${normalize(category) === normalize(activeCategory) ? "active" : ""}" onclick="setCategory('${escapeAttr(category)}')">
           ${escapeHtml(category)}
         </button>
       `).join("");
@@ -885,13 +824,7 @@
     function searchMatches(course, query){
       if(!query) return true;
       const haystack = [
-        course.category,
-        course.title,
-        course.lessons,
-        course.duration,
-        course.author,
-        course.tariff,
-        course.price
+        course.category, course.title, course.lessons, course.duration, course.author, course.tariff, course.price
       ].join(" ");
       return normalize(haystack).includes(normalize(query));
     }
@@ -901,17 +834,27 @@
       return allCourses.filter(course => categoryMatches(course, activeCategory) && searchMatches(course, query));
     }
 
+    function setCategory(category){
+      activeCategory = category;
+      renderCategoryCards();
+      renderChips();
+      renderCourses();
+    }
+
+    function clearSearch(){
+      document.getElementById("searchInput").value = "";
+      renderCourses();
+    }
+
     function renderCourses(){
       const query = document.getElementById("searchInput").value.trim();
       document.getElementById("clearSearch").classList.toggle("show", !!query);
 
+      const items = filteredCourses();
       const list = document.getElementById("courseList");
       const empty = document.getElementById("emptyState");
-      const items = filteredCourses();
 
-      document.getElementById("countLabel").textContent = `${items.length} ${wordMaterials(items.length)}`;
-      document.getElementById("coursesCountHero").textContent = allCourses.length ? String(allCourses.length) : "—";
-      document.getElementById("categoriesCountHero").textContent = categories.length > 1 ? String(categories.length - 1) : "—";
+      document.getElementById("countLabel").textContent = `${items.length} ${wordCourses(items.length)}`;
 
       if(!items.length){
         list.innerHTML = "";
@@ -923,35 +866,29 @@
 
       list.innerHTML = items.map(course => {
         const price = priceText(course.price);
-        const button = course.buttonText || "Оформить доступ";
-        const descParts = [];
-        if(course.lessons) descParts.push(`${course.lessons} уроков`);
-        if(course.duration) descParts.push(course.duration);
-        if(course.author) descParts.push(`Автор: ${course.author}`);
-        const desc = descParts.length ? descParts.join(" · ") : "Обучающий материал из каталога CAD Академии.";
+        const meta = [];
+        if(course.category) meta.push(course.category);
+        if(course.lessons) meta.push(`${course.lessons} уроков`);
+        if(course.duration) meta.push(course.duration);
+        if(course.author) meta.push(course.author);
 
         return `
-          <article class="course-card" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
+          <article class="course-card">
             <div class="course-top">
               <div>
                 <h4 class="course-title">${escapeHtml(course.title)}</h4>
-                <div class="meta-row">
-                  <span class="badge">${escapeHtml(course.category)}</span>
-                  ${course.tariff ? `<span class="badge">${escapeHtml(course.tariff)}</span>` : ""}
-                  ${course.author ? `<span class="badge">${escapeHtml(course.author)}</span>` : ""}
+                <div class="meta">
+                  ${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}
                 </div>
               </div>
-              ${price ? `<span class="price-badge">${escapeHtml(price)}</span>` : ""}
+              ${price ? `<span class="price">${escapeHtml(price)}</span>` : ""}
             </div>
 
-            <p class="course-desc">${escapeHtml(desc)}</p>
+            ${course.tariff ? `<p class="course-text">${escapeHtml(course.tariff)}</p>` : ""}
 
             <div class="course-actions">
-              <button class="btn primary" onclick="event.stopPropagation(); openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
-                ${escapeHtml(button)}
-              </button>
-              <button class="btn" onclick="event.stopPropagation(); openTariffsModal('${escapeAttr(course.category)}')">
-                Другие курсы
+              <button class="btn primary" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
+                ${escapeHtml(course.buttonText || "Оформить доступ")}
               </button>
             </div>
           </article>
@@ -968,56 +905,38 @@
       }
 
       if(!items.length){
-        target.innerHTML = `<div class="loading">Пока нет тарифов для отображения.</div>`;
+        target.innerHTML = `<div class="loading">Нет данных для отображения.</div>`;
         return;
       }
 
       target.innerHTML = `
-        <div class="tariff-list">
+        <div class="modal-list">
           ${items.map(course => {
             const price = priceText(course.price);
-            const meta = [
-              course.category,
-              course.tariff,
-              course.lessons ? `${course.lessons} уроков` : "",
-              course.duration,
-              course.author
-            ].filter(Boolean);
+            const meta = [];
+            if(course.category) meta.push(course.category);
+            if(course.lessons) meta.push(`${course.lessons} уроков`);
+            if(course.duration) meta.push(course.duration);
+            if(course.author) meta.push(course.author);
 
             return `
-              <div class="tariff">
-                <div class="tariff-top">
+              <div class="modal-item">
+                <div class="modal-item-top">
                   <h5>${escapeHtml(course.title)}</h5>
-                  ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
+                  ${price ? `<div class="mprice">${escapeHtml(price)}</div>` : ""}
                 </div>
-                <p>${escapeHtml(meta.join(" · ") || "Материал из каталога CAD Академии.")}</p>
-                <div class="meta-row">
-                  ${meta.slice(0, 4).map(item => `<span class="badge">${escapeHtml(item)}</span>`).join("")}
+                ${course.tariff ? `<p>${escapeHtml(course.tariff)}</p>` : ""}
+                <div class="meta">
+                  ${meta.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("")}
                 </div>
-                <div class="course-actions">
-                  <button class="modal-btn" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
-                    ${escapeHtml(course.buttonText || "Оформить доступ")}
-                  </button>
-                </div>
+                <button class="modal-btn" onclick="openUrl('${escapeAttr(course.link || CONFIG.LINKS.bot)}')">
+                  ${escapeHtml(course.buttonText || "Оформить доступ")}
+                </button>
               </div>
             `;
           }).join("")}
         </div>
       `;
-    }
-
-    function filterBy(category){
-      activeCategory = category;
-      document.getElementById("searchInput").value = "";
-      renderChips();
-      renderCourses();
-      renderTariffs(category === "Все" ? "" : category);
-      document.getElementById("searchInput").scrollIntoView({behavior:"smooth", block:"center"});
-    }
-
-    function clearSearch(){
-      document.getElementById("searchInput").value = "";
-      renderCourses();
     }
 
     function openTariffsModal(category = ""){
