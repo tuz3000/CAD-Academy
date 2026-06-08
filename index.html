@@ -677,7 +677,7 @@
 
           <div class="stats">
             <div class="stat"><b id="heroPrograms">—</b><span>программ</span></div>
-            <div class="stat"><b id="heroExtra">—</b><span>раздела</span></div>
+            <div class="stat"><b id="heroSections">—</b><span>разделов</span></div>
             <div class="stat"><b id="heroMaterials">—</b><span>материалов</span></div>
           </div>
         </div>
@@ -689,7 +689,7 @@
       </div>
 
       <div class="note">
-        Структура каталога: программа → раздел → материал. Основные программы отдельно, дополнительные направления отдельно.
+        Структура каталога: программа → раздел → материал. 8 основных программ и 13 разделов внутри каталога.
       </div>
 
       <input class="search" placeholder="Поиск: Revit, AutoCAD, Нейросети, ИТР, автор..." oninput="filterPrograms(this.value)" />
@@ -999,10 +999,10 @@
     function renderPrograms(list=programs){
       const root=document.getElementById("programs");
       const mainCount = MAIN_PROGRAMS.filter(name => programs.some(p => p.title === name)).length;
-      const extraCount = EXTRA_SECTIONS.filter(name => programs.some(p => p.title === name)).length;
-      document.getElementById("homeCounter").textContent=`${mainCount} программ${extraCount ? " + " + extraCount + " раздела" : ""} · ${catalog.length} ${word(catalog.length,"материал","материала","материалов")}`;
+      const totalSections = 13;
+      document.getElementById("homeCounter").textContent=`${mainCount} программ + ${totalSections} разделов · ${catalog.length} ${word(catalog.length,"материал","материала","материалов")}`;
       document.getElementById("heroPrograms").textContent=String(mainCount);
-      document.getElementById("heroExtra").textContent=String(extraCount);
+      document.getElementById("heroSections").textContent=String(totalSections);
       document.getElementById("heroMaterials").textContent=String(catalog.length);
 
       if(!list.length){
