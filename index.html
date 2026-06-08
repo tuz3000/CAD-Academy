@@ -407,6 +407,34 @@
       gap: 10px;
     }
 
+    .section-group {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 2px;
+    }
+
+    .section-group-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -.02em;
+    }
+
+    .section-group-count {
+      color: #7dd3fc;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
     .material-card {
       padding: 15px;
       border-radius: 18px;
@@ -535,12 +563,12 @@
       </section>
 
       <div class="section-title-row">
-        <div class="section-title">📚 Направления и материалы</div>
+        <div class="section-title">📚 Программы и разделы</div>
         <div class="section-counter" id="homeCounter">Загрузка…</div>
       </div>
 
       <div class="section-note">
-        В карточках показаны категории, разделы и названия материалов из каталога.
+        Например: Revit — основная программа, а внутри неё разделы: Курсы, Шаблоны, Семейства.
       </div>
 
       <input class="search" placeholder="Поиск: Revit, AutoCAD, название материала..." oninput="filterCards(this.value)" />
@@ -843,27 +871,36 @@
       }));
     }
 
+    function groupItemsBySection(items){
+      const grouped = {};
+      items.forEach(item => {
+        const sectionName = item.section || "Материалы";
+        if(!grouped[sectionName]) grouped[sectionName] = [];
+        grouped[sectionName].push(item);
+      });
+      return Object.entries(grouped).map(([title, items]) => ({ title, items }));
+    }
+
     function previewHtml(direction){
-      const visible = direction.items.slice(0, 3);
-      const hidden = Math.max(0, direction.items.length - visible.length);
+      const groups = groupItemsBySection(direction.items).slice(0, 4);
+      const hiddenGroups = Math.max(0, groupItemsBySection(direction.items).length - groups.length);
 
       return `
         <div class="preview">
-          <div class="preview-label">Что внутри</div>
-          ${visible.map(item => {
-            const sectionName = item.section || item.title;
-            const materialName = item.material || item.title;
-            const same = normalize(sectionName) === normalize(materialName);
+          <div class="preview-label">Разделы внутри программы</div>
+          ${groups.map(group => {
+            const first = group.items[0];
+            const materialName = first?.material || first?.title || "";
             return `
               <div class="preview-item">
                 <span>
-                  ${escapeHtml(sectionName)}
-                  ${!same ? `<small>${escapeHtml(materialName)}</small>` : ""}
+                  ${escapeHtml(group.title)}
+                  ${materialName ? `<small>${escapeHtml(materialName)}${group.items.length > 1 ? ` · ещё ${group.items.length - 1}` : ""}</small>` : ""}
                 </span>
               </div>
             `;
           }).join("")}
-          ${hidden ? `<div class="preview-more">+ ещё ${hidden} ${wordItems(hidden)}</div>` : ""}
+          ${hiddenGroups ? `<div class="preview-more">+ ещё ${hiddenGroups} разделов</div>` : ""}
         </div>
       `;
     }
@@ -915,33 +952,40 @@
     }
 
     function renderMaterials(direction){
-      return direction.items.slice(0, 80).map(item => {
-        const meta = [];
-        if(item.lessons && item.lessons !== "0") meta.push(item.lessons + " уроков");
-        if(item.duration) meta.push(item.duration);
-        if(item.author) meta.push(item.author);
+      const groups = groupItemsBySection(direction.items);
 
-        const price = priceText(item.price);
-        const sectionName = item.section || item.title;
-        const materialName = item.material || item.title;
-        const same = normalize(sectionName) === normalize(materialName);
+      return groups.map(group => `
+        <div class="section-group">
+          <div class="section-group-head">
+            <div class="section-group-title">${escapeHtml(group.title)}</div>
+            <div class="section-group-count">${group.items.length} ${wordItems(group.items.length)}</div>
+          </div>
 
-        return `
-          <article class="material-card">
-            <div class="material-head">
-              <div>
-                <div class="material-section">${escapeHtml(sectionName)}</div>
-                <div class="material-meta">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
-              </div>
-              ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
-            </div>
+          ${group.items.map(item => {
+            const meta = [];
+            if(item.lessons && item.lessons !== "0") meta.push(item.lessons + " уроков");
+            if(item.duration) meta.push(item.duration);
+            if(item.author) meta.push(item.author);
 
-            ${!same ? `<div class="material-name"><b>Название материала:</b><br>${escapeHtml(materialName)}</div>` : ""}
+            const price = priceText(item.price);
+            const materialName = item.material || item.title || group.title;
 
-            ${item.tariff ? `<div class="material-meta">${escapeHtml(item.tariff)}</div>` : ""}
-          </article>
-        `;
-      }).join("");
+            return `
+              <article class="material-card">
+                <div class="material-head">
+                  <div>
+                    <div class="material-section">${escapeHtml(materialName)}</div>
+                    <div class="material-meta">${meta.length ? escapeHtml(meta.join(" · ")) : "Видеоматериал из библиотеки CAD Академии"}</div>
+                  </div>
+                  ${price ? `<div class="price">${escapeHtml(price)}</div>` : ""}
+                </div>
+
+                ${item.tariff ? `<div class="material-meta">${escapeHtml(item.tariff)}</div>` : ""}
+              </article>
+            `;
+          }).join("")}
+        </div>
+      `).join("");
     }
 
     function openDirection(title){
